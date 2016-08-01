@@ -1,0 +1,12 @@
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'mqueue/mqueue.css' %}" />
+<script type="text/javascript">
+function toggle_msgs() {
+	$('#streambox').show();
+	num_msgs = parseFloat($('#num_msgs').html());
+	$('#streambox-btns').show();
+}
+</script>
+<a id="msgs_counter" class="hidden-xxs" style="display:none;" href="javascript:toggle_msgs()" title="Messages">
+	<span class="label label-success" style="font-size:130%;"><i class="fa fa-flash"></i>&nbsp;<span id="num_msgs">0</span></span>
+</a>

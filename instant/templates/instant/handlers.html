@@ -1,0 +1,13 @@
+{% load i18n %}
+<div id="minorbox" style="display:none;position:absolute;top:10px;left:10px;z-index:1000">
+	<i class="fa fa-exclamation fa-2x" style="color:firebrick"></i>
+</div>
+<script type="text/javascript">function hide_jumbo(){$('#jumbobox').hide()}</script>
+<div id="jumbobox" style="display:none;position:absolute;top:2%;left:2%;width:96%;height:96%;z-index:1000;background-color:firebrick;color:white;font-size:280%;border:1px solid grey;vertical-align:middle;border-radius:0.5em;padding:1em;text-align:center">
+	<div id="jumbocontent" style="position:absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+		<p><button class="btn btn-success btn-lg" style="margin-top:2em;" onclick="hide_jumbo()">{% trans "Close" %}</button></p>
+	</div>
+</div>
+<script type="text/javascript">
+{% include "instant/js/handlers.js" %}
+</script>

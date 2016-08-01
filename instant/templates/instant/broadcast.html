@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load staticfiles i18n %}
+
+{% block title %}{% trans 'Broadcast form' %}{% endblock %}
+
+{% block content %}
+<style>
+label {
+	min-width:8em;
+	text-align:left;
+}
+</style>
+<div class="row">
+	<div class="col-xs-12 text-center">
+		<h1 class="gds">{% trans 'Broadcast to a channel' %}</h1>
+		<form id="broadcast_form" action="" method="post">{% csrf_token %}
+			{{ form.as_p }}
+			<div id="submit_form">
+				<input type="submit" value="{% trans 'Send' %}" />
+			</div>	
+		</form>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+#streambox {
+	position:fixed;
+	top:1em;
+	right:1em;
+}
+#streambox-btns {
+	float:right
+}
+#streambox-btn {
+	font-size:80%;
+	border-radius:3px;
+	background-color:black;
+}
+a#mqdelete_btn, a:visited#mqdelete_btn {
+	color:red;
+}
+a#mqclose_btn, a:visited#mqclose_btn {
+	color:green;
+}
+.inbox {
+	padding:1em;
+	border-radius:0.5em;
+	border:1px solid grey;
+	background-color:white;
+	margin-bottom:0.5em;
+}
+/*
+.admin-msg {
+	background-color:firebrick !important;
+}
+.admin-msg a, .admin-msg a:visited {
+	color:white !important;
+}
+.admin-msg a.btn, .admin-msg a.btn:visited, .staff-msg a.btn, .staff-msg a.btn:visited {
+	background-color:white !important;
+	color:black !important;
+}
+.staff-msg {
+	background-color:orange !important;
+}
+.staff-msg a, .staff-msg a:visited {
+	color:black !important;
+}
+*/
