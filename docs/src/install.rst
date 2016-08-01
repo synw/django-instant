@@ -4,7 +4,7 @@ Install and configure
 Instant can deliver events in real time to the users. This is made using the 
 `Centrifugo <https://github.com/centrifugal/centrifugo/>`_  websockets server.
  
-**Warning**: all this is still experimental. Use at your own risks.
+**Warning**: this app is still at an early alpha stage.
 
 1. Install Centrifugo: example for Debian: 
 
