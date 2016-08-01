@@ -5,7 +5,8 @@ from django import template
 from django.conf import settings
 from cent.core import generate_token, Client
 
-DEBUG = getattr(settings, 'INSTANT_DEBUG', False)
+
+DEBUG = False
 
 try:
     SECRET_KEY = getattr(settings, 'CENTRIFUGO_SECRET_KEY')
@@ -29,11 +30,11 @@ def _get_public_channel():
 
 register = template.Library()
 
-@register.assignment_tag
+@register.simple_tag
 def get_centrifugo_url():
     return CENTRIFUGO_HOST+":"+str(CENTRIFUGO_PORT)
 
-@register.assignment_tag
+@register.simple_tag
 def get_timestamp():
     return str(int(time.time()))
 

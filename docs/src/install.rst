@@ -49,6 +49,15 @@ Leave it if you want only the logged in users to see the messages.
    mv django-mqueue/mqueue . && rm -rf django-mqueue
    python manage.py makemigrations && python manage.py migrate
    
+In settings.py add to ``INSTALLED_APPS``:
+
+   .. highlight:: python
+
+::
+
+   "mqueue",
+   "instant",
+
 Set the urls:
 
 .. highlight:: python

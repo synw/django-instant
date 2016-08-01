@@ -1,5 +1,7 @@
 {% load instant %}
 
+var debug = false;
+
 // websocket connection management
 {% get_timestamp as timestamp %}
 var centrifuge = new Centrifuge({

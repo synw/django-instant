@@ -3,7 +3,6 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 
-DEBUG = getattr(settings, 'INSTANT_DEBUG', False)
 
 try:
     SECRET_KEY = getattr(settings, 'CENTRIFUGO_SECRET_KEY')
