@@ -88,12 +88,8 @@ Add ``'instant',`` to installed apps and configure settings.py:
    CENTRIFUGO_HOST = 'http://ip_here' #default: localhost
    CENTRIFUGO_PORT = 8012 # default: 8001
 
-
-
-Important: if you use the log handler these settings must be placed before ``from mqueue.conf import LOGGING``
-
 Templates
 ~~~~~~~~~
 
-Include the template ``{% include "instant/stream.html" %}`` anywhere (nothing will be displayed it is the engine), 
+Include the template ``{% include "instant/client.html" %}`` anywhere (nothing will be displayed it is the engine), 
 in the footer for example. Add ``{% include "instant/messages.html" %}`` where you want the message counter to be.
