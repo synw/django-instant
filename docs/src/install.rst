@@ -71,7 +71,7 @@ Set the urls:
 
 ::
 
-   cd static/instant
+   cd static && mkdir instant && cd instant
    npm install centrifuge
 
 Settings
