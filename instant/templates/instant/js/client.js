@@ -1,6 +1,6 @@
 {% load instant %}
 
-var debug = false;
+var debug = true;
 
 // websocket connection management
 {% get_timestamp as timestamp %}
@@ -33,19 +33,19 @@ var public_callbacks = {
 		};
     },
     "join": function(message) {
-    	if ( debug === true ) {'JOIN '+console.log(message)};
+    	if ( debug === true ) {console.log('JOIN: '+JSON.stringify(message))};
     },
     "leave": function(message) {
-    	if ( debug === true ) {'LEAVE '+console.log(message)};
+    	if ( debug === true ) {console.log('LEAVE: '+JSON.stringify(message))};
     },
     "subscribe": function(context) {
-    	if ( debug === true ) {'SUSCRIBE '+console.log(context)};
+    	if ( debug === true ) {console.log('SUSCRIBE: '+JSON.stringify(context))};
     },
     "error": function(errContext) {
-    	if ( debug === true ) {'ERROR '+console.log(err)};
+    	if ( debug === true ) {console.log('ERROR: '+JSON.stringify(err))};
     },
     "unsubscribe": function(context) {
-    	if ( debug === true ) {'UNSUSCRIBE '+console.log(context)};
+    	if ( debug === true ) {console.log('UNSUSCRIBE: '+JSON.stringify(context))};
     }
 }
 
@@ -58,5 +58,13 @@ centrifuge.on('connect', function(context) {
 centrifuge.on('disconnect', function(context) {
 	if ( debug === true ) {console.log("Disconnection: "+context.reason)};
 });
+{% get_apps as apps %}
+{% if "presence" in apps %}
+	subscription.presence().then(function(message) {
+		if ( debug === true ) {console.log('PRESENCE: '+JSON.stringify(message.data))};
+	}, function(err) {
+		if ( debug === true ) {console.log('PRESENCE ERROR: '+err)};
+	});
+{% endif %}
 
 centrifuge.connect();

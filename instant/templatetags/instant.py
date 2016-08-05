@@ -21,6 +21,7 @@ REDIS_PORT = getattr(settings, 'MQUEUE_REDIS_PORT', 6379)
 REDIS_DB = getattr(settings, 'MQUEUE_REDIS_DB', 0)
 
 GLOBAL_STREAMS =  getattr(settings, 'INSTANT_GLOBAL_STREAMS', ())
+APPS =  getattr(settings, 'INSTANT_APPS', [])
 
 def _get_public_channel():
     channel = SITE_SLUG+'_public'
@@ -52,6 +53,10 @@ def mq_generate_token(user, timestamp, info=""):
 @register.simple_tag
 def get_public_channel():
     return _get_public_channel()
+
+@register.simple_tag
+def get_apps():
+    return APPS
 
 
 
