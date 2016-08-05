@@ -45,7 +45,8 @@ Leave it if you want only the logged in users to see the messages.
    cd my_django_project_root
    git clone https://github.com/synw/django-instant.git
    mv django-instant/instant . && rm -rf django-instant
-   pip install django-mqueue
+   git clone https://github.com/synw/django-mqueue.git
+   mv django-mqueue/instant . && rm -rf django-mqueue
    python manage.py makemigrations && python manage.py migrate
    
 In settings.py add to ``INSTALLED_APPS``:
