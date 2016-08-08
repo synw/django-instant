@@ -27,7 +27,7 @@ Stream events from code
    from instant import broadcast 
 
    # fire an event on the public channel
-   instant.broadcast(message='Hello world', event_class="infos")
+   broadcast(message='Hello world', event_class="infos")
    
    # send an instant debug message during development
    broadcast("Something happened somewhere in the code", event_class='debug')
