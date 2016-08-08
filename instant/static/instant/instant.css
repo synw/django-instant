@@ -24,6 +24,59 @@ a#mqclose_btn, a:visited#mqclose_btn {
 	background-color:white;
 	margin-bottom:0.5em;
 }
+/* --------------------------------- Messages formating ------------------------------- */
+.mq-label {
+	display: inline;
+	padding: 0.5em;
+	font-size: 75%;
+	font-weight: bold;
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: 0.5em;
+}
+.mq-default {
+	background-color: darkslategrey;
+	color:white;
+}
+.mq-important {
+	background-color: firebrick;
+	color: white;
+}
+.mq-ok {
+	background-color: forestgreen;
+	color:white;
+}
+.mq-warning {
+	background-color: orangered;
+	color:white;
+}
+.mq-info {
+	background-color: royalblue;
+	color:white;
+}
+.mq-debug {
+	background-color: orange;
+	color:black;
+}
+.mq-error {
+	background-color: red;
+	color:white;
+}
+.mq-created {
+	background-color: darkcyan;
+	color:white;
+}
+.mq-edited {
+	background-color: dodgerblue;
+	color:white;
+}
+.mq-deleted {
+	background-color: gold;
+	color:white;
+}
+
 /*
 .admin-msg {
 	background-color:firebrick !important;

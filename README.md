@@ -8,5 +8,4 @@ Example app: [django-presence](https://github.com/synw/django-presence)
 
 ### Todo
 
-- Remove django-mqueue dependency
 - Unbootstrap the UI
