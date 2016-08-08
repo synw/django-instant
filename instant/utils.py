@@ -10,7 +10,7 @@ def _get_public_channel():
         channel = "public"
     return channel
 
-def broadcast(message, event_class=None, channel=None):
+def broadcast(message, event_class="default", channel=None):
     cent_url = CENTRIFUGO_HOST+":"+str(CENTRIFUGO_PORT)
     client = Client(cent_url, SECRET_KEY, timeout=1)
     if channel is None:
