@@ -2,6 +2,7 @@
 
 from cent.core import Client
 from instant.conf import GLOBAL_STREAMS, CENTRIFUGO_HOST, CENTRIFUGO_PORT, SITE_SLUG, SECRET_KEY, EVENT_CLASSES, EVENT_ICONS_HTML, EVENT_EXTRA_HTML
+from string import lower
 
 
 def _get_public_channel():
@@ -18,6 +19,8 @@ def broadcast(message, event_class="default", channel=None):
     msg_label = format_event_class(obj=None, event_class=event_class)
     data = {"message": message, 'message_label':msg_label, 'event_class':event_class }
     client.publish(channel, data)
+    if lower(event_class) == "debug":
+        print "[DEBUG] "+message
     return
 
 def get_event_class_str(event_class):
