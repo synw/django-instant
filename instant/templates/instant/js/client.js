@@ -1,6 +1,6 @@
 {% load instant %}
 
-var debug = true;
+var debug = false;
 
 // websocket connection management
 {% get_timestamp as timestamp %}
@@ -12,18 +12,32 @@ var centrifuge = new Centrifuge({
 });
 
 var public_callbacks = {
-    "message": function(message) {
-        var msg = message.data.message;
-        var channel = message.channel;
-        var event_class = message.data.event_class
-        var message_label = message.data.message_label;
-        if ( debug === true ) {
-        	console.log('MESSAGE: '+msg+'\nChannel: '+channel+'\nEvent class: '+event_class+'\nLabel: '+message_label);
-        }
-        var alert_on_event = handlers_for_event_class(event_class, channel, msg);
+    "message": function(dataset) {
+    	//console.log('SET: '+JSON.stringify(dataset));
+    	var channel = dataset['channel'];
+    	var d = new Date();
+    	var timestamp = new Date(dataset['timestamp']*1000 + d.getTimezoneOffset() * 60000);
+    	var message = "";
+    	if (dataset['data'].hasOwnProperty('message')) {
+    		var message = dataset['data']['message'];
+    	}
+    	var message_label = "";
+    	if (dataset['data'].hasOwnProperty('message_label')) {
+    		var message_label = dataset['data']['message_label'];
+    	}
+    	var event_class = "";
+    	if (dataset['data'].hasOwnProperty('event_class')) {
+    		var event_class = dataset['data']['event_class'];
+    	}
+    	var data = "";
+    	if (dataset['data'].hasOwnProperty('data')) {
+    		var data = dataset['data']['data'];
+    	}
+    	//console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
+        var alert_on_event = handlers_for_event(event_class, channel, message, data, timestamp);
 		if (alert_on_event === true) {
 			// default behavior: popup a message on the top right corner
-			$('#streambox').prepend(format_data(msg, event_class, message_label));
+			$('#streambox').prepend(format_data(message, event_class, message_label));
 			num_msgs = increment_counter();
 			if (num_msgs > 0) {
 		    	$('#msgs_counter').show();
@@ -58,8 +72,8 @@ centrifuge.on('connect', function(context) {
 centrifuge.on('disconnect', function(context) {
 	if ( debug === true ) {console.log("Disconnection: "+context.reason)};
 });
-{% get_apps as apps %}
-{% if "presence" in apps %}
+
+{% if "presence"|is_in_apps %}
 	subscription.presence().then(function(message) {
 		if ( debug === true ) {console.log('PRESENCE: '+JSON.stringify(message.data))};
 	}, function(err) {

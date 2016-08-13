@@ -54,9 +54,11 @@ def mq_generate_token(user, timestamp, info=""):
 def get_public_channel():
     return _get_public_channel()
 
-@register.simple_tag
-def get_apps():
-    return APPS
-
+@register.filter
+def is_in_apps(app):
+    if app in APPS:
+        return True
+    else:
+        return False
 
 
