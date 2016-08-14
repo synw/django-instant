@@ -7,6 +7,7 @@ Check the [documentation](http://django-instant.readthedocs.io/en/latest/).
 Example apps: 
 
 [Django Presence](https://github.com/synw/django-presence): user presence notification widget
+
 [Django Rechat](https://github.com/synw/django-rechat): chat
 
 ### Todo
