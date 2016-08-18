@@ -2,6 +2,7 @@
 
 import time
 from django import template
+from django.template.defaultfilters import stringfilter
 from django.conf import settings
 from cent.core import generate_token, Client
 
@@ -54,7 +55,12 @@ def mq_generate_token(user, timestamp, info=""):
 def get_public_channel():
     return _get_public_channel()
 
+@register.assignment_tag
+def get_apps():
+    return APPS
+
 @register.filter
+@stringfilter
 def is_in_apps(app):
     if app in APPS:
         return True

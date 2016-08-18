@@ -1,6 +1,7 @@
-{% load instant %}
+{% load instant_tags %}
+
 {% include "instant/js/utils.js" %}
-{% if "presence" in apps %}
+{% if "presence"|is_in_apps %}
 	{% include "presence/js/utils.js" %}
 {% endif %}
 

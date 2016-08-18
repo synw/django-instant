@@ -1,4 +1,4 @@
-{% load instant %}
+{% load instant_tags %}
 
 var debug = false;
 
