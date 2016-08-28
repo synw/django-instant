@@ -1,6 +1,6 @@
 {% load instant_tags %}
 
-var debug = false;
+var debug = true;
 
 // websocket connection management
 {% get_timestamp as timestamp %}
@@ -73,12 +73,6 @@ centrifuge.on('disconnect', function(context) {
 	if ( debug === true ) {console.log("Disconnection: "+context.reason)};
 });
 
-{% if "presence"|is_in_apps %}
-	subscription.presence().then(function(message) {
-		if ( debug === true ) {console.log('PRESENCE: '+JSON.stringify(message.data))};
-	}, function(err) {
-		if ( debug === true ) {console.log('PRESENCE ERROR: '+err)};
-	});
-{% endif %}
+{% include "instant/extra_clients.js" %}
 
 centrifuge.connect();

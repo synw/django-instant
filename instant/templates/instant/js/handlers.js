@@ -1,9 +1,6 @@
 {% load instant_tags %}
 
 {% include "instant/js/utils.js" %}
-{% if "presence"|is_in_apps %}
-	{% include "presence/js/utils.js" %}
-{% endif %}
 
 function handlers_for_event(event_class, channel, message, data, timestamp) {
 	// return true if we want the regular alert to be displayed, false otherwise
@@ -20,17 +17,6 @@ function handlers_for_event(event_class, channel, message, data, timestamp) {
 		$('#jumbobox').css('display','table-cell');
 		return false
 	}
-	// presence app
-	{% if "presence"|is_in_apps %}
-		{% include "presence/js/handlers.js" %}
-	{% else %}
-		if (event_class == '__presence__') {
-			return false
-		}
-	{% endif %}
-	// rechat app
-	{% if "rechat"|is_in_apps %}
-		{% include "rechat/js/handlers.js" %}
-	{% endif %}
+	{% include "instant/extra_handlers.js" %}
 	return true
 }
