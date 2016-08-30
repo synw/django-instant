@@ -1,6 +1,10 @@
 # Django Instant
 
-Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifugo) to deliver events in real time to the users.
+Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifugo).
+
+* Push events in real time into public or private channels.
+
+* Handle your event in javascript client-side.
 
 Check the [documentation](http://django-instant.readthedocs.io/en/latest/).
 
