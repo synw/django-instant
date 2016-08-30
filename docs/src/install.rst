@@ -3,8 +3,6 @@ Install and configure
 
 Instant can deliver events in real time to the users. This is made using the 
 `Centrifugo <https://github.com/centrifugal/centrifugo/>`_  websockets server.
- 
-**Warning**: this app is still at an early alpha stage.
 
 1. Install Centrifugo: example for Debian: 
 
@@ -25,7 +23,7 @@ Instant can deliver events in real time to the users. This is made using the
 
    ./centrifugo genconfig
    
-This will generate your secret key. Set anonymous to true if you want all users to receive the messages. 
+This will generate your secret key. Set anonymous to true if you want them to be able to receive messages. 
 Leave it if you want only the logged in users to see the messages.
 
 .. highlight:: javascript

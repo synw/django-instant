@@ -35,7 +35,7 @@ The only required parameter is ``message``.
 Direct broadcast of events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Got to /instant/ as superuser and use the form to broadcast a message to the public channel.
+Got to ``/instant/`` as superuser and use the form to broadcast a message to the public channel.
 
 By default the sent messages pop up on the top-right corner of the page. The next section will describe how to 
 customize the handlers on the client side according to the event class.

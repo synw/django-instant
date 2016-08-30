@@ -1,20 +1,25 @@
 Client-side event handlers
 ==========================
 
-You can customize the javascript that will handle each class of event. Use the template 
-``instant/js/handlers.js`` and add your own event handler in the function:
+You can customize the javascript that will handle each class of event. 
+
+Create a template ``instant/extra_handlers.js`` with this content:
+
+.. highlight:: django
+
+::
+   
+   {% include "mymodule/handlers.js" %}
+   
+In ``templates/mymodule/handlers.js`` define your client side handler:
 
 .. highlight:: javascript
 
 ::
    
-   function handlers_for_event_class(event_class, channel, message) {
-	// return true if we want the normal behavior to be triggered, false otherwise
-	if (event_class == 'Important') {
-		// do whatever you want
-		alert('The message '+message+' is important');
-		// false not to fire the normal message on the top right corner
+	if (event_class == '__myeventclass__') {
+		console.log(message);
 		return false
 	}
-	return true
-   }
+	
+Return ``true`` if you want the default message to popup, ``false`` to disable the default behaviour.
