@@ -21,7 +21,8 @@ class BroadcastView(FormView):
     def form_valid(self, form):
         msg = form.cleaned_data['message']
         event_class = form.cleaned_data['event_class']
-        broadcast(msg, event_class)
+        channel = form.cleaned_data['channel']
+        broadcast(message=msg, event_class=event_class, channel=channel)
         messages.info(self.request, _(u"Message broadcasted to the public channel"))
         return super(BroadcastView, self).form_valid(form)
     

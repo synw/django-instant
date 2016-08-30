@@ -61,15 +61,6 @@ Set the urls:
 ::
 
    url('^instant/', include('instant.urls')),
-   
-4. Install the js part with npm:
-
-.. highlight:: python
-
-::
-
-   cd static && mkdir instant && cd instant
-   npm install centrifuge
 
 Settings
 ~~~~~~~~
@@ -80,13 +71,16 @@ Add ``'instant',`` to installed apps and configure settings.py:
 
    # required settings
    SITE_SLUG = "my_site" # used internaly to prefix the channels
-   CENTRIFUGO_SECRET_KEY = "the_key_that_is_in_config.json"
+   CENTRIFUGO_SECRET_KEY = "70b651f6-775a-4949-982b-b387b31c1d84" # the_key_that_is_in_config.json
+   
    # optionnal settings
    CENTRIFUGO_HOST = 'http://ip_here' #default: localhost
    CENTRIFUGO_PORT = 8012 # default: 8001
+   INSTANT_PUBLIC_CHANNEL = "public" #default: SITE_SLUG+'_public'
 
 Templates
 ~~~~~~~~~
 
-Include the template ``{% include "instant/client.html" %}`` anywhere (nothing will be displayed it is the engine), 
-in the footer for example. Add ``{% include "instant/messages.html" %}`` where you want the message counter to be.
+Include the template ``{% include "instant/client.html" %}`` anywhere: nothing will be displayed it is the engine. 
+
+Add ``{% include "instant/messages.html" %}`` where you want the message counter to be.

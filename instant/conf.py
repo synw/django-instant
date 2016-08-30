@@ -16,7 +16,8 @@ REDIS_PORT = getattr(settings, 'MQUEUE_REDIS_PORT', 6379)
 REDIS_DB = getattr(settings, 'MQUEUE_REDIS_DB', 0)
 
 SITE_SLUG =  getattr(settings, 'SITE_SLUG', 'site')
-GLOBAL_STREAMS =  getattr(settings, 'INSTANT_GLOBAL_STREAMS', ())
+public_channel = SITE_SLUG+'_public'
+PUBLIC_CHANNEL =  getattr(settings, 'INSTANT_PUBLIC_CHANNEL', public_channel)
 
 # ===================== Events formats ===================================
 EVENT_CLASSES = {

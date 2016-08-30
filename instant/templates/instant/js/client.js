@@ -35,7 +35,7 @@ var public_callbacks = {
     	}
     	//console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
         var alert_on_event = handlers_for_event(event_class, channel, message, data, timestamp);
-		if (alert_on_event === true) {
+		if (alert_on_event === true ) {
 			// default behavior: popup a message on the top right corner
 			$('#streambox').prepend(format_data(message, event_class, message_label));
 			num_msgs = increment_counter();
@@ -56,7 +56,7 @@ var public_callbacks = {
     	if ( debug === true ) {console.log('SUSCRIBE: '+JSON.stringify(context))};
     },
     "error": function(errContext) {
-    	if ( debug === true ) {console.log('ERROR: '+JSON.stringify(err))};
+    	if ( debug === true ) {console.log('ERROR: '+JSON.stringify(errContext))};
     },
     "unsubscribe": function(context) {
     	if ( debug === true ) {console.log('UNSUSCRIBE: '+JSON.stringify(context))};

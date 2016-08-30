@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import json
 from cent.core import Client
-from instant.conf import GLOBAL_STREAMS, CENTRIFUGO_HOST, CENTRIFUGO_PORT, SITE_SLUG, SECRET_KEY, EVENT_CLASSES, EVENT_ICONS_HTML, EVENT_EXTRA_HTML
+from instant.conf import PUBLIC_CHANNEL, CENTRIFUGO_HOST, CENTRIFUGO_PORT, SITE_SLUG, SECRET_KEY, EVENT_CLASSES, EVENT_ICONS_HTML, EVENT_EXTRA_HTML
 from string import lower
 
 
 def _get_public_channel():
-    channel = SITE_SLUG+'_public'
-    if 'public' in GLOBAL_STREAMS:
-        channel = "public"
-    return channel
+    return PUBLIC_CHANNEL
 
 def broadcast(message, event_class="default", data={}, channel=None):
     cent_url = CENTRIFUGO_HOST+":"+str(CENTRIFUGO_PORT)
@@ -17,10 +15,10 @@ def broadcast(message, event_class="default", data={}, channel=None):
     if channel is None:
         channel = _get_public_channel()
     msg_label = format_event_class(obj=None, event_class=event_class)
-    _data = {"message": message, "channel":channel, 'message_label':msg_label, 'event_class':event_class, "data":data }
-    client.publish(channel, _data)
+    payload = {"message": message, "channel":channel, 'message_label':msg_label, 'event_class':event_class, "data":data }
+    client.publish(channel, payload)
     if lower(event_class) == "debug":
-        print "[DEBUG] "+message
+        print "[DEBUG] "+str(json.dumps(payload))
     return
 
 def get_event_class_str(event_class):

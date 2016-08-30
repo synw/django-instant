@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from instant.utils import _get_public_channel
 
 choices = [
            ('public', 'Public'), 
@@ -20,6 +21,12 @@ class BroadcastForm(forms.Form):
                                   max_length=60, 
                                   label="Event class", 
                                   required=True
+                                  )
+    channel = forms.CharField(
+                                  max_length=60, 
+                                  label="Channel", 
+                                  required=True,
+                                  initial = _get_public_channel()
                                   )
     """
     channel = forms.CharField(
