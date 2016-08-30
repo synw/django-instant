@@ -25,6 +25,13 @@ Websockets for Django with `Centrifugo <https://github.com/centrifugal/centrifug
 	:caption: Handlers
    
 	src/handlers
+	
+	
+.. toctree::
+	:maxdepth: 2
+	:caption: Private channels
+	
+	src/private_chans
 
 	
 
