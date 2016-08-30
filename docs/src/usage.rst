@@ -23,12 +23,14 @@ Stream events from code
    from instant import broadcast 
 
    # fire an event on the public channel
-   broadcast(message='Hello world', event_class="infos", channel="public")
+   broadcast(message='Hello world', event_class="infos", channel="public", data={"myfield":"my_value"})
    
    # send an instant debug message during development
    broadcast("Something happened somewhere in the code", event_class='debug')
    
 The only required parameter is ``message``.
+
+To send extra data pass some json into ``data``.
 
 **Note**: if no channel is provided the events are broadcasted to the default public channel.
 
