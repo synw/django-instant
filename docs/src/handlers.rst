@@ -23,3 +23,5 @@ In ``templates/mymodule/handlers.js`` define your client side handler:
 	}
 	
 Return ``true`` if you want the default message to popup, ``false`` to disable the default behaviour.
+
+Note: for javascript debugging you can set a ``INSTANT_DEBUG = True`` in settings.py
