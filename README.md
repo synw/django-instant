@@ -18,9 +18,12 @@ from instant import broadcast
 # push an event on the default public channel
 broadcast(message='Hello world', event_class="test")
 
-# push an event to a private channel with extra data payload
-data = {"site":"mysite","username":"joe"}
-broadcast(message='Hello world', channel="$myprivatechan", data=data)
+# push an event to the logged in users channel with extra data payload
+data = {"field1":"value1","field2":"value2"}
+broadcast(message='Message for users', target="users", data=data)
+
+# push an event to the staff channel
+broadcast(message='Message for staff', target="staff")
   ```
 
 Handle the event client-side in a template:
