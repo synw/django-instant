@@ -4,3 +4,25 @@ var playSound = (function beep() {
         snd.play(); 
     }
 })();
+
+function unpack_data(dataset) {
+	var channel = dataset['channel'];
+	var message = "";
+	if (dataset['data'].hasOwnProperty('message')) {
+		var message = dataset['data']['message'];
+	}
+	var message_label = "";
+	if (dataset['data'].hasOwnProperty('message_label')) {
+		var message_label = dataset['data']['message_label'];
+	}
+	var event_class = "";
+	if (dataset['data'].hasOwnProperty('event_class')) {
+		var event_class = dataset['data']['event_class'];
+	}
+	var data = "";
+	if (dataset['data'].hasOwnProperty('data')) {
+		var data = dataset['data']['data'];
+	}
+	var res = {"channel":channel, "message": message, "event_class": event_class, "message_label": message_label, "data": data}
+	return res
+}

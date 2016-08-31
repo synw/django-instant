@@ -73,20 +73,14 @@ Edit ``myapp/client.js``:
        "message": function(dataset) {
    	// the debug variable is set via INSTANT_DEBUG = True in settings.py
        	if (debug === true) { console.log('SET: '+JSON.stringify(dataset));};
-       	var channel = dataset['channel'];
-       	var message = "";
-       	if (dataset['data'].hasOwnProperty('message')) { var message = dataset['data']['message']; };
-    	var message_label = "";
-    	if (dataset['data'].hasOwnProperty('message_label')) { var message_label = dataset['data']['message_label']; };
-    	var event_class = "";
-    	if (dataset['data'].hasOwnProperty('event_class')) { var event_class = dataset['data']['event_class']; };
-    	var data = "";
-    	if (dataset['data'].hasOwnProperty('data')) { var data = dataset['data']['data']; };
-    	// handlers
-    	if (debug === true) {console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data))};
-    	var datapack = dataset['data']['data'];
-    	if ( datapack.hasOwnProperty('my_field) ) {
-   		my_field = datapack['myfield']
+       	res = unpack_data(dataset);
+    	var message = res['message']
+    	var event_class = res['event_class']
+    	var message_label = res['message_label']
+    	var data = res['data']
+    	var channel = res['channel'];
+    	if ( data.hasOwnProperty('my_field) ) {
+   		my_field = data['myfield']
     	}
     	// do something with the data
     	$('#message_box').prepend(message);
