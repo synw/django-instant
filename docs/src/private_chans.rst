@@ -51,6 +51,7 @@ You can activate the defaults private channels in settings:
    # reserved to superuser
    INSTANT_ENABLE_SUPERUSER_CHANNEL = True
 
+Make sure the main client is loaded somewhere: ``{% include "instant/client.html" %}``. 
 Then you can use the corresponding widgets in templates to display the events:
 
 .. highlight:: django
