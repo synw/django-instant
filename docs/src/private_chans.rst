@@ -51,6 +51,65 @@ Set you channels credentials in settings.py:
    # superusers only: if not set default is SITE_SLUG+'_admin'
    INSTANT_SUPERUSER_CHANNELS = ['$adminchan']
    
+Now you can setup the client-side handlers for you channels:
+
+Create a ``{% instant/extra_clients.js %}`` template that contains something like:
+
+.. highlight:: javascript
+
+::
+   
+   {% if user.is_authenticated and request.path == "/private/" %}
+   	{% include "myapp/client.js" %}
+   {% endif %}
+
+Edit ``myapp/client.js``:
+
+.. highlight:: javascript
+
+::
+   
+   var my_callbacks = {
+       "message": function(dataset) {
+   	// the debug variable is set via INSTANT_DEBUG = True in settings.py
+       	if (debug === true) { console.log('SET: '+JSON.stringify(dataset));};
+       	var channel = dataset['channel'];
+       	var message = "";
+       	if (dataset['data'].hasOwnProperty('message')) { var message = dataset['data']['message']; };
+    	var message_label = "";
+    	if (dataset['data'].hasOwnProperty('message_label')) { var message_label = dataset['data']['message_label']; };
+    	var event_class = "";
+    	if (dataset['data'].hasOwnProperty('event_class')) { var event_class = dataset['data']['event_class']; };
+    	var data = "";
+    	if (dataset['data'].hasOwnProperty('data')) { var data = dataset['data']['data']; };
+    	// handlers
+    	if (debug === true) {console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data))};
+    	var datapack = dataset['data']['data'];
+    	if ( datapack.hasOwnProperty('my_field) ) {
+   		my_field = datapack['myfield']
+    	}
+    	// do something with the data
+    	$('#message_box').prepend(message);
+    },
+	"join": function(message) {
+    	if ( debug === true ) {console.log('JOIN: '+message['channel']+' : '+JSON.stringify(message))};
+    },
+    "leave": function(message) {
+    	if ( debug === true ) {console.log('LEAVE: '+message['channel']+' : '+JSON.stringify(message))};
+    },
+    "subscribe": function(context) {
+    	if ( debug === true ) {console.log('SUSCRIBE: '+context['channel']+' : '+JSON.stringify(context))};
+    },
+    "error": function(errContext) {
+    	if ( debug === true ) {console.log('ERROR: '+errContext['channel']+' : '+JSON.stringify(errContext))};
+    },
+    "unsubscribe": function(context) {
+    	if ( debug === true ) {console.log('UNSUSCRIBE: '+context['channel']+' : '+JSON.stringify(context))};
+    }
+   }
+   
+   var subscription = centrifuge.subscribe("$mychannel", my_callbacks);
+
    
 Custom auth function
 ~~~~~~~~~~~~~~~~~~~~
