@@ -43,14 +43,6 @@ Leave it if you want only the logged in users to see the messages.
    cd my_django_project_root
    git clone https://github.com/synw/django-instant.git
    mv django-instant/instant . && rm -rf django-instant
-   
-In settings.py add to ``INSTALLED_APPS``:
-
-   .. highlight:: python
-
-::
-
-   "instant",
 
 Set the urls:
 
@@ -68,8 +60,9 @@ Add ``'instant',`` to installed apps and configure settings.py:
 ::
 
    # required settings
-   SITE_SLUG = "my_site" # used internaly to prefix the channels
    CENTRIFUGO_SECRET_KEY = "70b651f6-775a-4949-982b-b387b31c1d84" # the_key_that_is_in_config.json
+   SITE_SLUG = "my_site" # used internaly to prefix the channels
+   SITE_NAME = "My site"
    
    # optionnal settings
    CENTRIFUGO_HOST = 'http://ip_here' #default: localhost
