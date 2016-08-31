@@ -5,6 +5,24 @@ var playSound = (function beep() {
     }
 })();
 
+function getClockTime(seconds)
+{
+   var now    = new Date();
+   var hour   = now.getHours();
+   var minute = now.getMinutes();
+   var second = now.getSeconds();
+   if (hour   > 12) { hour = hour - 12;      }
+   if (hour   == 0) { hour = 12;             }
+   if (hour   < 10) { hour   = "0" + hour;   }
+   if (minute < 10) { minute = "0" + minute; }
+   if (seconds == true && second < 10) { second = "0" + second; }
+   var timestring = hour +':' +minute;
+   if (seconds == true) {
+	   timestring = timestring+':'+second;
+   }
+   return timestring;
+}
+
 function unpack_data(dataset) {
 	var channel = dataset['channel'];
 	var message = "";
@@ -23,6 +41,10 @@ function unpack_data(dataset) {
 	if (dataset['data'].hasOwnProperty('data')) {
 		var data = dataset['data']['data'];
 	}
-	var res = {"channel":channel, "message": message, "event_class": event_class, "message_label": message_label, "data": data}
+	var site = "";
+	if (dataset['data'].hasOwnProperty('site')) {
+		var site = dataset['data']['site'];
+	}
+	var res = {"channel":channel, "message": message, "event_class": event_class, "message_label": message_label, "data": data, "site":site}
 	return res
 }

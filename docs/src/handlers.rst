@@ -1,7 +1,7 @@
 Client-side event handlers
 ==========================
 
-You can customize the javascript that will handle each class of event. 
+You can customize the javascript that will handle each class of event of the default public channel. 
 
 Create a template ``instant/extra_handlers.js`` with this content:
 
@@ -25,3 +25,6 @@ In ``templates/mymodule/handlers.js`` define your client side handler:
 Return ``true`` if you want the default message to popup, ``false`` to disable the default behaviour.
 
 Note: for javascript debugging you can set a ``INSTANT_DEBUG = True`` in settings.py
+
+Note: this is only available for the default public channel events. To handle events in private channels
+see next section.

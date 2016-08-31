@@ -1,5 +1,5 @@
-Usage
-=====
+Send events
+===========
 
 Run the Centrifugo server:
 
@@ -7,9 +7,9 @@ Run the Centrifugo server:
 
 ::
 
-   ./centrifugo --config=config.json
+   ./centrifugo --config=config.json --port=8001
    
-Use the ``-d`` flag for debug and a port if needed: ``--port=8001``.
+Use the ``-d`` flag for debug. See the `Centrifugo config options <https://fzambia.gitbooks.io/centrifugal/content/server/configuration.html>`_.
 
 There are two ways to broadcast events:
 

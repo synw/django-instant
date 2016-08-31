@@ -24,6 +24,10 @@ REDIS_DB = getattr(settings, 'MQUEUE_REDIS_DB', 0)
 GLOBAL_STREAMS =  getattr(settings, 'INSTANT_GLOBAL_STREAMS', ())
 APPS =  getattr(settings, 'INSTANT_APPS', [])
 
+ENABLE_STAFF_CHANNEL = getattr(settings, 'INSTANT_ENABLE_STAFF_CHANNEL', False)
+ENABLE_USERS_CHANNEL = getattr(settings, 'INSTANT_ENABLE_USERS_CHANNEL', False)
+ENABLE_SUPERUSER_CHANNEL = getattr(settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
+
 # javascript debug messages
 debug_mode = getattr(settings, 'INSTANT_DEBUG', False)
 if debug_mode is True:
@@ -66,7 +70,34 @@ def mq_generate_token(user, timestamp, info=""):
 def get_public_channel():
     return _get_public_channel()
 
-@register.assignment_tag
+@register.simple_tag
+def is_users_channel(): 
+    print str(ENABLE_USERS_CHANNEL)
+    return ENABLE_USERS_CHANNEL
+
+@register.simple_tag
+def get_users_channel(): 
+    return '$'+SITE_SLUG+'_users'
+
+@register.simple_tag
+def is_staff_channel(): 
+    print str(ENABLE_STAFF_CHANNEL)
+    return ENABLE_STAFF_CHANNEL
+
+@register.simple_tag
+def get_staff_channel(): 
+    return '$'+SITE_SLUG+'_staff'
+
+@register.simple_tag
+def is_superuser_channel(): 
+    print str(ENABLE_SUPERUSER_CHANNEL)
+    return ENABLE_SUPERUSER_CHANNEL
+
+@register.simple_tag
+def get_superuser_channel(): 
+    return '$'+SITE_SLUG+'_admin'
+
+@register.simple_tag
 def get_apps():
     return APPS
 

@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.core.urlresolvers import reverse
 from django.http.response import Http404
 from django.views.generic import FormView
+from django.views.generic.base import TemplateView
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 from instant import broadcast
@@ -32,7 +33,7 @@ def instant_auth(request):
             if request.user.is_authenticated():
                 signature = signed_response(channel, client)
         if channel in STAFF_CHANNELS:
-            if request.user.is_staff():
+            if request.user.is_staff:
                 signature = signed_response(channel, client)
         if channel in SUPERUSER_CHANNELS:
             if request.user.is_superuser:
@@ -42,6 +43,15 @@ def instant_auth(request):
         else:
             response[channel] = {"status","403"}  
     return JsonResponse(response)
+
+
+class StaffChannelView(TemplateView):
+    template_name = 'instant/channels/staff.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.is_ajax():
+            raise Http404
+        return super(StaffChannelView, self).dispatch(request, *args, **kwargs)
 
 
 class BroadcastView(FormView):

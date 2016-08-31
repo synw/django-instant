@@ -16,12 +16,26 @@ REDIS_PORT = getattr(settings, 'MQUEUE_REDIS_PORT', 6379)
 REDIS_DB = getattr(settings, 'MQUEUE_REDIS_DB', 0)
 
 SITE_SLUG =  getattr(settings, 'SITE_SLUG', 'site')
+SITE_NAME =  getattr(settings, 'SITE_NAME', 'Site')
+
+ENABLE_USERS_CHANNEL = getattr(settings, 'INSTANT_ENABLE_USERS_CHANNEL', False)
+ENABLE_STAFF_CHANNEL = getattr(settings, 'INSTANT_ENABLE_STAFF_CHANNEL', False)
+ENABLE_SUPERUSER_CHANNEL = getattr(settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
 
 public_channel = SITE_SLUG+'_public'
+
 PUBLIC_CHANNEL =  getattr(settings, 'INSTANT_PUBLIC_CHANNEL', public_channel)
-USERS_CHANNELS =  getattr(settings, 'INSTANT_USERS_CHANNELS', ["$"+SITE_SLUG+"_users"])
-STAFF_CHANNELS =  getattr(settings, 'INSTANT_STAFF_CHANNELS', ["$"+SITE_SLUG+"_staff"])
-SUPERUSER_CHANNELS =  getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', ["$"+SITE_SLUG+"_admin"])
+USERS_CHANNELS =  getattr(settings, 'INSTANT_USERS_CHANNELS', [])
+STAFF_CHANNELS =  getattr(settings, 'INSTANT_STAFF_CHANNELS', [])
+SUPERUSER_CHANNELS =  getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [])
+# add default channels
+if ENABLE_USERS_CHANNEL is True:
+    USERS_CHANNELS.append("$"+SITE_SLUG+"_users")
+if ENABLE_STAFF_CHANNEL is True:
+    STAFF_CHANNELS.append("$"+SITE_SLUG+"_staff")
+if ENABLE_SUPERUSER_CHANNEL is True:
+    SUPERUSER_CHANNELS.append("$"+SITE_SLUG+"_admin")
+
 # ensure that the private channels will always be treated as private by Centrifugo
 chans = []
 for chan in USERS_CHANNELS:

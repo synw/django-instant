@@ -1,7 +1,20 @@
 Private channels
 ================
 
-All the channels prefixed with a dolar sign **$** are considered private.
+Add this in you main url file:
+
+.. highlight:: python
+
+::
+
+   from instant.views import instant_auth
+   
+   urlpatterns = [
+   	# ...
+   	url(r'^centrifuge/auth/$', instant_auth, name='instant-auth'),
+   	]
+
+All the channels prefixed with a dollar sign **$** are considered private.
 
 .. highlight:: python
 
@@ -22,136 +35,46 @@ that will indicate if the user is authorized or not.
 More info `here <https://fzambia.gitbooks.io/centrifugal/content/mixed/private_channels.html>`_ about Centrifugo's auth
 mechanism.
 
-Using Instant auth
-~~~~~~~~~~~~~~~~~~
+Default channels
+~~~~~~~~~~~~~~~~
 
-In you main url file:
-
-.. highlight:: python
-
-::
-
-   from instant.views import instant_auth
-   
-   urlpatterns = [
-   	# ...
-   	url(r'^centrifuge/auth/$', instant_auth, name='instant-auth'),
-   	]
-
-Set you channels credentials in settings.py:
+You can activate the defaults private channels in settings:
 
 .. highlight:: python
 
 ::
 
-   # logged in users only: if not set default is SITE_SLUG+'_users'
-   INSTANT_USERS_CHANNELS = ['$userschan']
-   # staff only: if not set default is SITE_SLUG+'_staff'
-   INSTANT_STAFF_CHANNELS = ['$staffchan']
-   # superusers only: if not set default is SITE_SLUG+'_admin'
-   INSTANT_SUPERUSER_CHANNELS = ['$adminchan']
-   
-Now you can setup the client-side handlers for you channels:
+   # reserved to logged in users
+   INSTANT_ENABLE_USERS_CHANNEL = True
+   # reserved to staff users
+   INSTANT_ENABLE_STAFF_CHANNEL = True
+   # reserved to superuser
+   INSTANT_ENABLE_SUPERUSER_CHANNEL = True
 
-Create a ``{% instant/extra_clients.js %}`` template that contains something like:
+Then you can use the corresponding widgets in templates to display the events:
 
-.. highlight:: javascript
+.. highlight:: django
 
 ::
+
+   {% include "instant/channels/users/widget.html" %}
    
-   {% if user.is_authenticated and request.path == "/private/" %}
-   	{% include "myapp/client.js" %}
-   {% endif %}
-
-Edit ``myapp/client.js``:
-
-.. highlight:: javascript
-
-::
+   {% include "instant/channels/staff/widget.html" %}
    
-   var my_callbacks = {
-       "message": function(dataset) {
-   	// the debug variable is set via INSTANT_DEBUG = True in settings.py
-       	if (debug === true) { console.log('SET: '+JSON.stringify(dataset));};
-       	res = unpack_data(dataset);
-    	var message = res['message']
-    	var event_class = res['event_class']
-    	var message_label = res['message_label']
-    	var data = res['data']
-    	var channel = res['channel'];
-    	if ( data.hasOwnProperty('my_field) ) {
-   		my_field = data['myfield']
-    	}
-    	// do something with the data
-    	$('#message_box').prepend(message);
-    },
-	"join": function(message) {
-    	if ( debug === true ) {console.log('JOIN: '+message['channel']+' : '+JSON.stringify(message))};
-    },
-    "leave": function(message) {
-    	if ( debug === true ) {console.log('LEAVE: '+message['channel']+' : '+JSON.stringify(message))};
-    },
-    "subscribe": function(context) {
-    	if ( debug === true ) {console.log('SUSCRIBE: '+context['channel']+' : '+JSON.stringify(context))};
-    },
-    "error": function(errContext) {
-    	if ( debug === true ) {console.log('ERROR: '+errContext['channel']+' : '+JSON.stringify(errContext))};
-    },
-    "unsubscribe": function(context) {
-    	if ( debug === true ) {console.log('UNSUSCRIBE: '+context['channel']+' : '+JSON.stringify(context))};
-    }
-   }
+   {% include "instant/channels/superuser/widget.html" %}
    
-   var subscription = centrifuge.subscribe("$mychannel", my_callbacks);
-
-   
-Custom auth function
-~~~~~~~~~~~~~~~~~~~~
-
-You can write a custom auth backend to authenticate the user. Example: urls.py:
+To push an event to one of theses channel use the ``target`` parameter: `
 
 .. highlight:: python
 
 ::
 
-   from mymodule.views import mychan_auth_view
-   url(r'^centrifuge/auth/$', mychan_auth_view),
+   broadcast(message="Staff event", target="staff")
+
+Note: if a ``channel`` parameter is provided, the ``target`` will be ignored.
    
-In views.py:
-
-.. highlight:: python
-
-::
-
-   import json
-   from django.http import JsonResponse
-   from django.views.decorators.csrf import csrf_exempt
-   from django.http.response import Http404
-   from cent.core import generate_channel_sign
-   from instant.conf import SECRET_KEY
-	
-   def signed_response(channel, client):
-    signature = generate_channel_sign(SECRET_KEY, client, channel, info="")
-    return {"sign": signature}
-
-   @csrf_exempt
-   def instant_auth(request):
-       if not request.is_ajax() or not request.method == "POST":
-           raise Http404
-       data = json.loads(request.body)
-       channels = data["channels"]
-       client = data['client']
-       response = {}
-       for channel in channels:
-       	   response[channel] = {"status","403"}
-           if channel == "$channel_to_check":
-           	# checks come here	
-           	if request.user.is_authenticated() and whatever():
-           		signature = signed_response(channel, client)
-           		response[channel] = signature   
-       return JsonResponse(response)
-	    
-
+To change the events behavior client-side customize the handler templates: 
+example: for staff events use: ``instant/channels/staff/js/client.js``
 
 
 	    
