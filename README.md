@@ -18,7 +18,7 @@ from instant import broadcast
 # push an event on the default public channel
 broadcast(message='Hello world', event_class="test")
 
-# # push an event to the logged in users channel
+# push an event to the logged in users channel
 broadcast(message='Message for users', target="users")
 
 # push an event to the staff channel with extra data payload
