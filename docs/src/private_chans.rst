@@ -29,7 +29,7 @@ Security
 ~~~~~~~~
    
 All the messages sent to the Centrifugo server are signed using the secret key. When a client requests a connection to
-a private channels Centrifugo sends an ajax request to ``/centrifugo/auth/`` and expects to receive a signed response
+a private channels Centrifugo sends an ajax request to ``/centrifuge/auth/`` and expects to receive a signed response
 that will indicate if the user is authorized or not.
 
 More info `here <https://fzambia.gitbooks.io/centrifugal/content/mixed/private_channels.html>`_ about Centrifugo's auth

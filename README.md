@@ -4,7 +4,9 @@ Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifug
 
 * Push events in real time into public or private channels.
 
-* Handle your event in javascript client-side.
+* Handle the events in javascript client-side.
+
+* Works with an existing Django instance: it does not require any modification of your main stack.
 
 Check the [documentation](http://django-instant.readthedocs.io/en/latest/).
 
