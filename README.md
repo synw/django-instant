@@ -2,7 +2,7 @@
 
 Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifugo).
 
-* Push events in real time into public or private channels.
+* Push events into public or private channels.
 
 * Handle the events in javascript client-side.
 
