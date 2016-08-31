@@ -21,12 +21,12 @@ broadcast(message='Message for everyone', event_class="test")
 # push an event to the logged in users channel
 broadcast(message='Message for users', target="users")
 
-# push an event to the staff channel with extra data payload
+# push an event to the staff channel with an extra data payload
 data = {"field1":"value1","field2":"value2"}
 broadcast(message='Message for staff', target="staff", data=data)
   ```
 
-Handle the event client-side in a template:
+Handle the events client-side in a template:
 
   ```javascript
 if (event_class == 'test') {
