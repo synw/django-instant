@@ -24,6 +24,13 @@ REDIS_DB = getattr(settings, 'MQUEUE_REDIS_DB', 0)
 GLOBAL_STREAMS =  getattr(settings, 'INSTANT_GLOBAL_STREAMS', ())
 APPS =  getattr(settings, 'INSTANT_APPS', [])
 
+# javascript debug messages
+debug_mode = getattr(settings, 'INSTANT_DEBUG', False)
+if debug_mode is True:
+    DEBUG_MODE = "true"
+else:
+    DEBUG_MODE = "false"
+
 def _get_public_channel():
     channel = SITE_SLUG+'_public'
     if 'public' in GLOBAL_STREAMS:
@@ -35,6 +42,10 @@ register = template.Library()
 @register.simple_tag
 def get_centrifugo_url():
     return CENTRIFUGO_HOST+":"+str(CENTRIFUGO_PORT)
+
+@register.simple_tag
+def debug_mode():
+    return DEBUG_MODE
 
 @register.simple_tag
 def get_timestamp():

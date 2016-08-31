@@ -1,6 +1,6 @@
 {% load instant_tags %}
 
-var debug = false;
+var debug = {% debug_mode %};
 
 // websocket connection management
 {% get_timestamp as timestamp %}
