@@ -1,6 +1,6 @@
 {% load instant_tags %}
 
-var mq_callbacks = {
+var mq_callbacks_{% get_superuser_channel %} = {
     "message": function(dataset) {
     	if (debug === true) { console.log('DATASET: '+JSON.stringify(dataset));};
     	res = unpack_data(dataset);
@@ -29,4 +29,4 @@ var mq_callbacks = {
     {% include "instant/js/join_events.js" %}
 }
 
-var subscription = centrifuge.subscribe("{% get_superuser_channel %}", mq_callbacks);
+var subscription = centrifuge.subscribe("{% get_superuser_channel %}", mq_callbacks_{% get_superuser_channel %});
