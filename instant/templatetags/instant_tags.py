@@ -72,7 +72,6 @@ def get_public_channel():
 
 @register.simple_tag
 def is_users_channel(): 
-    print str(ENABLE_USERS_CHANNEL)
     return ENABLE_USERS_CHANNEL
 
 @register.simple_tag
