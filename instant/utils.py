@@ -20,15 +20,17 @@ def broadcast(message, event_class="default", data={}, channel=None, site=SITE_N
                 channel = "$"+SITE_SLUG+'_staff'
             if target == "users":
                 channel = "$"+SITE_SLUG+'_users'
+            else:
+                return False, None
         else:
-            channel = _get_public_channel()
+            _get_public_channel()
     if message_label is None:
         message_label = format_event_class(obj=None, event_class=event_class)
     payload = {"message": message, "channel":channel, 'message_label':message_label, 'event_class':event_class, "data":data , "site":site}
     client.publish(channel, payload)
     if lower(event_class) == "debug":
         print "[DEBUG] "+str(json.dumps(payload))
-    return
+    return True, channel
 
 def get_event_class_str(event_class):
     event_class_str = 'Default'

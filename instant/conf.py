@@ -11,10 +11,6 @@ except ImportError:
 CENTRIFUGO_HOST = getattr(settings, 'CENTRIFUGO_HOST', 'http://localhost')
 CENTRIFUGO_PORT = getattr(settings, 'CENTRIFUGO_PORT', 8001)
 
-REDIS_HOST = getattr(settings, 'MQUEUE_REDIS_HOST', 'localhost')
-REDIS_PORT = getattr(settings, 'MQUEUE_REDIS_PORT', 6379)
-REDIS_DB = getattr(settings, 'MQUEUE_REDIS_DB', 0)
-
 SITE_SLUG =  getattr(settings, 'SITE_SLUG', 'site')
 SITE_NAME =  getattr(settings, 'SITE_NAME', 'Site')
 
@@ -23,7 +19,6 @@ ENABLE_STAFF_CHANNEL = getattr(settings, 'INSTANT_ENABLE_STAFF_CHANNEL', False)
 ENABLE_SUPERUSER_CHANNEL = getattr(settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
 
 public_channel = SITE_SLUG+'_public'
-
 PUBLIC_CHANNEL =  getattr(settings, 'INSTANT_PUBLIC_CHANNEL', public_channel)
 USERS_CHANNELS =  getattr(settings, 'INSTANT_USERS_CHANNELS', [])
 STAFF_CHANNELS =  getattr(settings, 'INSTANT_STAFF_CHANNELS', [])

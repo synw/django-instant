@@ -2,13 +2,18 @@
 
 from django import forms
 from instant.utils import _get_public_channel
+from instant.conf import ENABLE_USERS_CHANNEL, ENABLE_STAFF_CHANNEL, ENABLE_SUPERUSER_CHANNEL, PUBLIC_CHANNEL, USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS
 
-choices = [
-           ('public', 'Public'), 
-           ('user', 'User'),
-           ('staff', 'Staff'),
-           ('admin', 'Admin')
-           ]
+choices = [((PUBLIC_CHANNEL, 'Public'))]
+if ENABLE_USERS_CHANNEL is True:
+    for channel in USERS_CHANNELS:
+        choices.append((channel, channel))
+if ENABLE_STAFF_CHANNEL is True:
+    for channel in STAFF_CHANNELS:
+        choices.append((channel, channel))
+if ENABLE_SUPERUSER_CHANNEL is True:
+    for channel in SUPERUSER_CHANNELS:
+        choices.append((channel, channel))
 
 class BroadcastForm(forms.Form):
     message = forms.CharField(
@@ -20,24 +25,16 @@ class BroadcastForm(forms.Form):
     event_class = forms.CharField(
                                   max_length=60, 
                                   label="Event class", 
-                                  required=True
+                                  required=False
+                                  )
+    default_channel = forms.CharField(
+                                  max_length=60,
+                                  label="Channels",
+                                  required=False,
+                                  widget=forms.RadioSelect(choices=choices),
                                   )
     channel = forms.CharField(
                                   max_length=60, 
-                                  label="Channel", 
-                                  required=True,
-                                  initial = _get_public_channel()
+                                  label="Other channel", 
+                                  required=False
                                   )
-    """
-    channel = forms.CharField(
-                              max_length=60, 
-                              label="Channel", 
-                              required=True, 
-                              widget=forms.RadioSelect(choices=choices)
-                              )
-    """
-
-        
-
-
-

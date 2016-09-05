@@ -67,11 +67,16 @@ class BroadcastView(FormView):
         msg = form.cleaned_data['message']
         event_class = form.cleaned_data['event_class']
         channel = form.cleaned_data['channel']
-        broadcast(message=msg, event_class=event_class, channel=channel)
-        messages.info(self.request, _(u"Message broadcasted to the public channel"))
+        default_channel = form.cleaned_data['default_channel']
+        if channel or default_channel:
+            if default_channel:
+                broadcast(message=msg, event_class=event_class, channel=default_channel)
+            if channel:
+                broadcast(message=msg, event_class=event_class, channel=channel)
+            messages.success(self.request, _(u"Message broadcasted to the channel "+channel))
+        else:
+            messages.warning(self.request, _(u"Please provide a valid channel"))
         return super(BroadcastView, self).form_valid(form)
     
     def get_success_url(self):
         return reverse('instant-message-broadcasted')
-
-
