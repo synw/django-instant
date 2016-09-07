@@ -80,7 +80,6 @@ def get_users_channel():
 
 @register.simple_tag
 def is_staff_channel(): 
-    print str(ENABLE_STAFF_CHANNEL)
     return ENABLE_STAFF_CHANNEL
 
 @register.simple_tag
