@@ -88,7 +88,6 @@ def get_staff_channel():
 
 @register.simple_tag
 def is_superuser_channel(): 
-    print str(ENABLE_SUPERUSER_CHANNEL)
     return ENABLE_SUPERUSER_CHANNEL
 
 @register.simple_tag
