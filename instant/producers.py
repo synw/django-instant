@@ -20,7 +20,7 @@ def broadcast(message, event_class="default", data={}, channel=None, site=SITE_N
             else:
                 return False, None
         else:
-            _get_public_channel()
+            channel = _get_public_channel()
     if message_label is None:
         message_label = format_event_class(obj=None, event_class=event_class)
     payload = {"message": message, "channel":channel, 'message_label':message_label, 'event_class':event_class, "data":data , "site":site}
