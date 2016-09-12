@@ -20,7 +20,7 @@ Stream events from code
 
 ::
 
-   from instant import broadcast 
+   from instant.producers import broadcast 
 
    # fire an event on the public channel
    broadcast(message='Hello world', event_class="infos", channel="public", data={"myfield":"my_value"})

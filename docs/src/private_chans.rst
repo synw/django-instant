@@ -20,7 +20,7 @@ All the channels prefixed with a dollar sign **$** are considered private.
 
 ::
 
-   from instant import broadcast 
+   from instant.producers import broadcast 
 
    broadcast(message='Private event', channel="$private_chan")
    

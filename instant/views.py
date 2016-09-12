@@ -8,7 +8,7 @@ from django.views.generic import FormView
 from django.views.generic.base import TemplateView
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
-from instant import broadcast
+from instant.producers import broadcast
 from instant.forms import BroadcastForm
 from django.views.decorators.csrf import csrf_exempt
 from cent.core import generate_channel_sign

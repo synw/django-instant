@@ -1,3 +1,2 @@
-# -*- coding: utf-8 -*-
-
-from instant.utils import broadcast
+__version__ = '0.1.1'
+default_app_config = 'instant.apps.InstantConfig'
