@@ -2,7 +2,7 @@
 
 from string import lower
 from cent.core import Client
-from instant.utils import format_event_class
+from instant.utils import format_event_class, _get_public_channel
 from instant.conf import SITE_NAME, CENTRIFUGO_HOST, CENTRIFUGO_PORT, SECRET_KEY, SITE_SLUG
 
 
