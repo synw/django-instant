@@ -15,7 +15,7 @@ Check the [documentation](http://django-instant.readthedocs.io/en/latest/).
 Push some events on channels from anywhere in the code:
 
   ```python
-from instant import broadcast
+from instant.producers import broadcast
   
 # push an event on the default public channel
 broadcast(message='Message for everyone', event_class="test")
