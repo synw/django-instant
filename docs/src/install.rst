@@ -39,10 +39,7 @@ Leave it if you want only the logged in users to see the messages.
 
 ::
 
-   pip install cent
-   cd my_django_project_root
-   git clone https://github.com/synw/django-instant.git
-   mv django-instant/instant . && rm -rf django-instant
+   pip install django-instant
 
 Set the urls:
 
