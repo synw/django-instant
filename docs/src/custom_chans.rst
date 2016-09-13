@@ -82,7 +82,7 @@ In views.py:
     return {"sign": signature}
 
    @csrf_exempt
-   def instant_auth(request):
+   def mychan_auth_view(request):
        if not request.is_ajax() or not request.method == "POST":
            raise Http404
        data = json.loads(request.body)
