@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import json
-from instant.conf import PUBLIC_CHANNEL, EVENT_CLASSES, EVENT_ICONS_HTML, EVENT_EXTRA_HTML
+from cent.core import generate_channel_sign
+from instant.conf import PUBLIC_CHANNEL, EVENT_CLASSES, EVENT_ICONS_HTML, EVENT_EXTRA_HTML, SECRET_KEY
 
+
+def signed_response(channel, client):
+    signature = generate_channel_sign(SECRET_KEY, client, channel, info="")
+    return {"sign": signature}
 
 def _get_public_channel():
     return PUBLIC_CHANNEL

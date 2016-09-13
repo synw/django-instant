@@ -6,18 +6,14 @@ from django.core.urlresolvers import reverse
 from django.http.response import Http404
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 from instant.producers import broadcast
 from instant.forms import BroadcastForm
-from django.views.decorators.csrf import csrf_exempt
-from cent.core import generate_channel_sign
-from instant.conf import SECRET_KEY, USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS
+from instant.utils import signed_response
+from instant.conf import USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS
 
-
-def signed_response(channel, client):
-    signature = generate_channel_sign(SECRET_KEY, client, channel, info="")
-    return {"sign": signature}
 
 @csrf_exempt
 def instant_auth(request):

@@ -74,12 +74,9 @@ In views.py:
    from django.http import JsonResponse
    from django.views.decorators.csrf import csrf_exempt
    from django.http.response import Http404
-   from cent.core import generate_channel_sign
+   from instant.utils import signed_response
    from instant.conf import SECRET_KEY
-	
-   def signed_response(channel, client):
-    signature = generate_channel_sign(SECRET_KEY, client, channel, info="")
-    return {"sign": signature}
+   
 
    @csrf_exempt
    def mychan_auth_view(request):
