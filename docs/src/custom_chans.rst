@@ -75,7 +75,6 @@ In views.py:
    from django.views.decorators.csrf import csrf_exempt
    from django.http.response import Http404
    from instant.utils import signed_response
-   from instant.conf import SECRET_KEY
    
 
    @csrf_exempt
