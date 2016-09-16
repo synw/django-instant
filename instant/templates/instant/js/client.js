@@ -2,6 +2,8 @@
 
 var debug = {% debug_mode %};
 
+{% include "instant/js/utils.js" %}
+
 // websocket connection management
 {% get_timestamp as timestamp %}
 var centrifuge = new Centrifuge({
@@ -24,8 +26,10 @@ var public_callbacks = {
     	var data = res['data']
     	var channel = res['channel'];
     	var site = res['site'];
-    	//console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
-        var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
+    	if ( debug === true ) {
+    		console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
+    	}
+    	var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
 		if (alert_on_event === true ) {
 			// default behavior: popup a message on the top right corner
 			$('#streambox').prepend(format_data(message, event_class, message_label));
