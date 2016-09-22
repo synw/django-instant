@@ -4,14 +4,12 @@ Install and configure
 Instant can deliver events in real time to the users. This is made using the 
 `Centrifugo <https://github.com/centrifugal/centrifugo/>`_  websockets server.
 
-1. Install Centrifugo: example for Debian: 
+1. Install Centrifugo:
 
 .. highlight:: bash
 
 ::
 
-   sudo apt-get install golang
-   mkdir go && cd go
    wget https://github.com/centrifugal/centrifugo/releases/download/v1.5.1/centrifugo-1.5.1-linux-386.zip
    unzip centrifugo-1.5.1-linux-386.zip
    cd centrifugo-1.5.1-linux-386
