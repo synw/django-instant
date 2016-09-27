@@ -89,8 +89,7 @@ In views.py:
            if channel == "$mychannel":
            	# checks come here	
            	if request.user.is_authenticated() and whatever():
-           		signature = signed_response(channel, client)
-           		response[channel] = signature   
+           	   response[channel] = signed_response(channel, client) 
        return JsonResponse(response)
 	    
 
