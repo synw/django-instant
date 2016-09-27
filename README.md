@@ -12,7 +12,7 @@ Check the [documentation](http://django-instant.readthedocs.io/en/latest/).
 
 ### Quick example
 
-Push some events on channels from anywhere in the code:
+Push events in channels from anywhere in the code:
 
   ```python
 from instant.producers import broadcast
@@ -23,8 +23,8 @@ broadcast(message='Message for everyone', event_class="test")
 # push an event to the logged in users channel
 broadcast(message='Message for users', target="users")
 
-# push an event to the staff channel with an extra data payload
-data = {"field1":"value1","field2":"value2"}
+# push an event to the staff channel with an extra json data payload
+data = {"field1":"value1","field2":[1,2]}
 broadcast(message='Message for staff', target="staff", data=data)
   ```
 
