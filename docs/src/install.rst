@@ -21,8 +21,8 @@ Instant can deliver events in real time to the users. This is made using the
 
    ./centrifugo genconfig
    
-This will generate your secret key. Set anonymous to true if you want them to be able to receive messages. 
-Leave it if you want only the logged in users to see the messages.
+This will generate your secret key in a ``config.json`` file. Edit and set anonymous to true if you want 
+them to be able to receive the events. Leave it if you want only the logged in users to receive the events.
 
 .. highlight:: javascript
 
@@ -33,7 +33,7 @@ Leave it if you want only the logged in users to see the messages.
   "anonymous": true
   }
 
-3. Install the python requirements:
+3. Install:
 
 ::
 
