@@ -3,8 +3,8 @@
 import json
 from string import lower
 from cent.core import Client
-from instant.utils import format_event_class, _get_public_channel
-from instant.conf import SITE_NAME, CENTRIFUGO_HOST, CENTRIFUGO_PORT, SECRET_KEY, SITE_SLUG
+from instant.utils import format_event_class
+from instant.conf import SITE_NAME, CENTRIFUGO_HOST, CENTRIFUGO_PORT, SECRET_KEY, SITE_SLUG, PUBLIC_CHANNEL
 
 
 def broadcast(message, event_class="default", data={}, channel=None, site=SITE_NAME, message_label=None, target=None):
@@ -22,7 +22,7 @@ def broadcast(message, event_class="default", data={}, channel=None, site=SITE_N
             else:
                 return False, None
         else:
-            channel = _get_public_channel()
+            channel = PUBLIC_CHANNEL
     
     if message_label is None:
         message_label = format_event_class(obj=None, event_class=event_class)
