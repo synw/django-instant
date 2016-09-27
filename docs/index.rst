@@ -6,7 +6,8 @@
 Django Instant's documentation
 ==============================
 
-Websockets for Django with `Centrifugo <https://github.com/centrifugal/centrifugo/>`_
+Instant delivers events in real time to the userland using the 
+`Centrifugo <https://github.com/centrifugal/centrifugo/>`_  websockets server.
 
 .. toctree::
 	:maxdepth: 2

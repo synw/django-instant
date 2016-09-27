@@ -1,9 +1,6 @@
 Install and configure
 =====================
 
-Instant can deliver events in real time to the users. This is made using the 
-`Centrifugo <https://github.com/centrifugal/centrifugo/>`_  websockets server.
-
 1. Install Centrifugo:
 
 .. highlight:: bash
