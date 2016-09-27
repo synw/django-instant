@@ -8,7 +8,7 @@ Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifug
 
 :sunny: Just plug it on an existing Django instance: it does not require any modification of your main stack.
 
-Check the [documentation](http://django-instant.readthedocs.io/en/latest/).
+Check the [documentation](http://django-instant.readthedocs.io/en/latest/) for install instructions.
 
 ### Quick example
 
