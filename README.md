@@ -39,10 +39,10 @@ if (event_class == 'test') {
 
 ### Example apps
 
-[Jafeed](https://github.com/synw/jafeed): rss feeds aggregator with live notifications on new posts
-
 [Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): real time application events and logs
 
 [Django Presence](https://github.com/synw/django-presence): user presence notification widget
+
+[Jafeed](https://github.com/synw/jafeed): rss feeds aggregator with live notifications on new posts
 
 [Django Rechat](https://github.com/synw/django-rechat): basic chat app
