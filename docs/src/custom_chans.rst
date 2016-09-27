@@ -11,7 +11,7 @@ Set you channels credentials in settings.py:
    INSTANT_STAFF_CHANNELS = ['$mychannel2']
    INSTANT_SUPERUSER_CHANNELS = ['$mychannel3']
    
-Now you can setup the client-side handlers for you channels:
+Now you can setup the client-side handlers for your channels:
 
 Create a ``{% instant/extra_clients.js %}`` template that contains something like:
 
@@ -76,7 +76,6 @@ In views.py:
    from django.http.response import Http404
    from instant.utils import signed_response
    
-
    @csrf_exempt
    def mychan_auth_view(request):
        if not request.is_ajax() or not request.method == "POST":
