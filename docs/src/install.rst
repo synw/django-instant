@@ -21,8 +21,8 @@ Instant can deliver events in real time to the users. This is made using the
 
    ./centrifugo genconfig
    
-This will generate your secret key in a ``config.json`` file. Edit and set anonymous to true if you want 
-them to be able to receive the events. Leave it if you want only the logged in users to receive the events.
+This will generate your secret key in a ``config.json`` file. Edit it and set anonymous to true if you want 
+to use public events. Leave it if you want only the logged in users to receive the events.
 
 .. highlight:: javascript
 
