@@ -30,7 +30,7 @@ to use public events. Leave it if you want only the logged in users to receive t
   "anonymous": true
   }
 
-3. Install:
+3. Install Django Instant:
 
 ::
 
