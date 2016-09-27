@@ -6,7 +6,7 @@ Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifug
 
 * Handle the events in javascript client-side.
 
-:dizzy: Works with an existing Django instance: it does not require any modification of your main stack.
+:sunny: Works with an existing Django instance: it does not require any modification of your main stack.
 
 Check the [documentation](http://django-instant.readthedocs.io/en/latest/).
 
