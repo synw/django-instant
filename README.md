@@ -43,6 +43,8 @@ if (event_class == 'test') {
 
 [Django Presence](https://github.com/synw/django-presence): user presence notification widget
 
+[Django Hitsfeed](https://github.com/synw/django-hitsfeed): realtime hits monitoring
+
 [Jafeed](https://github.com/synw/jafeed): rss feeds aggregator with live notifications on new posts
 
 [Django Rechat](https://github.com/synw/django-rechat): basic chat app
