@@ -1,6 +1,6 @@
 {% load instant_tags %}
 
-var mq_callbacks_{% get_staff_channel %} = {
+var staff_callbacks_{% get_staff_channel %} = {
     "message": function(dataset) {
     	if (debug === true) { console.log('DATASET: '+JSON.stringify(dataset));};
     	res = unpack_data(dataset);
@@ -9,6 +9,8 @@ var mq_callbacks_{% get_staff_channel %} = {
     	var message_label = res['message_label']
     	var data = res['data']
     	var channel = res['channel'];
+    	var site = res['site'];
+    	var timestamp = res['timestamp'];
     	var d = new Date();
     	// handlers
     	if (debug === true) {
@@ -19,14 +21,13 @@ var mq_callbacks_{% get_staff_channel %} = {
     		message = '<a href="'+data['admin_url']+'" target="_blank">'+message+'</a>';
     	}
     	var output = "";
-    	//var site = res['site'];
-    	//if ( site != "" ) {
-    	//	var output ='<div class="pull-right badge" style="margin-left:0.5em;font-size:85%">'+site+'</div>';
-    	//}
-    	output = output+'<div class="mq_message">'+timenow+' '+message_label+'&nbsp;&nbsp;'+message+'</div>';
-    	$('#staff_msgs').prepend(output);
+    	var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
+		if (alert_on_event === true ) {
+			output = output+'<div class="mq_message">'+timenow+' '+message_label+'&nbsp;&nbsp;'+message+'</div>';
+    		$('#staff_msgs').prepend(output);
+		}
     },
     {% include "instant/js/join_events.js" %}
 }
 
-var subscription = centrifuge.subscribe("{% get_staff_channel %}", mq_callbacks_{% get_staff_channel %});
+var subscription = centrifuge.subscribe("{% get_staff_channel %}", staff_callbacks_{% get_staff_channel %});

@@ -37,7 +37,7 @@ def instant_auth(request):
         if signature is not None:
             response[channel] = signature
         else:
-            response[channel] = {"status","403"}  
+            response[channel] = {"status","403"}
     return JsonResponse(response)
 
 
