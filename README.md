@@ -39,7 +39,7 @@ if (event_class == 'test') {
 
 ### Example apps
 
-[Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): real time application events and logs
+[Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): realtime application events and logs
 
 [Django Presence](https://github.com/synw/django-presence): user presence notification widget
 
