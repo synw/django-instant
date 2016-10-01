@@ -66,12 +66,6 @@ def mq_generate_token(user, timestamp, info=""):
         print "Generated token for user "+user+" at "+timestamp+": "+token
     return token
 
-@register.filter
-@stringfilter
-def get_id_from_url(url):
-    xid = url.replace('/','---')
-    return xid
-
 @register.simple_tag
 def get_public_channel():
     return _get_public_channel()
