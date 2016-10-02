@@ -1,6 +1,6 @@
 {% load instant_tags %}
 
-var mq_callbacks_{% get_superuser_channel %} = {
+var superuser_callbacks_{% get_superuser_channel %} = {
     "message": function(dataset) {
     	if (debug === true) { console.log('DATASET: '+JSON.stringify(dataset));};
     	res = unpack_data(dataset);
@@ -19,14 +19,14 @@ var mq_callbacks_{% get_superuser_channel %} = {
     		message = '<a href="'+data['admin_url']+'" target="_blank">'+message+'</a>';
     	}
     	var output = "";
-    	//var site = res['site'];
-    	//if ( site != "" ) {
-    	//	var output ='<div class="pull-right badge" style="margin-left:0.5em;font-size:85%">'+site+'</div>';
-    	//}
-    	output = output+'<div style="margin:1.2em;">'+timenow+' '+message_label+'&nbsp;&nbsp;'+message+'</div>';
-    	$('#user_msgs').prepend(output);
+    	var output = "";
+    	var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
+		if (alert_on_event === true ) {
+			output = output+'<div style="margin:1.2em;">'+timenow+' '+message_label+'&nbsp;&nbsp;'+message+'</div>';
+			$('#superuser_msgs').prepend(output);
+		}
     },
     {% include "instant/js/join_events.js" %}
 }
 
-var subscription = centrifuge.subscribe("{% get_superuser_channel %}", mq_callbacks_{% get_superuser_channel %});
+var subscription = centrifuge.subscribe("{% get_superuser_channel %}", superuser_callbacks_{% get_superuser_channel %});
