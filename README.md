@@ -53,9 +53,13 @@ if (event_class == 'test') {
 
 ### Why?
 
-Most of the websockets solutions associated with Django today require some modification of the main stack, like uwsgi.
+Most of the websockets solutions associated with Django today require some modification in the main stack, like uwsgi, 
+and often come with a whole bunch of new concepts to figure out, making the newcomer to feel like 
+he is walking in the dark.
+
 We wanted a solution that could plug on a safe classic Django stack without having to do any tweaks on it. 
-The Centrifugo websockets server handles the job very well, better than all the python solutions IMHO. This made 
+The Centrifugo websockets server handles the job very well, better than all the python solutions I know IMHO. This made 
 it possible to build an app that just plugs on an existing Django stack. The API is simple and does not involve any
 new concept.
+
 We are trying to ship a fully compatible, easy to install and ready to use websockets solution for Django.
