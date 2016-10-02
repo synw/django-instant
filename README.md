@@ -62,4 +62,5 @@ The Centrifugo websockets server handles the job very well, better than all the 
 it possible to build an app that just plugs on an existing Django stack. The API is simple and does not involve any
 new concept.
 
-We are trying to ship a fully compatible, easy to install and ready to use websockets solution for Django.
+We are trying to ship a fully compatible, easy to install and ready to use websockets solution for Django: 
+websockets in Django should not be a big deal!
