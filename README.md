@@ -50,3 +50,12 @@ if (event_class == 'test') {
 [Jafeed](https://github.com/synw/jafeed): rss feeds aggregator with live notifications on new posts
 
 [Django Rechat](https://github.com/synw/django-rechat): basic chat app
+
+### Why?
+
+Most of the websockets solutions associated with Django today require some modification of the main stack, like uwsgi.
+We wanted a solution that could plug on a safe classic Django stack without having to do any tweaks on it. 
+The Centrifugo websockets server handles the job very well, better than all the python solutions IMHO. This made 
+it possible to build an app that just plugs on an existing Django stack. The API is simple and does not involve any
+new concept.
+We are trying to ship a fully compatible, easy to install and ready to use websockets solution for Django.
