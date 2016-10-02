@@ -38,7 +38,7 @@ mechanism.
 Default channels
 ~~~~~~~~~~~~~~~~
 
-You can activate the defaults private channels in settings:
+By default only the public channel is enabled. You can activate the default privates channels in settings:
 
 .. highlight:: python
 
@@ -74,8 +74,8 @@ To push an event to one of theses channel use the ``target`` parameter: `
 
 Note: if a ``channel`` parameter is provided, the ``target`` will be ignored.
    
-To change the events behavior client-side customize the handler templates: 
-example: for staff events use: ``instant/channels/staff/js/client.js``
+To change the events behavior client-side customize the handlers like described in the previous section
+or overide the whole client: for the staff channel: ``instant/channels/staff/js/client.js``
 
 
 	    
