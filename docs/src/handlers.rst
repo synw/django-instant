@@ -17,7 +17,7 @@ In ``templates/mymodule/handlers.js`` define your client side handler:
 
 ::
    
-	if ( channel == "mysite_public" && event_class == 'anyeventclass' ) {
+	if ( event_class == 'anyeventclass' ) {
 		console.log(message);
 		return false
 	}

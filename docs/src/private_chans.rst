@@ -74,8 +74,19 @@ To push an event to one of theses channel use the ``target`` parameter: `
 
 Note: if a ``channel`` parameter is provided, the ``target`` will be ignored.
    
-To change the events behavior client-side customize the handlers like described in the previous section
-or overide the whole client: for the staff channel: ``instant/channels/staff/js/client.js``
+To change the events behavior client-side customize the handlers like described in the previous section, and use the
+channel parameter:
+
+.. highlight:: javascript
+
+::
+   
+   if ( channel == "mysite_staff" && event_class == 'anyeventclass' ) {
+      console.log(message);
+      return false
+   }
+
+You can also overide the whole client: for the staff channel: ``instant/channels/staff/js/client.js``
 
 
 	    
