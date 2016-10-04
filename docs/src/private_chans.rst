@@ -81,7 +81,7 @@ channel parameter:
 
 ::
    
-   if ( channel == "mysite_staff" && event_class == 'anyeventclass' ) {
+   if ( channel == "$mysite_staff" && event_class == 'anyeventclass' ) {
       console.log(message);
       return false
    }

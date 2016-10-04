@@ -32,7 +32,7 @@ Edit ``myapp/client.js``:
    var my_callbacks = {
        "message": function(dataset) {
    	// the debug variable is set via INSTANT_DEBUG = True in settings.py
-       	if (debug === true) { console.log('SET: '+JSON.stringify(dataset));};
+       	if (debug === true) { console.log('EVENT: '+JSON.stringify(dataset));};
        	res = unpack_data(dataset);
     	var message = res['message']
     	var event_class = res['event_class']
