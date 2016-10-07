@@ -60,6 +60,14 @@ Add ``'instant',`` to installed apps and configure settings.py:
    CENTRIFUGO_HOST = 'http://ip_here' #default: localhost
    CENTRIFUGO_PORT = 8012 # default: 8001
    INSTANT_PUBLIC_CHANNEL = "public" #default: SITE_SLUG+'_public'
+   
+By default the events are broadcasted using python. An experimental go module is available to perform the broadcast
+operations in order to leave the main process alone as much as possible. This might be usefull when lots of messages
+are sent simultaneously.
+
+::
+
+   INSTANT_BROADCAST_WITH = 'go'
 
 Templates
 ~~~~~~~~~

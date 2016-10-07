@@ -64,3 +64,8 @@ new concept.
 
 We are trying to ship a fully compatible, easy to install and ready to use websockets solution for Django: 
 websockets in Django should not be a big deal!
+
+### Todo
+
+- Deprecate message_label
+- Async broadcast options

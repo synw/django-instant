@@ -14,6 +14,8 @@ CENTRIFUGO_PORT = getattr(settings, 'CENTRIFUGO_PORT', 8001)
 SITE_SLUG =  getattr(settings, 'SITE_SLUG', 'site')
 SITE_NAME =  getattr(settings, 'SITE_NAME', 'Site')
 
+BROADCAST_WITH = getattr(settings, 'INSTANT_BROADCAST_WITH', "py")
+
 ENABLE_USERS_CHANNEL = getattr(settings, 'INSTANT_ENABLE_USERS_CHANNEL', False)
 ENABLE_STAFF_CHANNEL = getattr(settings, 'INSTANT_ENABLE_STAFF_CHANNEL', False)
 ENABLE_SUPERUSER_CHANNEL = getattr(settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
