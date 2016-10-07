@@ -6,7 +6,7 @@ Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifug
 
 * Handle the events in javascript client-side.
 
-:sunny: Just plug it on an existing Django instance: _it does not require any modification in your main stack_. 
+:sunny: Compatible: plug it on an existing Django instance _without any modification in your main stack_. 
 
 Straightforward: no particular concepts to know, no learning curve: just push events and handle them client-side.
 
