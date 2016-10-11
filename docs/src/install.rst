@@ -61,13 +61,26 @@ Add ``'instant',`` to installed apps and configure settings.py:
    CENTRIFUGO_PORT = 8012 # default: 8001
    INSTANT_PUBLIC_CHANNEL = "public" #default: SITE_SLUG+'_public'
    
-By default the events are broadcasted using python. An experimental go module is available to perform the broadcast
+By default the events are broadcasted using python. An go module is available to perform the broadcast
 operations in order to leave the main process alone as much as possible. This might be usefull when lots of messages
-are sent simultaneously.
+are sent simultaneously. This option is recommended for higher performance.
 
 ::
 
    INSTANT_BROADCAST_WITH = 'go'
+   
+Performance test: 1000 messages:
+
+- Python: 2.96 seconds
+- Go: 1.41 seconds
+
+10000 messages:
+
+- Python: 29.57 seconds
+- Go: 14.44 seconds
+
+Note: this test uses the standard broadcast function so that each new event sent makes an new connection to Centrifugo.
+A batch send option is on the todo list: a go module runing one goroutine per event should be lightning fast at the job.
 
 Templates
 ~~~~~~~~~
