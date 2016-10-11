@@ -67,6 +67,5 @@ websockets in Django should not be a big deal!
 
 ### Todo
 
-- Deprecate message_label
 - Async broadcast options
 - Batch send
