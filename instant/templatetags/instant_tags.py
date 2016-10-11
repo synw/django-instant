@@ -4,7 +4,7 @@ import time
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.conf import settings
-from cent.core import generate_token, Client
+from cent.core import generate_token
 
 
 DEBUG = False
@@ -105,5 +105,3 @@ def is_in_apps(app):
         return True
     else:
         return False
-
-

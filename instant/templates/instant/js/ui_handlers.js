@@ -1,4 +1,8 @@
 // UI handlers
+String.prototype.toTitleCase = function(){
+  return this.replace(/\b(\w+)/g, function(m,p){ return p[0].toUpperCase() + p.substr(1).toLowerCase() })
+}
+{% include "instant/event_class_format.js" %}
 function hide_streambox() {
 	$('#streambox-btns').hide();
 	$('#streambox').hide();
@@ -33,6 +37,8 @@ function delete_msg(msg) {
 		hide_streambox();
 	}
 }
-function format_data(message, event_class, label) { 
-	return '<div class="mqmsg inbox '+event_class+'-msg"><a href="#" onclick="delete_msg(this)">'+label+'&nbsp;&nbsp;'+message+'</a>&nbsp;&nbsp;<a class="btn btn-default pull-right" style="background-color:lightgrey;position:relative;top:-0.5em" href="#" onclick="delete_msg(this)">OK</a></div>'
+function format_data(message, event_class) {
+	var label = get_label(event_class);
+	formated_event='<div class="mqmsg inbox '+event_class+'-msg"><a href="#" onclick="delete_msg(this)">'+label+'&nbsp;&nbsp;'+message+'</a>&nbsp;&nbsp;<a class="btn btn-default pull-right" style="background-color:lightgrey;position:relative;top:-0.5em" href="#" onclick="delete_msg(this)">OK</a></div>'
+	return formated_event
 }
