@@ -7,9 +7,9 @@ function get_label(event_class) {
             'debug' : 'mq-label mq-debug',
             'warning' : 'mq-label mq-warning',
             'error' : 'mq-label mq-error',
-            'object created' : 'mq-label mq-created',
-            'object edited' : 'mq-label mq-edited',
-            'object deleted' : 'mq-label mq-deleted',
+            'created' : 'mq-label mq-created',
+            'edited' : 'mq-label mq-edited',
+            'deleted' : 'mq-label mq-deleted',
             }
 	var event_icons = {
             'default' : '<i class="fa fa-flash"></i>',
@@ -19,9 +19,9 @@ function get_label(event_class) {
             'debug' : '<i class="fa fa-cog"></i>',
             'warning' : '<i class="fa fa-exclamation"></i>',
             'error' : '<i class="fa fa-exclamation-triangle"></i>',
-            'object edited' : '<i class="fa fa-pencil"></i>',
-            'object created' : '<i class="fa fa-plus"></i>',
-            'object deleted' : '<i class="fa fa-remove"></i>',
+            'edited' : '<i class="fa fa-pencil"></i>',
+            'created' : '<i class="fa fa-plus"></i>',
+            'deleted' : '<i class="fa fa-remove"></i>',
             }
 	var css_event_class = event_classes['default'];
 	var icon_event_class = event_icons['default'];
@@ -29,9 +29,7 @@ function get_label(event_class) {
 	var i = 0;
 	for (event_type in event_classes) {
 		if ( i > 0 ) {	
-			var out = "default";
 			if (event_class_lower.indexOf(event_type) !== -1) {
-				out = event_type;
 				css_event_class = event_classes[event_type];
 				icon_event_class = event_icons[event_type];
 				break
