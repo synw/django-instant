@@ -32,7 +32,7 @@ var public_callbacks = {
     	var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
 		if (alert_on_event === true ) {
 			// default behavior: popup a message on the top right corner
-			$('#streambox').prepend(format_data(message, event_class, message_label));
+			$('#streambox').prepend(format_data(message, event_class));
 			num_msgs = increment_counter();
 			if (num_msgs > 0) {
 		    	$('#msgs_counter').show();

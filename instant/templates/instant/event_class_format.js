@@ -23,13 +23,21 @@ function get_label(event_class) {
             'object created' : '<i class="fa fa-plus"></i>',
             'object deleted' : '<i class="fa fa-remove"></i>',
             }
-	var css_event_class = event_classes['default']
-	for (ec in event_classes) {
-		if ( event_class.toLowerCase() == ec.toLowerCase() ) {
-			var ecl = event_class.toLowerCase()
-			css_event_class = event_classes[ecl]
-			icon_event_class = event_icons[ecl]
+	var css_event_class = event_classes['default'];
+	var icon_event_class = event_icons['default'];
+	var event_class_lower = event_class.toLowerCase()
+	var i = 0;
+	for (event_type in event_classes) {
+		if ( i > 0 ) {	
+			var out = "default";
+			if (event_class_lower.indexOf(event_type) !== -1) {
+				out = event_type;
+				css_event_class = event_classes[event_type];
+				icon_event_class = event_icons[event_type];
+				break
+			}
 		}
+		i++;
 	}
 	var label = '<span class="'+css_event_class+'">'+icon_event_class+'&nbsp;&nbsp;'+event_class.toTitleCase()+'</span>';
 	return label
