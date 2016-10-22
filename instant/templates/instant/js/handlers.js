@@ -1,7 +1,5 @@
 {% load instant_tags %}
 
-{% include "instant/js/utils.js" %}
-
 function handlers_for_event(event_class, channel, message, data, timestamp) {
 	// return true if we want the regular alert to be displayed, false otherwise
 	if ( channel == "{% get_public_channel %}" ) {
