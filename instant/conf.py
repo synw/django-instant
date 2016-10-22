@@ -22,16 +22,9 @@ ENABLE_SUPERUSER_CHANNEL = getattr(settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL',
 
 public_channel = SITE_SLUG+'_public'
 PUBLIC_CHANNEL =  getattr(settings, 'INSTANT_PUBLIC_CHANNEL', public_channel)
-USERS_CHANNELS =  getattr(settings, 'INSTANT_USERS_CHANNELS', [])
-STAFF_CHANNELS =  getattr(settings, 'INSTANT_STAFF_CHANNELS', [])
-SUPERUSER_CHANNELS =  getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [])
-# add default channels
-if ENABLE_USERS_CHANNEL is True:
-    USERS_CHANNELS.append("$"+SITE_SLUG+"_users")
-if ENABLE_STAFF_CHANNEL is True:
-    STAFF_CHANNELS.append("$"+SITE_SLUG+"_staff")
-if ENABLE_SUPERUSER_CHANNEL is True:
-    SUPERUSER_CHANNELS.append("$"+SITE_SLUG+"_admin")
+USERS_CHANNELS =  getattr(settings, 'INSTANT_USERS_CHANNELS', ["$"+SITE_SLUG+"_users"])
+STAFF_CHANNELS =  getattr(settings, 'INSTANT_STAFF_CHANNELS', ["$"+SITE_SLUG+"_staff"])
+SUPERUSER_CHANNELS =  getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', ["$"+SITE_SLUG+"_admin"])
 
 # ensure that the private channels will always be treated as private by Centrifugo
 chans = []
