@@ -29,7 +29,7 @@ def broadcast_py(message, event_class="default", data={}, channel=None, site=SIT
     payload = {"message": message, "channel":channel, 'event_class':event_class, "data":data , "site":site}
     client.publish(channel, payload)
     if event_class.lower() == "debug":
-        print "[DEBUG] "+str(json.dumps(payload))
+        print ("[DEBUG] ", str(json.dumps(payload)))
     return True, channel
 
 def broadcast_go(message, event_class="default", data={}, channel=None, site=SITE_NAME, message_label=None, target=None):
@@ -41,7 +41,7 @@ def broadcast_go(message, event_class="default", data={}, channel=None, site=SIT
     gocmd=pth+'/go/cent_broadcast '+params
     os.system(gocmd)
     if event_class.lower() == "debug":
-        print "[DEBUG] "+str(json.dumps(data))
+        print ("[DEBUG] ", message, str(json.dumps(data)))
     return
 
 if BROADCAST_WITH == "go":
