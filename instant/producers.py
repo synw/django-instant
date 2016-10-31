@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-from string import lower
 from cent.core import Client
 from instant.conf import SITE_NAME, CENTRIFUGO_HOST, CENTRIFUGO_PORT, SECRET_KEY, SITE_SLUG, PUBLIC_CHANNEL, BROADCAST_WITH
 if BROADCAST_WITH == "go":
@@ -29,7 +28,7 @@ def broadcast_py(message, event_class="default", data={}, channel=None, site=SIT
     channel = _get_channel(channel, target)
     payload = {"message": message, "channel":channel, 'event_class':event_class, "data":data , "site":site}
     client.publish(channel, payload)
-    if lower(event_class) == "debug":
+    if event_class.lower() == "debug":
         print "[DEBUG] "+str(json.dumps(payload))
     return True, channel
 
@@ -41,6 +40,8 @@ def broadcast_go(message, event_class="default", data={}, channel=None, site=SIT
     pth = os.path.dirname(instant.__file__)
     gocmd=pth+'/go/cent_broadcast '+params
     os.system(gocmd)
+    if event_class.lower() == "debug":
+        print "[DEBUG] "+str(json.dumps(data))
     return
 
 if BROADCAST_WITH == "go":
