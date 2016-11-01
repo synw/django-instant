@@ -8,5 +8,6 @@ def signed_response(channel, client):
     signature = generate_channel_sign(SECRET_KEY, client, channel, info="")
     return {"sign": signature}
 
+
 def _get_public_channel():
     return PUBLIC_CHANNEL
