@@ -19,7 +19,7 @@ from instant.conf import USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS
 def instant_auth(request):
     if not request.is_ajax() or not request.method == "POST":
         raise Http404
-    data = json.loads(request.body)
+    data = json.loads(request.body.decode("utf-8"))
     channels = data["channels"]
     client = data['client']
     response = {}
