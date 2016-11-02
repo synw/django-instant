@@ -1,5 +1,7 @@
 # Django Instant
 
+[![Build Status](https://travis-ci.org/synw/django-instant.svg?branch=master)](https://travis-ci.org/synw/django-instant)
+
 Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifugo).
 
 * Push events into public or private channels.
