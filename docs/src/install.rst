@@ -1,6 +1,9 @@
 Install and configure
 =====================
 
+Note: this documentation if for a standalone manual installation. You can use the
+`installer <https://github.com/synw/django-instant-installer>`_, it also can install a demo.
+
 1. Install Centrifugo:
 
 .. highlight:: bash

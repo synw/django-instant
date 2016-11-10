@@ -41,6 +41,11 @@ if (event_class == 'test') {
 }
   ```
 
+### Installer and demo
+
+An experimental [installer](https://github.com/synw/django-instant-installer) is available. 
+It also can install a demo.
+
 ### Example apps
 
 [Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): realtime application events and logs
