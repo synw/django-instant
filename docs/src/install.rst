@@ -6,13 +6,14 @@ Note: this documentation if for a standalone manual installation. You can use th
 
 1. Install Centrifugo:
 
+Download it `here <https://github.com/centrifugal/centrifugo/releases>`_
+
 .. highlight:: bash
 
 ::
 
-   wget https://github.com/centrifugal/centrifugo/releases/download/v1.5.1/centrifugo-1.5.1-linux-386.zip
-   unzip centrifugo-1.5.1-linux-386.zip
-   cd centrifugo-1.5.1-linux-386
+   unzip centrifugo-1.x.x.zip
+   cd centrifugo-1.x.x
 
 
 2. Configure Centrifugo
