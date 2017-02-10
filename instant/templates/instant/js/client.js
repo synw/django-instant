@@ -12,7 +12,7 @@ var centrifuge = new Centrifuge({
     timestamp: "{{ timestamp }}",
     token: "{% mq_generate_token user.username timestamp %}"
 });
-
+{% if public_channel_is_on %}
 var public_callbacks = {
     "message": function(dataset) {
     	//console.log('SET: '+JSON.stringify(dataset));
@@ -53,6 +53,7 @@ centrifuge.on('connect', function(context) {
 centrifuge.on('disconnect', function(context) {
 	if ( debug === true ) {console.log("Disconnection: "+context.reason)};
 });
+{% endif %}
 
 {% include "instant/extra_clients.js" %}
 

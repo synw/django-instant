@@ -25,6 +25,7 @@ APPS =  getattr(settings, 'INSTANT_APPS', [])
 
 public_channel = SITE_SLUG+'_public'
 PUBLIC_CHANNEL = getattr(settings, 'INSTANT_PUBLIC_CHANNEL', public_channel)
+ENABLE_PUBLIC_CHANNEL = getattr(settings, 'INSTANT_ENABLE_PUBLIC_CHANNEL', True)
 ENABLE_STAFF_CHANNEL = getattr(settings, 'INSTANT_ENABLE_STAFF_CHANNEL', False)
 ENABLE_USERS_CHANNEL = getattr(settings, 'INSTANT_ENABLE_USERS_CHANNEL', False)
 ENABLE_SUPERUSER_CHANNEL = getattr(settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
@@ -60,6 +61,10 @@ def mq_generate_token(user, timestamp, info=""):
         print "Timestamp: "+timestamp
         print "Generated token for user "+user+" at "+timestamp+": "+token
     return token
+
+@register.simple_tag
+def public_channel_is_on():
+    return ENABLE_PUBLIC_CHANNEL
 
 @register.simple_tag
 def get_public_channel():
