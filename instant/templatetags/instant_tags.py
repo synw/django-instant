@@ -21,9 +21,10 @@ REDIS_HOST = getattr(settings, 'MQUEUE_REDIS_HOST', 'localhost')
 REDIS_PORT = getattr(settings, 'MQUEUE_REDIS_PORT', 6379)
 REDIS_DB = getattr(settings, 'MQUEUE_REDIS_DB', 0)
 
-GLOBAL_STREAMS =  getattr(settings, 'INSTANT_GLOBAL_STREAMS', ())
 APPS =  getattr(settings, 'INSTANT_APPS', [])
 
+public_channel = SITE_SLUG+'_public'
+PUBLIC_CHANNEL = getattr(settings, 'INSTANT_PUBLIC_CHANNEL', public_channel)
 ENABLE_STAFF_CHANNEL = getattr(settings, 'INSTANT_ENABLE_STAFF_CHANNEL', False)
 ENABLE_USERS_CHANNEL = getattr(settings, 'INSTANT_ENABLE_USERS_CHANNEL', False)
 ENABLE_SUPERUSER_CHANNEL = getattr(settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
@@ -34,12 +35,6 @@ if debug_mode is True:
     DEBUG_MODE = "true"
 else:
     DEBUG_MODE = "false"
-
-def _get_public_channel():
-    channel = SITE_SLUG+'_public'
-    if 'public' in GLOBAL_STREAMS:
-        channel = "public"
-    return channel
 
 register = template.Library()
 
@@ -68,7 +63,7 @@ def mq_generate_token(user, timestamp, info=""):
 
 @register.simple_tag
 def get_public_channel():
-    return _get_public_channel()
+    return PUBLIC_CHANNEL
 
 @register.simple_tag
 def is_users_channel(): 
