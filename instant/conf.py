@@ -1,14 +1,50 @@
 # -*- coding: utf-8 -*-
 
+from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
-from django.contrib.auth.models import User
 
 
-USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', User)
+try:
+    SECRET_KEY = getattr(settings, 'CENTRIFUGO_SECRET_KEY')
+except ImportError:
+    raise ImproperlyConfigured(u"The Centrifugo secret key must be set in settings.py with CENTRIFUGO_SECRET_KEY")
+CENTRIFUGO_HOST = getattr(settings, 'CENTRIFUGO_HOST', 'http://localhost')
+CENTRIFUGO_PORT = getattr(settings, 'CENTRIFUGO_PORT', 8001)
 
-USE_REVERSION=getattr(settings, 'MICROB_USE_REVERSION', "reversion" in settings.INSTALLED_APPS)
+SITE_SLUG =  getattr(settings, 'SITE_SLUG', 'site')
+SITE_NAME =  getattr(settings, 'SITE_NAME', 'Site')
 
-CODE_MODE = getattr(settings, 'MICROB_CODE_MODE', False)
-CODEMIRROR_KEYMAP = getattr(settings, 'MICROB_CODEMIRROR_KEYMAP', 'default')
+BROADCAST_WITH = getattr(settings, 'INSTANT_BROADCAST_WITH', "py")
 
-#MICROB_HITS_CHANNEL = getattr(settings, 'MICROB_HITS_CHANNEL', "$microb_hits")
+ENABLE_USERS_CHANNEL = getattr(settings, 'INSTANT_ENABLE_USERS_CHANNEL', False)
+ENABLE_STAFF_CHANNEL = getattr(settings, 'INSTANT_ENABLE_STAFF_CHANNEL', False)
+ENABLE_SUPERUSER_CHANNEL = getattr(settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
+
+DEFAULT_USERS_CHANNEL = "$"+SITE_SLUG+"_users"
+DEFAULT_STAFF_CHANNEL = "$"+SITE_SLUG+"_staff"
+DEFAULT_SUPERUSER_CHANNEL = "$"+SITE_SLUG+"_admin"
+public_channel = SITE_SLUG+'_public'
+PUBLIC_CHANNEL =  getattr(settings, 'INSTANT_PUBLIC_CHANNEL', public_channel)
+USERS_CHANNELS =  getattr(settings, 'INSTANT_USERS_CHANNELS', [DEFAULT_USERS_CHANNEL])
+STAFF_CHANNELS =  getattr(settings, 'INSTANT_STAFF_CHANNELS', [DEFAULT_STAFF_CHANNEL])
+SUPERUSER_CHANNELS =  getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [DEFAULT_SUPERUSER_CHANNEL])
+
+# ensure that the private channels will always be treated as private by Centrifugo
+chans = []
+for chan in USERS_CHANNELS:
+    if not chan.startswith("$"):
+        chan = u"$"+chan
+    chans.append(chan)
+USERS_CHANNELS = chans
+schans = []
+for chan in STAFF_CHANNELS:
+    if not chan.startswith("$"):
+        chan = u"$"+chan
+    schans.append(chan)
+STAFF_CHANNELS = schans
+achans = []
+for chan in SUPERUSER_CHANNELS:
+    if not chan.startswith("$"):
+        chan = u"$"+chan
+    achans.append(chan)
+SUPERUSER_CHANNELS = achans
