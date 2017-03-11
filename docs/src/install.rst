@@ -66,7 +66,7 @@ Add ``'instant',`` to installed apps and configure settings.py:
    INSTANT_PUBLIC_CHANNEL = "public" #default: SITE_SLUG+'_public'
    INSTANT_ENABLE_PUBLIC_CHANNEL = False # this one is to disable the default public channel
    
-By default the events are broadcasted using python. A go module is available to perform the broadcast
+By default the events are broadcasted using python. A go module is available to perform the publish
 operations in order to leave the main process alone as much as possible. This might be usefull when lots of messages
 are sent simultaneously. This option is recommended for higher performance.
 
@@ -84,8 +84,7 @@ Performance test: 1000 messages:
 - Python: 29.57 seconds
 - Go: 14.44 seconds
 
-Note: this test uses the standard broadcast function so that each new event sent makes an new connection to Centrifugo.
-A batch send option is on the todo list: a go module runing one goroutine per event should be lightning fast at the job.
+Note: this test uses the standard publish function so that each new event sent makes an new connection to Centrifugo.
 
 Templates
 ~~~~~~~~~

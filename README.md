@@ -19,17 +19,17 @@ Check the [documentation](http://django-instant.readthedocs.io/en/latest/) for t
 Push events in channels from anywhere in the code:
 
   ```python
-from instant.producers import broadcast
+from instant.producers import publish
   
 # push an event on the default public channel
-broadcast(message='Message for everyone', event_class="test")
+publish(message='Message for everyone', event_class="test")
 
 # push an event to the logged in users channel
-broadcast(message='Message for users', target="users")
+publish(message='Message for users', target="users")
 
 # push an event to the staff channel with an extra json data payload
 data = {"field1":"value1","field2":[1,2]}
-broadcast(message='Message for staff', target="staff", data=data)
+publish(message='Message for staff', target="staff", data=data)
   ```
 
 Handle the events client-side in a template:
@@ -72,5 +72,6 @@ websockets in Django should not be a big deal!
 
 ### Todo
 
-- Async broadcast options
+- Async publish options
 - Batch send
+- Decent UI for sending messages

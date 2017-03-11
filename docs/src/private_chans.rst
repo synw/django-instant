@@ -20,9 +20,9 @@ All the channels prefixed with a dollar sign **$** are considered private.
 
 ::
 
-   from instant.producers import broadcast 
+   from instant.producers import publish 
 
-   broadcast(message='Private event', channel="$private_chan")
+   publish(message='Private event', channel="$private_chan")
    
 
 Security
@@ -70,7 +70,7 @@ To push an event to one of theses channel use the ``target`` parameter: `
 
 ::
 
-   broadcast(message="Staff event", target="staff")
+   publish(message="Staff event", target="staff")
 
 Note: if a ``channel`` parameter is provided, the ``target`` will be ignored.
    
