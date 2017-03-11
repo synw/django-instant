@@ -9,11 +9,10 @@ from django.views.generic.base import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
-from instant.producers import broadcast
+from instant.producers import publish
 from instant.forms import BroadcastForm
 from instant.utils import signed_response
-from instant.conf import USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS, DEFAULT_USERS_CHANNEL, \
-DEFAULT_STAFF_CHANNEL, DEFAULT_SUPERUSER_CHANNEL
+from instant.conf import USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS
 
 
 @csrf_exempt
@@ -26,13 +25,13 @@ def instant_auth(request):
     response = {}
     for channel in channels:
         signature = None
-        if channel in USERS_CHANNELS or channel == DEFAULT_USERS_CHANNEL:
+        if channel in USERS_CHANNELS:
             if request.user.is_authenticated():
                 signature = signed_response(channel, client)
-        if channel in STAFF_CHANNELS or channel == DEFAULT_STAFF_CHANNEL:
+        if channel in STAFF_CHANNELS:
             if request.user.is_staff:
                 signature = signed_response(channel, client)
-        if channel in SUPERUSER_CHANNELS or channel == DEFAULT_SUPERUSER_CHANNEL:
+        if channel in SUPERUSER_CHANNELS:
             if request.user.is_superuser:
                 signature = signed_response(channel, client)
         if signature is not None:
@@ -53,7 +52,7 @@ class StaffChannelView(TemplateView):
 
 class BroadcastView(FormView):
     form_class = BroadcastForm
-    template_name = 'instant/broadcast.html'
+    template_name = 'instant/publish.html'
     
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_superuser:
@@ -67,9 +66,9 @@ class BroadcastView(FormView):
         default_channel = form.cleaned_data['default_channel']
         if channel or default_channel:
             if default_channel:
-                broadcast(message=msg, event_class=event_class, channel=default_channel)
+                publish(message=msg, event_class=event_class, channel=default_channel)
             if channel:
-                broadcast(message=msg, event_class=event_class, channel=channel)
+                publish(message=msg, event_class=event_class, channel=channel)
             messages.success(self.request, _(u"Message broadcasted to the channel "+channel))
         else:
             messages.warning(self.request, _(u"Please provide a valid channel"))
