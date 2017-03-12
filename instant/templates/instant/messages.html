@@ -2,11 +2,16 @@
 <link rel="stylesheet" href="{% static 'instant/instant.css' %}" />
 <script type="text/javascript">
 function toggle_msgs() {
-	$('#streambox').show();
-	num_msgs = parseFloat($('#num_msgs').html());
-	$('#streambox-btns').show();
+	var box = document.getElementById("streambox");
+	box.style.display = "block";
+	var num = document.getElementById("num_msgs").innerHTML;
+	var num_msgs = parseFloat(num);
+	var btns = document.getElementById("streambox-btns");
+	btns.style.display = "block";
 }
 </script>
 <a id="msgs_counter" class="hidden-xxs" style="display:none;" href="javascript:toggle_msgs()" title="Messages">
-	<span class="label label-success" style="font-size:130%;"><i class="fa fa-flash"></i>&nbsp;<span id="num_msgs">0</span></span>
+	<span class="label label-success" style="font-size:130%;">
+		<i class="fa fa-flash"></i>&nbsp;<span id="num_msgs">0</span>
+	</span>
 </a>

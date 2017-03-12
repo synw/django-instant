@@ -12,7 +12,9 @@ var centrifuge = new Centrifuge({
     timestamp: "{{ timestamp }}",
     token: "{% mq_generate_token user.username timestamp %}"
 });
-{% if public_channel_is_on %}
+
+{% public_channel_is_on as enable_public_channel %}
+{% if enable_public_channel %}
 var public_callbacks = {
     "message": function(dataset) {
     	//console.log('SET: '+JSON.stringify(dataset));
@@ -32,12 +34,16 @@ var public_callbacks = {
     	var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
 		if (alert_on_event === true ) {
 			// default behavior: popup a message on the top right corner
-			$('#streambox').prepend(format_data(message, event_class));
+			var box = document.getElementById("streambox");
+			var el = format_data(message, event_class);
+			box.insertAdjacentHTML('afterbegin', el);	
 			num_msgs = increment_counter();
 			if (num_msgs > 0) {
-		    	$('#msgs_counter').show();
-		    	$('#streambox').show();
-		    	$('#streambox').delay(15000).fadeOut();
+				var counter = document.getElementById("msgs_counter");
+				counter.style.display = "block";
+		    	toggle_msgs();
+		    	function hideBox() {box.style.display="none"};
+		    	setTimeout(hideBox(), 15000);
 			}
 		};
     },
