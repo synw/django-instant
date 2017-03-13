@@ -43,8 +43,7 @@ if (event_class == 'test') {
 
 ### Installer and demo
 
-An experimental [installer](https://github.com/synw/django-instant-installer) is available. 
-It also can install a demo.
+An installer is available: use the [Django Mogo](https://github.com/synw/django-mogo) script.
 
 ### Example apps
 
