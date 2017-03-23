@@ -1,6 +1,6 @@
 {% load instant_tags %}
 
-var debug = {% debug_mode %};
+var instantDebug = {% debug_mode %};
 
 {% include "instant/js/utils.js" %}
 
@@ -28,7 +28,7 @@ var public_callbacks = {
     	var data = res['data']
     	var channel = res['channel'];
     	var site = res['site'];
-    	if ( debug === true ) {
+    	if ( instantDebug === true ) {
     		console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
     	}
     	var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
@@ -53,11 +53,11 @@ var public_callbacks = {
 var subscription = centrifuge.subscribe("{% get_public_channel %}", public_callbacks);
 
 centrifuge.on('connect', function(context) {
-	if ( debug === true ) {console.log("Connection ("+context.latency+"ms)")};
+	if ( instantDebug === true ) {console.log("Connection ("+context.latency+"ms)")};
 });
 
 centrifuge.on('disconnect', function(context) {
-	if ( debug === true ) {console.log("Disconnection: "+context.reason)};
+	if ( instantDebug === true ) {console.log("Disconnection: "+context.reason)};
 });
 {% endif %}
 
