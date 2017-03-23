@@ -50,7 +50,7 @@ class StaffChannelView(TemplateView):
         return super(StaffChannelView, self).dispatch(request, *args, **kwargs)
 
 
-class BroadcastView(FormView):
+class PublishView(FormView):
     form_class = BroadcastForm
     template_name = 'instant/publish.html'
     
@@ -69,7 +69,7 @@ class BroadcastView(FormView):
                 publish(message=msg, event_class=event_class, channel=default_channel)
             if channel:
                 publish(message=msg, event_class=event_class, channel=channel)
-            messages.success(self.request, _(u"Message broadcasted to the channel "+channel))
+            messages.success(self.request, _(u"Message published to the channel "+channel))
         else:
             messages.warning(self.request, _(u"Please provide a valid channel"))
         return super(BroadcastView, self).form_valid(form)
