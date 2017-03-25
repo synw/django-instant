@@ -51,18 +51,7 @@ By default only the public channel is enabled. You can activate the default priv
    # reserved to superuser
    INSTANT_ENABLE_SUPERUSER_CHANNEL = True
 
-Make sure the main client is loaded somewhere: ``{% include "instant/client.html" %}``. 
-Then you can use the corresponding widgets in templates to display the events:
-
-.. highlight:: django
-
-::
-
-   {% include "instant/channels/users/widget.html" %}
-   
-   {% include "instant/channels/staff/widget.html" %}
-   
-   {% include "instant/channels/superuser/widget.html" %}
+Make sure the main client is loaded somewhere: ``{% include "instant/client.html" %}`` and add some handlers.
    
 To push an event to one of theses channel use the ``target`` parameter: `
 

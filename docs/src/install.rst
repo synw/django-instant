@@ -66,7 +66,7 @@ Add ``'instant',`` to installed apps and configure settings.py:
    INSTANT_PUBLIC_CHANNEL = "public" #default: SITE_SLUG+'_public'
    INSTANT_ENABLE_PUBLIC_CHANNEL = False # this one is to disable the default public channel
    
-By default the events are broadcasted using python. A go module is available to perform the publish
+By default the events are published using python. A go module is available to perform the publish
 operations in order to leave the main process alone as much as possible. This might be usefull when lots of messages
 are sent simultaneously. This option is recommended for higher performance.
 
@@ -90,5 +90,4 @@ Templates
 ~~~~~~~~~
 
 Include the template ``{% include "instant/client.html" %}`` anywhere: nothing will be displayed it is the engine. 
-
-Add ``{% include "instant/messages.html" %}`` where you want the message counter to be.
+See next section for messages handling. 
