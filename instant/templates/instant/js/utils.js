@@ -18,6 +18,7 @@ function getClockTime(seconds)
 
 function unpack_data(dataset) {
 	var channel = dataset['channel'];
+	var uid = dataset['uid'];
 	var message = "";
 	if (dataset['data'].hasOwnProperty('message')) {
 		var message = dataset['data']['message'];
@@ -38,6 +39,6 @@ function unpack_data(dataset) {
 	if (dataset['data'].hasOwnProperty('site')) {
 		var site = dataset['data']['site'];
 	}
-	var res = {"channel":channel, "message": message, "event_class": event_class, "message_label": message_label, "data": data, "site":site}
+	var res = {"channel":channel, "message": message, "event_class": event_class, "message_label": message_label, "data": data, "site":site, "uid": uid}
 	return res
 }

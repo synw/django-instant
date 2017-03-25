@@ -26,7 +26,7 @@ var public_callbacks = {
     	var message_label = res['message_label'];
     	var data = res['data'];
     	var channel = res['channel'];
-    	var uid = res['UID'];
+    	var uid = res['uid'];
     	var site = res['site'];
     	if ( instantDebug === true ) {
     		console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
