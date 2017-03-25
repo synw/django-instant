@@ -1,3 +1,7 @@
+String.prototype.toTitleCase = function(){
+  return this.replace(/\b(\w+)/g, function(m,p){ return p[0].toUpperCase() + p.substr(1).toLowerCase() })
+}
+
 function get_label(event_class) {
 	var event_classes={
             'default' : 'mq-label mq-default',

@@ -4,7 +4,6 @@ var instantDebug = {% debug_mode %};
 
 {% include "instant/js/utils.js" %}
 
-// websocket connection management
 {% get_timestamp as timestamp %}
 var centrifuge = new Centrifuge({
     url: "{% get_centrifugo_url %}",
@@ -22,30 +21,17 @@ var public_callbacks = {
     	var d = new Date();
     	var timestamp = new Date(dataset['timestamp']*1000 + d.getTimezoneOffset() * 60000);
     	res = unpack_data(dataset);
-    	var message = res['message']
-    	var event_class = res['event_class']
-    	var message_label = res['message_label']
-    	var data = res['data']
+    	var message = res['message'];
+    	var event_class = res['event_class'];
+    	var message_label = res['message_label'];
+    	var data = res['data'];
     	var channel = res['channel'];
+    	var uid = res['UID'];
     	var site = res['site'];
     	if ( instantDebug === true ) {
     		console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
     	}
-    	var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
-		if (alert_on_event === true ) {
-			// default behavior: popup a message on the top right corner
-			var box = document.getElementById("streambox");
-			var el = format_data(message, event_class);
-			box.insertAdjacentHTML('afterbegin', el);	
-			num_msgs = increment_counter();
-			if (num_msgs > 0) {
-				var counter = document.getElementById("msgs_counter");
-				counter.style.display = "block";
-		    	toggle_msgs();
-		    	function hideBox() {box.style.display="none"};
-		    	setTimeout(hideBox(), 15000);
-			}
-		};
+    	handlers_for_event(event_class, channel, message, data, site, timestamp, uid);
     },
     {% include "instant/js/join_events.js" %}
 }

@@ -3,15 +3,7 @@
 <script src="{% static 'instant/js/sockjs.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'instant/js/centrifuge.js' %}" type="text/javascript"></script>
 <link rel="stylesheet" href="{% static 'instant/instant.css' %}" />
-<div id="streambox" style="display:none;">
-	<div id="streambox-btns">
-		<a id="mqdelete_btn" href="javascript:clear_msgs()" title="{% trans 'Delete all' %}"><i class="fa fa-close fa-2x"></i></a>
-		<a id="mqclose_btn" style="margin-left:0.7em;" href="javascript:hide_streambox()" title="{% trans 'Close' %}"><i class="fa fa-check fa-2x"></i></a>
-	</div>
-</div>
-{% include "instant/handlers.html" %}
 <script type="text/javascript">
-	var debug = true;
-	{% include "instant/js/ui_handlers.js" %}
+	{% include "instant/js/handlers.js" %}
 	{% include "instant/js/client.js" %}
 </script>

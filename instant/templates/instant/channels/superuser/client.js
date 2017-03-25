@@ -9,6 +9,7 @@ var superuser_callbacks_{% get_superuser_channel %} = {
     	var message_label = res['message_label']
     	var data = res['data']
     	var channel = res['channel'];
+    	var uid = res['UID'];
     	var d = new Date();
     	// handlers
     	if (debug === true) {
@@ -18,13 +19,7 @@ var superuser_callbacks_{% get_superuser_channel %} = {
     	if ( data.hasOwnProperty('admin_url') ) {
     		message = '<a href="'+data['admin_url']+'" target="_blank">'+message+'</a>';
     	}
-    	var output = "";
-    	var output = "";
-    	var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
-		if (alert_on_event === true ) {
-			output = output+'<div style="margin:1.2em;">'+timenow+' '+message_label+'&nbsp;&nbsp;'+message+'</div>';
-			$('#superuser_msgs').prepend(output);
-		}
+    	handlers_for_event(event_class, channel, message, data, site, timestamp, uid);
     },
     {% include "instant/js/join_events.js" %}
 }

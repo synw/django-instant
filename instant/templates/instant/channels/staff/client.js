@@ -11,21 +11,16 @@ var staff_callbacks_{% get_staff_channel %} = {
     	var channel = res['channel'];
     	var site = res['site'];
     	var timestamp = res['timestamp'];
+    	var uid = res['UID'];
     	var d = new Date();
     	// handlers
     	if (debug === true) {
     			console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
     	}
-    	var timenow = getClockTime(false);
     	if ( data.hasOwnProperty('admin_url') ) {
     		message = '<a href="'+data['admin_url']+'" target="_blank">'+message+'</a>';
     	}
-    	var output = "";
-    	var alert_on_event = handlers_for_event(event_class, channel, message, data, site, timestamp);
-		if (alert_on_event === true ) {
-			output = output+'<div class="mq_message">'+timenow+' '+message_label+'&nbsp;&nbsp;'+message+'</div>';
-    		$('#staff_msgs').prepend(output);
-		}
+    	handlers_for_event(event_class, channel, message, data, site, timestamp, uid);
     },
     {% include "instant/js/join_events.js" %}
 }
