@@ -54,12 +54,6 @@ def get_timestamp():
 @register.simple_tag
 def mq_generate_token(user, timestamp, info=""):
     token = generate_token(SECRET_KEY, user, timestamp, info)
-    if DEBUG is True:
-        print "Generating token:"
-        print "Key: "+SECRET_KEY
-        print "User: "+user
-        print "Timestamp: "+timestamp
-        print "Generated token for user "+user+" at "+timestamp+": "+token
     return token
 
 @register.simple_tag
