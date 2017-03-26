@@ -2,7 +2,7 @@
 
 var mq_callbacks_{% get_users_channel %} = {
     "message": function(dataset) {
-    	if (debug === true) { console.log('DATASET: '+JSON.stringify(dataset));};
+    	if (instantDebug === true) { console.log('DATASET: '+JSON.stringify(dataset));};
     	res = unpack_data(dataset);
     	var message = res['message']
     	var event_class = res['event_class']
@@ -10,7 +10,7 @@ var mq_callbacks_{% get_users_channel %} = {
     	var data = res['data']
     	var channel = res['channel'];
     	var uid = res['UID'];
-    	var d = new Date();
+    	var site = res["site"];
     	// handlers
     	if (debug === true) {
     			console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
@@ -19,7 +19,7 @@ var mq_callbacks_{% get_users_channel %} = {
     	if ( data.hasOwnProperty('admin_url') ) {
     		message = '<a href="'+data['admin_url']+'" target="_blank">'+message+'</a>';
     	}
-    	handlers_for_event(event_class, channel, message, data, site, timestamp);
+    	handlers_for_event(event_class, channel, message, data, site, uid);
     },
     {% include "instant/js/join_events.js" %}
 }

@@ -16,10 +16,8 @@ var centrifuge = new Centrifuge({
 {% if enable_public_channel %}
 var public_callbacks = {
     "message": function(dataset) {
-    	//console.log('SET: '+JSON.stringify(dataset));
     	var channel = dataset['channel'];
     	var d = new Date();
-    	var timestamp = new Date(dataset['timestamp']*1000 + d.getTimezoneOffset() * 60000);
     	res = unpack_data(dataset);
     	var message = res['message'];
     	var event_class = res['event_class'];
@@ -28,10 +26,8 @@ var public_callbacks = {
     	var channel = res['channel'];
     	var uid = res['uid'];
     	var site = res['site'];
-    	if ( instantDebug === true ) {
-    		console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
-    	}
-    	handlers_for_event(event_class, channel, message, data, site, timestamp, uid);
+    	if (instantDebug === true && event_class !== "__presence__") { console.log('DATASET: '+JSON.stringify(dataset)) };
+    	handlers_for_event(event_class, channel, message, data, site, uid);
     },
     {% include "instant/js/join_events.js" %}
 }
