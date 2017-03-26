@@ -10,6 +10,7 @@ var superuser_callbacks_{% get_superuser_channel %} = {
     	var data = res['data']
     	var channel = res['channel'];
     	var uid = res['UID'];
+    	var site = res["site"];
     	// handlers
     	if (debug === true) {
     			console.log('Msg: '+message+"\nChan: "+channel+"\nEvent_class: "+event_class+'\nData: '+JSON.stringify(data));
