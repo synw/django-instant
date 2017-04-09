@@ -28,16 +28,14 @@ def publish_py(message, event_class="default", data={}, channel=None, site=SITE_
     client = Client(cent_url, SECRET_KEY, timeout=1)
     channel = _get_channel(channel, target)
     payload = {"message": message, "channel":channel, 'event_class':event_class, "data":data , "site":site}
-    ok = False
+    err = False
     try:
         client.publish(channel, payload)
-        ok = True
-    except CentException:
-        ok = False
-        raise
+    except CentException as e:
+        err = str(e)
     if event_class.lower() == "debug":
         print ("[DEBUG] ", str(json.dumps(payload)))
-    return ok
+    return err
 
 def publish_go(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None):
     channel = _get_channel(channel, target)
@@ -46,22 +44,22 @@ def publish_go(message, event_class="default", data={}, channel=None, site=SITE_
     params = conn+' -channel="'+channel+'" -event_class="'+event_class+'" -message="'+message+'" -data=\''+json.dumps(data)+"'"
     pth = os.path.dirname(instant.__file__)
     gocmd=pth+'/go/cent_broadcast '+params
-    os.system(gocmd)
+    err = os.system(gocmd)
     if event_class.lower() == "debug":
         print ("[DEBUG] ", message, str(json.dumps(data)))
-    return
+    return err
 
 def publish_with_warning(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None):
     print("Warning: the broadcast() method is deprecated in favor of publish(). It will be removed in version 0.4")
     if BROADCAST_WITH == "go":
-        publish_go(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None)
+        err = publish_go(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None)
     else:
-        publish_py(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None)
-    return
+        err = publish_py(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None)
+    return err
     
 if BROADCAST_WITH == "go":
     publish  = publish_go
 else:
     publish = publish_py
-    
+
 broadcast = publish_with_warning
