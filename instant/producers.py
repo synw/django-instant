@@ -2,7 +2,7 @@
 
 from __future__ import print_function
 import json
-from cent.core import Client
+from cent import Client, CentException
 from instant.conf import SITE_NAME, CENTRIFUGO_HOST, CENTRIFUGO_PORT, SECRET_KEY, SITE_SLUG, PUBLIC_CHANNEL, BROADCAST_WITH
 if BROADCAST_WITH == "go":
     import os, instant
@@ -28,10 +28,16 @@ def publish_py(message, event_class="default", data={}, channel=None, site=SITE_
     client = Client(cent_url, SECRET_KEY, timeout=1)
     channel = _get_channel(channel, target)
     payload = {"message": message, "channel":channel, 'event_class':event_class, "data":data , "site":site}
-    client.publish(channel, payload)
+    ok = False
+    try:
+        client.publish(channel, payload)
+        ok = True
+    except CentException:
+        ok = False
+        raise
     if event_class.lower() == "debug":
         print ("[DEBUG] ", str(json.dumps(payload)))
-    return True, channel
+    return ok
 
 def publish_go(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None):
     channel = _get_channel(channel, target)
