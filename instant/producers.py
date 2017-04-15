@@ -28,7 +28,7 @@ def publish_py(message, event_class="default", data={}, channel=None, site=SITE_
     client = Client(cent_url, SECRET_KEY, timeout=1)
     channel = _get_channel(channel, target)
     payload = {"message": message, "channel":channel, 'event_class':event_class, "data":data , "site":site}
-    err = False
+    err = None
     try:
         client.publish(channel, payload)
     except CentException as e:
