@@ -44,10 +44,10 @@ def publish_go(message, event_class="default", data={}, channel=None, site=SITE_
     params = conn+' -channel="'+channel+'" -event_class="'+event_class+'" -message="'+message+'" -data=\''+json.dumps(data)+"'"
     pth = os.path.dirname(instant.__file__)
     gocmd=pth+'/go/cent_broadcast '+params
-    err = os.system(gocmd)
+    os.system(gocmd)
     if event_class.lower() == "debug":
         print ("[DEBUG] ", message, str(json.dumps(data)))
-    return err
+    return
 
 def publish_with_warning(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None):
     print("Warning: the broadcast() method is deprecated in favor of publish(). It will be removed in version 0.4")

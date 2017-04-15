@@ -68,7 +68,10 @@ Add ``'instant',`` to installed apps and configure settings.py:
    
 By default the events are published using python. A go module is available to perform the publish
 operations in order to leave the main process alone as much as possible. This might be usefull when lots of messages
-are sent simultaneously. This option is recommended for higher performance.
+are sent. 
+
+Note: when this option is enabled there is no error handling. This option is recommended when you need higher performance
+and don't care about error messages.
 
 ::
 

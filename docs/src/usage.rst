@@ -22,8 +22,10 @@ Stream events from code
 
    from instant.producers import publish 
 
-   # fire an event on the public channel
-   publish(message='Hello world', event_class="infos", channel="public", data={"myfield":"my_value"})
+   # fire an event on the public channel whith error handling
+   err = publish(message='Hello world', event_class="infos", channel="public", data={"myfield":"my_value"})
+   if err != None:
+      print("Error", str(err))
    
    # send an instant debug message during development
    publish("Something happened somewhere in the code", event_class='debug')
