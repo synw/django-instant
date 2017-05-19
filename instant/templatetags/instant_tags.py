@@ -99,3 +99,19 @@ def is_in_apps(app):
         return True
     else:
         return False
+    
+@register.simple_tag
+def get_channels():
+    channels = []
+    if ENABLE_PUBLIC_CHANNEL is True:
+        channels.append(PUBLIC_CHANNEL)
+    if ENABLE_STAFF_CHANNEL is True:
+        c = '$'+SITE_SLUG+'_staff'
+        channels.append(c)
+    if ENABLE_USERS_CHANNEL is True:
+        c = '$'+SITE_SLUG+'_users'
+        channels.append(c)
+    if ENABLE_SUPERUSER_CHANNEL is True:
+        c = '$'+SITE_SLUG+'_admin'
+        channels.append(c)
+    return channels

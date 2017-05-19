@@ -50,14 +50,14 @@ class StaffChannelView(TemplateView):
         return super(StaffChannelView, self).dispatch(request, *args, **kwargs)
 
 
-class PublishView(FormView):
+class DashboardView(FormView):
     form_class = BroadcastForm
-    template_name = 'instant/publish.html'
+    template_name = 'instant/dashboard/index.html'
     
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_superuser:
             raise Http404
-        return super(PublishView, self).dispatch(request, *args, **kwargs)
+        return super(DashboardView, self).dispatch(request, *args, **kwargs)
     
     def form_valid(self, form):
         msg = form.cleaned_data['message']
@@ -72,7 +72,7 @@ class PublishView(FormView):
             messages.success(self.request, _(u"Message published to the channel "+channel))
         else:
             messages.warning(self.request, _(u"Please provide a valid channel"))
-        return super(PublishView, self).form_valid(form)
+        return super(DashboardView, self).form_valid(form)
     
     def get_success_url(self):
         return reverse('instant-message-broadcasted')

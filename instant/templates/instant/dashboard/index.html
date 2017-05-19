@@ -1,0 +1,37 @@
+{% load staticfiles i18n vv_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{% trans 'Instant Dashboard' %}</title>
+    {% include "instant/dashboard/head.html" %}
+</head>
+
+<body>
+<div id="app">
+	<div id="site_header">
+		{% include "instant/dashboard/header.html" %}
+	</div>
+	<div id="navbar">
+		{% include "instant/dashboard/navbar.html" %}
+	</div>
+	<div style="display:flex">
+		<div id="content" class="gc flex grow">
+			{% block content %}{% endblock %}
+			{% include "instant/vues/templates.html" %}
+		</div>
+		<div id="sidebar" class="hidden">
+			{% include "instant/dashboard/sidebar.html" %}
+		</div>
+	</div>
+	<div id="footer">
+		
+	</div>
+	{% include "instant/client.html" %}
+	<script type="text/javascript">
+		{% getVvapps as apps %}
+		{% include "vv/app.js" %}
+	</script>
+	
+</div>
+</body>
+</html>

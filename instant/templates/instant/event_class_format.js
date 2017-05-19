@@ -4,16 +4,16 @@ String.prototype.toTitleCase = function(){
 
 function get_label(event_class) {
 	var event_classes={
-            'default' : 'mq-label mq-default',
-            'important' : 'mq-label mq-important',
-            'ok' : 'mq-label mq-ok',
-            'info' : 'mq-label mq-info',
-            'debug' : 'mq-label mq-debug',
-            'warning' : 'mq-label mq-warning',
-            'error' : 'mq-label mq-error',
-            'created' : 'mq-label mq-created',
-            'edited' : 'mq-label mq-edited',
-            'deleted' : 'mq-label mq-deleted',
+            'default' : 'i-label i-default',
+            'important' : 'i-label i-important',
+            'ok' : 'i-label i-ok',
+            'info' : 'i-label i-info',
+            'debug' : 'i-label i-debug',
+            'warning' : 'i-label i-warning',
+            'error' : 'i-label i-error',
+            'created' : 'i-label i-created',
+            'edited' : 'i-label i-edited',
+            'deleted' : 'i-label i-deleted',
             }
 	var event_icons = {
             'default' : '<i class="fa fa-flash"></i>',

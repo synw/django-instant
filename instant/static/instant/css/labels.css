@@ -1,0 +1,52 @@
+/* --------------------------------- Messages formating ------------------------------- */
+.i-label {
+	display: inline;
+	padding: 0.5em;
+	font-size: 75%;
+	font-weight: bold;
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: 0.5em;
+}
+.i-default {
+	background-color: darkslategrey;
+	color:white;
+}
+.i-important {
+	background-color: firebrick;
+	color: white;
+}
+.i-ok {
+	background-color: forestgreen;
+	color:white;
+}
+.i-warning {
+	background-color: orangered;
+	color:white;
+}
+.i-info {
+	background-color: royalblue;
+	color:white;
+}
+.i-debug {
+	background-color: orange;
+	color:black;
+}
+.i-error {
+	background-color: red;
+	color:white;
+}
+.i-created {
+	background-color: darkcyan;
+	color:white;
+}
+.i-edited {
+	background-color: dodgerblue;
+	color:white;
+}
+.i-deleted {
+	background-color: gold;
+	color:white;
+}

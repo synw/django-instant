@@ -1,0 +1,37 @@
+{% load i18n instant_tags %}
+{% if user.is_superuser %}
+<div id="instant" style="display:none" class="flex" v-show="instantForm">
+	<div class="event-labels">
+		<span class="pull-left" v-for="cl in eventLabels" v-bind:div="cl">
+			<span v-bind:id="cl.name"
+				href="" 
+				class="event-label inline"
+				v-html="cl.label" 
+				@click="activateEventClass(cl.name)">
+			</span>
+		</span>
+		{% get_channels as channels %}
+		<div id="chans" class="pull-right">
+			{% for channel in channels %}
+				<span id="{{ channel }}" class="label label-default chan" @click="activateChannel('{{ channel }}')">
+					{{ channel }}
+				</span>
+			{% endfor %}
+		</div>
+		<span id="msg_status" v-html="msgStatus" class="pull-right"></span>
+	</div>
+	<div class="full" style="padding:0 1em 0.5em 1em">
+		<form id="instant_form" onsubmit="return false">
+			<div class="inline" style="min-width:80%">
+				<input id="msg" type="text" name="msg" style="min-width:80%" 
+					v-bind:placeholder="instantFormPlaceholder" v-model="msgToSend">
+				</input>
+			</div>
+			<div class="inline">
+				<button id="submitMsg" @click="postInstantForm()" class="disabled">{% trans "Publish" %}</button>
+			</div>
+			{% csrf_token %}
+		</form>
+	</div>
+</div>
+{% endif %}
