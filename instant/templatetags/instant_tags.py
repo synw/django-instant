@@ -4,6 +4,7 @@ import time
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.conf import settings
+from django.utils.html import mark_safe
 from cent.core import generate_token
 
 
@@ -17,10 +18,6 @@ SITE_SLUG =  getattr(settings, 'SITE_SLUG', 'site')
 CENTRIFUGO_HOST = getattr(settings, 'CENTRIFUGO_HOST', 'http://localhost')
 CENTRIFUGO_PORT = getattr(settings, 'CENTRIFUGO_PORT', 8001)
 
-REDIS_HOST = getattr(settings, 'MQUEUE_REDIS_HOST', 'localhost')
-REDIS_PORT = getattr(settings, 'MQUEUE_REDIS_PORT', 6379)
-REDIS_DB = getattr(settings, 'MQUEUE_REDIS_DB', 0)
-
 APPS =  getattr(settings, 'INSTANT_APPS', [])
 
 public_channel = SITE_SLUG+'_public'
@@ -29,6 +26,7 @@ ENABLE_PUBLIC_CHANNEL = getattr(settings, 'INSTANT_ENABLE_PUBLIC_CHANNEL', True)
 ENABLE_STAFF_CHANNEL = getattr(settings, 'INSTANT_ENABLE_STAFF_CHANNEL', False)
 ENABLE_USERS_CHANNEL = getattr(settings, 'INSTANT_ENABLE_USERS_CHANNEL', False)
 ENABLE_SUPERUSER_CHANNEL = getattr(settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
+EXCLUDE = getattr(settings, 'INSTANT_EXCLUDE', ["__presence__"])
 
 # javascript debug messages
 debug_mode = getattr(settings, 'INSTANT_DEBUG', False)
@@ -115,3 +113,14 @@ def get_channels():
         c = '$'+SITE_SLUG+'_admin'
         channels.append(c)
     return channels
+
+@register.simple_tag
+def exclude_chans():
+    chans = []
+    for chan in EXCLUDE:
+        chans.append('"'+chan+'"')
+    return mark_safe(",".join(chans))
+
+@register.simple_tag
+def num_excluded_chans():
+    return len(EXCLUDE)

@@ -41,10 +41,6 @@ if (event_class == 'test') {
 }
   ```
 
-### Installer and demo
-
-An installer is available: use the [Django Mogo](https://github.com/synw/django-mogo) script.
-
 ### Example apps
 
 [Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): realtime application events and logs

@@ -23,7 +23,7 @@ setup(
       ],
     install_requires=[
         'cent',
-	'django-vitevue',
+        'django-vitevue',
     ],
     zip_safe=False
 )

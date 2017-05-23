@@ -1,4 +1,4 @@
-{% load i18n vvinstant_tags %}
+{% load i18n instant_tags %}
 {% if user.is_superuser %}
 	toggleInstantForm: function(){
 		if (this.instantForm === true) {
@@ -107,13 +107,13 @@
 toggleSidebar: function() {
 	sidebar = this.get("sidebar");
 	//console.log("CLASS", sidebar.className);
-	if (this.sidebarUp) {
+	if (this.sidebar) {
 		//console.log("IS UP");
-		this.sidebarUp = false;
+		this.sidebar = false;
 		sidebar.className = "hidden";
 	} else {
 		//console.log("IS DOWN");
-		this.sidebarUp = true;
+		this.sidebar = true;
 		sidebar.className = "flex";
 	}
 	//console.log("CLASS", sidebar.className);
@@ -136,7 +136,7 @@ formatMsg: function(msg) {
 	res = res+"&nbsp;"+msg.message;
 	return res
 },
-delMsg: function(msg) {
+delMsg: function(msg) {	
 	for (i=0;i<this.msgs.length;i++) {
 		if (msg.uid === this.msgs[i].uid) {
 			var index = this.msgs.indexOf(msg);
@@ -147,23 +147,14 @@ delMsg: function(msg) {
 	}
 	if (this.numMsgs === 0) {
 		if (this.sidebar === true) {
-			this.toggleMsgSidebar()
+			this.toggleSidebar()
 		}
 	}
 },
 deleteAllMsgs: function() {
 	this.msgs = [];
 	this.numMsgs = 0;
-	if (this.showSidebar === true) {
+	if (this.sidebar === true) {
 		this.toggleSidebar();
 	}
 },
-closeWarningMsg: function() {
-	$("#warning-msg").slideUp();
-	this.warningMsg = "";
-},
-closeInfoMsg: function() {
-	$("#info-msg").slideUp();
-	this.infoMsg = "";
-},
-

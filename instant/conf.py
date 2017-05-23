@@ -29,6 +29,8 @@ USERS_CHANNELS =  getattr(settings, 'INSTANT_USERS_CHANNELS', [DEFAULT_USERS_CHA
 STAFF_CHANNELS =  getattr(settings, 'INSTANT_STAFF_CHANNELS', [DEFAULT_STAFF_CHANNEL])
 SUPERUSER_CHANNELS =  getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [DEFAULT_SUPERUSER_CHANNEL])
 
+EXCLUDE = getattr(settings, 'INSTANT_EXCLUDE', ["__presence__"])
+
 # ensure that the private channels will always be treated as private by Centrifugo
 chans = []
 for chan in USERS_CHANNELS:

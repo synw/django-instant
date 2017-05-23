@@ -5,12 +5,12 @@
 		<h3>{% trans 'Messages' %}</h3>
 	</div>
 	<div>
-		<div class="text-right">{% include "vvinstant/widgets/togglebtn.html" %}</div>
+		<div class="text-right">{% include "instant/widgets/togglebtn.html" %}</div>
 	</div>
 	{% verbatim %}
 	<ul v-for="msg in msgs" style="list-style-type:none">
 		<li v-bind:id="msg.uid">
-			<a href="" class="pull-right btn btn-link btn-sm" @click='delMsg(msg)'>
+			<a href="" class="pull-right btn btn-link btn-sm" @click="delMsg(msg)">
 				<i class="fa fa-close" style="color:red;position:relative;top:-0.3em"></i>
 			</a>
 			<span v-html="formatMsg(msg)"></span>

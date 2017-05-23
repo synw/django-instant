@@ -50,7 +50,7 @@ def publish_go(message, event_class="default", data={}, channel=None, site=SITE_
     return
 
 def publish_with_warning(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None):
-    print("Warning: the broadcast() method is deprecated in favor of publish(). It will be removed in version 0.4")
+    print("Warning from Django Instant: the broadcast() method is deprecated in favor of publish(). It will be removed in version 0.4")
     if BROADCAST_WITH == "go":
         err = publish_go(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None)
     else:
