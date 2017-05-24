@@ -4,6 +4,7 @@ import json
 from django.http import JsonResponse
 from django.core.urlresolvers import reverse
 from django.http.response import Http404
+from django.views.generic.base import View
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView
 from django.views.decorators.csrf import csrf_exempt
@@ -76,3 +77,19 @@ class DashboardView(FormView):
     
     def get_success_url(self):
         return reverse('instant-message-broadcasted')
+
+
+class PostMsgView(View):
+    
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            #print("NOT SUPERUSER")
+            return JsonResponse({"ok":0})
+        #print("NOT SUPERUSER")
+        
+        data = json.loads(self.request.body.decode('utf-8'))
+        msg = data["msg"]
+        channel = data["channel"]
+        event_class = data["event_class"]
+        publish(message=msg, event_class=event_class, channel=channel)
+        return JsonResponse({"ok":1})

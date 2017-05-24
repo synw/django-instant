@@ -4,7 +4,7 @@
 	var exclude = [{% exclude_chans %}];
 	//console.log("EX VAR: "+exclude);
 	for (i=0;i<exclude.length;i++) {
-		console.log(channel+" / "+exclude[i]);
+		//console.log(channel+" / "+exclude[i]);
 		if (event_class === exclude[i]) {
 			return
 		}
@@ -21,7 +21,7 @@ setTimeout(function(){
 app.msgs.unshift({"event_class": event_class, "message": message, "uid": uid});
 document.getElementById("instant_msgs").style.display = "inline-block";
 
-console.log("AUTOMSG", app.autoMsg);
+//console.log("AUTOMSG", app.autoMsg);
 
 if (app.autoMsg === true ) {
 	if (app.sidebar === false) {

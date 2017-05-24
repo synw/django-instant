@@ -36,6 +36,14 @@ to use public events. Leave it if you want only the logged in users to receive t
 ::
 
    pip install django-instant
+   
+   
+Add to installed apps:
+
+::
+
+   "vv",
+   "instant",
 
 Set the urls:
 
@@ -48,7 +56,7 @@ Set the urls:
 Settings
 ~~~~~~~~
 
-Add ``'instant',`` to installed apps and configure settings.py:
+Configure settings.py:
 
 ::
 
@@ -56,6 +64,7 @@ Add ``'instant',`` to installed apps and configure settings.py:
    CENTRIFUGO_SECRET_KEY = "70b651f6-775a-4949-982b-b387b31c1d84" # the_key_that_is_in_config.json
    SITE_SLUG = "my_site" # used internaly to prefix the channels
    SITE_NAME = "My site"
+   VV_APPS = ["instant"]
    
    # optionnal settings
    CENTRIFUGO_HOST = 'http://ip_here' #default: localhost

@@ -1,2 +1,2 @@
-__version__ = '0.3.4'
+__version__ = '0.3.6'
 default_app_config = 'instant.apps.InstantConfig'
