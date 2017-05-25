@@ -1,5 +1,5 @@
 /*
-Experimental go module that broadcasts events to Centrifugo from flags input
+Experimental go module that publishes events to Centrifugo from flags input
 */
 
 package main
@@ -29,7 +29,7 @@ type Event struct {
 	Data       string `json:"data"`
 }
 
-func broadcast(connection *Connection, event *Event) {
+func publish(connection *Connection, event *Event) {
 	url := fmt.Sprintf("%s:%s", connection.Host, connection.Port)
 	e, erro := json.Marshal(event)
 	if erro != nil {
@@ -70,6 +70,6 @@ func main() {
 	cleanChannel := strings.Replace(channel, "-_-", "$", -1)
 	event := &Event{cleanChannel, message, eventClass, data}
 	conn := &Connection{host, port, key}
-	broadcast(conn, event)
+	publish(conn, event)
 	return
 }
