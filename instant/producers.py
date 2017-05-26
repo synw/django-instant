@@ -43,7 +43,7 @@ def publish_go(message, event_class="default", data={}, channel=None, site=SITE_
     conn='-host="'+CENTRIFUGO_HOST+'" -port="'+str(CENTRIFUGO_PORT)+'" -key="'+SECRET_KEY+'"'
     params = conn+' -channel="'+channel+'" -event_class="'+event_class+'" -message="'+message+'" -data=\''+json.dumps(data)+"'"
     pth = os.path.dirname(instant.__file__)
-    gocmd=pth+'/go/cent_broadcast '+params
+    gocmd=pth+'/go/publish '+params
     os.system(gocmd)
     if event_class.lower() == "debug":
         print ("[DEBUG] ", message, str(json.dumps(data)))
