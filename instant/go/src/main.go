@@ -1,63 +1,75 @@
 /*
-Experimental go module that broadcasts events to Centrifugo from flags input
+Experimental go module that publishes events to Centrifugo from flags input
 */
 
 package main
 
 import (
-	"fmt"
-	"time"
+	"encoding/json"
 	"flag"
+	"fmt"
 	"strings"
-	"github.com/centrifugal/gocent"
-	)
+	"time"
 
+	"github.com/centrifugal/gocent"
+)
+
+// Connection defines the parameters to connect to Cent.
 type Connection struct {
 	Host string
-    Port string
-    Key string
-}	
-	
-type Event struct {
-	Channel string
-    Message string
-    Event_class string
-    Data string
+	Port string
+	Key  string
 }
 
-func broadcast(connection *Connection, event *Event) {
+// Event defines the structure of a Cent event on the channel.
+type Event struct {
+	Channel    string `json:"-"`
+	Message    string `json:"message"`
+	EventClass string `json:"event_class"`
+	Data       string `json:"data"`
+}
+
+func publish(connection *Connection, event *Event) {
 	url := fmt.Sprintf("%s:%s", connection.Host, connection.Port)
-	e:= fmt.Sprintf("{\"message\":\"%s\", \"event_class\":\"%s\", \"data\":%s}", event.Message, event.Event_class, event.Data)
+	e, erro := json.Marshal(event)
+	if erro != nil {
+		fmt.Printf("Broadcast event json error: %s", erro.Error())
+		return
+	}
 	//fmt.Println("CHANNEL "+event.Channel+" -> SENDING EVENT: "+e)
 	d := []byte(e)
 	client := gocent.NewClient(url, connection.Key, 5*time.Second)
 	_, err := client.Publish(event.Channel, d)
-	 if err != nil {
-	 	fmt.Sprintf("Centrifugo client error: %s", err.Error())
-	 	return
-	 }
+	if err != nil {
+		fmt.Printf("Centrifugo client error: %s", err.Error())
+		return
+	}
 	return
 }
 
 func main() {
-	var key string
-	var host string
-	var port string
-	var channel string
-	var message string
-	var event_class string
-	var data string
+	var (
+		key        string
+		host       string
+		port       string
+		channel    string
+		message    string
+		eventClass string
+		data       string
+	)
+
 	flag.StringVar(&key, "key", "", "Key")
 	flag.StringVar(&host, "host", "localhost", "Host")
 	flag.StringVar(&port, "port", "8001", "Port")
 	flag.StringVar(&channel, "channel", "", "Channel")
 	flag.StringVar(&message, "message", "", "Message")
-	flag.StringVar(&event_class, "event_class", "Default", "Event class")
+	flag.StringVar(&eventClass, "event_class", "Default", "Event class")
 	flag.StringVar(&data, "data", "{}", "Data")
 	flag.Parse()
-	channel_ := strings.Replace(channel, "-_-", "$", -1)
-	event := &Event{channel_, message, event_class, data}
+
+	cleanChannel := strings.Replace(channel, "-_-", "$", -1)
+	event := &Event{cleanChannel, message, eventClass, data}
 	conn := &Connection{host, port, key}
-	broadcast(conn, event)
+	publish(conn, event)
 	return
 }
