@@ -79,6 +79,8 @@ are sent.
 Note: when this option is enabled there is no error handling. This option is recommended when you need higher performance
 and don't care about error messages.
 
+You might have to make the `instant/go/publish` file executable with `chmod`
+
 ::
 
    INSTANT_BROADCAST_WITH = 'go'
