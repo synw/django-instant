@@ -1,4 +1,4 @@
-{% load i18n instant_tags %}
+{% load i18n %}
 {% if user.is_superuser %}
 <div id="instant" style="display:none" class="flex" v-show="instantForm">
 	<div class="event-labels">
@@ -10,15 +10,8 @@
 				@click="activateEventClass(cl.name)">
 			</span>
 		</span>
-		{% get_channels as channels %}
-		<div id="chans" class="pull-right">
-			{% for channel in channels %}
-				<span id="{{ channel }}" class="label label-default chan" @click="activateChannel('{{ channel }}')">
-					{{ channel }}
-				</span>
-			{% endfor %}
-		</div>
-		<span id="msg_status" v-html="msgStatus" class="pull-right"></span>
+		
+		<span id="msg_status" v-html="msgStatus"></span>
 	</div>
 	<div class="full" style="padding:0 1em 0.5em 1em">
 		<form id="instant_form" onsubmit="return false">

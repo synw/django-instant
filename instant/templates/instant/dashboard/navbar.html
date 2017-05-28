@@ -1,3 +1,12 @@
-<div class="pull-right">
-	{% include "instant/widgets/btn.html" %}
+{% load instant_tags %}
+<div style="text-align:center">
+	{% get_channels as channels %}
+	<div id="chans" class="inline" v-if="instantForm">Channels:
+		{% for channel in channels %}
+			<span id="{{ channel }}" class="label label-default chan" @click="activateChannel('{{ channel }}')">
+				{{ channel }}
+			</span>
+		{% endfor %}
+	</div>
+	{% include "instant/dashboard/widgets/btn.html" %}
 </div>

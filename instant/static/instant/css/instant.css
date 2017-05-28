@@ -49,10 +49,14 @@ div {
 	padding:0 0 0 6em;
 	height:2.9em;
 	line-height:2.9em;
+	color:white;
 }
 #navbar .btn {
 	padding:0.9em 0.4em 0.9em 0.4em;
 	vertical-align:baseline;
+}
+#chans {
+	display:inline-block;
 }
 #content {
 	min-height:40em;
@@ -97,9 +101,6 @@ div {
 	margin:0.5em 1em 0.5em 0.5em;
 	display:inline-block;
 }
-#chans {
-	margin-right:4em;
-}
 .event-label {
 	margin-right:0.5em;
 	opacity:0.6;
@@ -107,6 +108,7 @@ div {
 .event-labels {
 	padding:0.5em;
 	margin:0 0 0 2em;
+	min-height:3.2em;
 }
 .full {
 	width:100%;

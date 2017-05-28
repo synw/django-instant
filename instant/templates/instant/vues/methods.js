@@ -3,13 +3,7 @@
 	toggleInstantForm: function(){
 		if (this.instantForm === true) {
 			this.instantForm = false;
-			document.getElementById("instant").style.display = "none";
-			document.getElementById("instant_open").style.display = "none";
-			document.getElementById("instant_close").style.display = "block";
 		} else {
-			document.getElementById("instant").style.display = "block";
-			document.getElementById("instant_open").style.display = "block";
-			document.getElementById("instant_close").style.display = "none";
 			this.instantForm = true;
 		}
 	},
