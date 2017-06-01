@@ -32,7 +32,9 @@
 				app.statusMsg(status);
 				app.msgToSend = "";
 			} else {
-				app.statusMsg(err);
+				var err = response.data.err;
+				var errmsg = '<i class="fa fa-close" style="color:red"></i>&nbsp;'+err;
+				app.errMsg(errmsg, true);
 			}
 			
 		}
@@ -42,6 +44,10 @@
 		app.show("msg_status");
 		app.msgStatus = msg;
 		app.hide("msg_status", 2500);
+	},
+	errMsg: function(msg) {
+		app.show("msg_status");
+		app.msgStatus = msg;
 	},
 	hide: function(el, delay) {
 		elem = this.get(el);

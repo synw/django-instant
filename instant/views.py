@@ -65,12 +65,16 @@ class DashboardView(FormView):
         event_class = form.cleaned_data['event_class']
         channel = form.cleaned_data['channel']
         default_channel = form.cleaned_data['default_channel']
+        err = None
         if channel or default_channel:
             if default_channel:
-                publish(message=msg, event_class=event_class, channel=default_channel)
+                err = publish(message=msg, event_class=event_class, channel=default_channel)
             if channel:
-                publish(message=msg, event_class=event_class, channel=channel)
-            messages.success(self.request, _(u"Message published to the channel "+channel))
+                err = publish(message=msg, event_class=event_class, channel=channel)
+            if err is not None:
+                messages.warning(self.request, _(u"Error publishing the message: "+err))
+            else:
+                messages.success(self.request, _(u"Message published to the channel "+channel))
         else:
             messages.warning(self.request, _(u"Please provide a valid channel"))
         return super(DashboardView, self).form_valid(form)
@@ -83,13 +87,13 @@ class PostMsgView(View):
     
     def post(self, request, *args, **kwargs):
         if not request.user.is_superuser:
-            #print("NOT SUPERUSER")
             return JsonResponse({"ok":0})
-        #print("NOT SUPERUSER")
-        
         data = json.loads(self.request.body.decode('utf-8'))
         msg = data["msg"]
         channel = data["channel"]
         event_class = data["event_class"]
-        publish(message=msg, event_class=event_class, channel=channel)
+        err = publish(message=msg, event_class=event_class, channel=channel)
+        if err is not None:
+            errmsg =  _(u"Error publishing the message: "+err)
+            return JsonResponse({"ok":0, "err":errmsg})
         return JsonResponse({"ok":1})
