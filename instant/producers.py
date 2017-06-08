@@ -48,18 +48,8 @@ def publish_go(message, event_class="default", data={}, channel=None, site=SITE_
     if event_class.lower() == "debug":
         print ("[DEBUG] ", message, str(json.dumps(data)))
     return
-
-def publish_with_warning(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None):
-    print("Warning from Django Instant: the broadcast() method is deprecated in favor of publish(). It will be removed in version 0.4")
-    if BROADCAST_WITH == "go":
-        err = publish_go(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None)
-    else:
-        err = publish_py(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None)
-    return err
     
 if BROADCAST_WITH == "go":
     publish  = publish_go
 else:
     publish = publish_py
-
-broadcast = publish_with_warning
