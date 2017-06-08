@@ -15,11 +15,11 @@ setup(
     download_url = 'https://github.com/synw/django-instant/releases/tag/'+version, 
     keywords = ['django', 'websockets', 'centrifugo'], 
     classifiers = [
-          'Development Status :: 3 - Alpha',
-          'Framework :: Django :: 1.9',
+          'Development Status :: 4 - Beta',
+          'Framework :: Django :: 1.11',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
-          'Programming Language :: Python :: 2.7',
+          'Programming Language :: Python :: 3.5',
       ],
     install_requires=[
         'cent',
