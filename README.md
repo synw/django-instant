@@ -63,10 +63,9 @@ it possible to build an app that just plugs on an existing Django stack. The API
 new concept.
 
 We are trying to ship a fully compatible, easy to install and ready to use websockets solution for Django: 
-websockets in Django should not be a big deal!
+websockets in Django should not be a big deal.
 
 ### Todo
 
-- Async publish options
-- Batch send
-- Decent UI for sending messages
+- Improve the user interface
+- Dashboard with stats
