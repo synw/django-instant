@@ -43,14 +43,13 @@ Add to installed apps:
 ::
 
    "instant",
-   "vv", # required only if you want to use the dashboard at /instant/
 
 Set the urls:
 
 .. highlight:: python
 
 ::
-
+   # required only if you want to use the frontend at /instant/
    url('^instant/', include('instant.urls')),
 
 Settings
