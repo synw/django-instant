@@ -5,7 +5,7 @@ function handlers_for_event(event_class, channel, message, data, site, uid) {
 		console.log(message);
 	}*/
 	{% if user.is_superuser %}
-		{% include "instant/dashboard/handlers.js" %}
+		{% include "instant/frontend/handlers.js" %}
 	{% endif %}
 	{% include "instant/extra_handlers.js" %}
 }

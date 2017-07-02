@@ -1,0 +1,45 @@
+{% load staticfiles i18n vv_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{% trans 'Instant' %}</title>
+    {% include "instant/frontend/head.html" %}
+</head>
+
+<body>
+<div id="app">
+	<div id="site_header">
+		{% include "instant/frontend/header.html" %}
+	</div>
+	<div id="navbar">
+		{% include "instant/frontend/navbar.html" %}
+	</div>
+	<div id="content" style="text-align:center;width:100%">
+		<div style="width:100%;max-width:1140px !important;text-align:left;display:inline-block">
+			{% include "instant/frontend/form.html" %}
+			<h3 v-if="(numMsgs>0)" style="display:none">{% trans 'Messages' %}</h3>
+			{% verbatim %}
+			<ul v-for="msg in msgs" style="list-style-type:none">
+				<li v-bind:id="msg.uid">
+					<a href="#" class="pull-right btn btn-link btn-sm" @click="delMsg(msg)">
+						<i class="fa fa-close" style="color:red;position:relative;top:-0.3em"></i>
+					</a>
+					<span style="margin-left:-2.2em" v-html="formatMsg(msg)"></span>
+				</li>
+			</ul>
+			<div class="gus" v-show="numMsgs" style="display:none">
+				<a href="#" @click="deleteAllMsgs()">
+					<button class="danger">
+						{% endverbatim %}{% trans 'Delete all' %}
+					</button>
+				</a>
+			</div>
+		</div>
+	</div>
+	{% include "instant/client.html" %}
+	<script type="text/javascript">
+		{% include "instant/frontend/app.js" %}
+	</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+/* ##################################### Base tags ##################################### */
+body  {
+	background-color:#fff;
+    margin: 0;
+    padding: 0; 
+}
+a, a:hover, a:visited {
+	text-decoration:none !important;
+}
+a:not(.btn), a:visited:not(.btn) {
+	color:darkslategrey;
+}
+a:hover:not(.btn) {
+	color:grey;
+}
+h1, h2, h3, h4, h5 {
+	color:darkslategrey;
+}
+img {
+	vertical-align:middle;
+}
+div {
+	box-sizing: border-box;
+	vertical-align:top;
+}
+/* ##################################### Skeleton ##################################### */
+#site_header {
+	min-height:80px;
+	background-color:steelblue;
+}
+#site_header a, #site_header a:visited, #navbar a, #navbar a:visited {
+	color:white !important;
+	padding-right:0.8em;
+}
+#topbar {
+	position:absolute;
+	top:1em;
+	right:1em;
+}
+#topbar a:hover {
+	color:grey !important;
+}
+#navbar .list-inline a:hover, #navbar .list-inline a.active {
+	color:darkslategrey !important;
+	background-color:white;
+}
+#navbar {
+	background-color:grey;
+	padding:0 0 0 6em;
+	height:2.9em;
+	line-height:2.9em;
+	color:white;
+}
+#navbar .btn {
+	padding:0.9em 0.4em 0.9em 0.4em;
+	vertical-align:baseline;
+}
+#chans {
+	display:inline-block;
+}
+#content {
+	min-height:40em;
+	padding:0.5em 1em 4em 1em;
+}
+#footer {
+	min-height:50px;
+	background-color:steelblue;
+}
+/* ##################################### Widgets ##################################### */
+.flex {
+	display:flex;
+}
+.grow {
+	flex-grow:1;
+}
+.start {
+	justify-content:flex-start;
+}
+.hidden {
+	display:none;
+}
+.pad {
+	padding:1em;
+}
+#msg_status {
+	display:inline-block;
+	margin:0.2em 1em 0 0.5em;
+}
+.chan {
+	margin:0.5em 1em 0.5em 0.5em;
+	display:inline-block;
+}
+.event-label {
+	margin-right:0.5em;
+	opacity:0.6;
+}
+.event-labels {
+	padding:0.5em;
+	margin:0 0 0 2em;
+	min-height:3.2em;
+}
+.full {
+	width:100%;
+}
+.inline {
+	display:inline-block;
+}
+.disabled {
+	opacity:0.6;
+}
+#submitMsg {
+	position:relative;
+	top:-0.4em;
+}
+.pull-left {
+	float:left
+}
+.pull-right {
+	float:right
+}

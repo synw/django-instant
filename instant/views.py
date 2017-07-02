@@ -51,18 +51,22 @@ class StaffChannelView(TemplateView):
         return super(StaffChannelView, self).dispatch(request, *args, **kwargs)
 
 
-class DashboardView(FormView):
+class FrontendView(FormView):
     form_class = BroadcastForm
-    template_name = 'instant/dashboard/index.html'
+    template_name = 'instant/frontend/index.html'
     
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_superuser:
             raise Http404
-        return super(DashboardView, self).dispatch(request, *args, **kwargs)
+        return super(FrontendView, self).dispatch(request, *args, **kwargs)
     
     def form_valid(self, form):
+        print(form.cleaned_data)
+        
         msg = form.cleaned_data['message']
-        event_class = form.cleaned_data['event_class']
+        event_class = "default"
+        if "event_class" in form.cleaned_data:
+            event_class = form.cleaned_data['event_class']
         channel = form.cleaned_data['channel']
         default_channel = form.cleaned_data['default_channel']
         err = None
@@ -77,7 +81,7 @@ class DashboardView(FormView):
                 messages.success(self.request, _(u"Message published to the channel "+channel))
         else:
             messages.warning(self.request, _(u"Please provide a valid channel"))
-        return super(DashboardView, self).form_valid(form)
+        return super(FrontendView, self).form_valid(form)
     
     def get_success_url(self):
         return reverse('instant-message-broadcasted')
@@ -91,7 +95,9 @@ class PostMsgView(View):
         data = json.loads(self.request.body.decode('utf-8'))
         msg = data["msg"]
         channel = data["channel"]
-        event_class = data["event_class"]
+        event_class = "default"
+        if "event_class" in data:
+            event_class = data['event_class']
         err = publish(message=msg, event_class=event_class, channel=channel)
         if err is not None:
             errmsg =  _(u"Error publishing the message: "+err)

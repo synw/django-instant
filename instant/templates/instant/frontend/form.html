@@ -1,6 +1,5 @@
 {% load i18n %}
-{% if user.is_superuser %}
-<div id="instant" style="display:none" class="flex" v-show="instantForm">
+<div id="instant" style="display:none" v-show="instantForm">
 	<div class="event-labels">
 		<span class="pull-left" v-for="cl in eventLabels" v-bind:div="cl">
 			<span v-bind:id="cl.name"
@@ -27,4 +26,3 @@
 		</form>
 	</div>
 </div>
-{% endif %}
