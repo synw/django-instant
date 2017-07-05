@@ -6,10 +6,10 @@ var instantDebug = {% debug_mode %};
 
 {% get_timestamp as timestamp %}
 var centrifuge = new Centrifuge({
-    url: "{% get_centrifugo_url %}",
-    user: "{{ request.user.username }}",
+	url: "{% get_centrifugo_url %}",
+    user: "{% if user.is_anonymous %}anonymous{% else %}{{ request.user.username }}{% endif %}",
     timestamp: "{{ timestamp }}",
-    token: "{% mq_generate_token user.username timestamp %}"
+    token: "{% if user.is_anonymous %}{% mq_generate_token 'anonymous' timestamp %}{% else %}{% mq_generate_token user.username timestamp %}{% endif %}"
 });
 
 {% public_channel_is_on as enable_public_channel %}
