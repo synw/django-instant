@@ -63,7 +63,6 @@ Configure settings.py:
    CENTRIFUGO_SECRET_KEY = "70b651f6-775a-4949-982b-b387b31c1d84" # the_key_that_is_in_config.json
    SITE_SLUG = "my_site" # used internaly to prefix the channels
    SITE_NAME = "My site"
-   VV_APPS = ["instant"] # required only if you want to use the dashboard at /instant/
    
    # optionnal settings
    CENTRIFUGO_HOST = 'http://ip_here' #default: localhost
