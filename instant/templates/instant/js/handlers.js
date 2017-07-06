@@ -5,7 +5,7 @@ function handlers_for_event(event_class, channel, message, data, site, uid) {
 		console.log(message);
 	}*/
 	{% if user.is_superuser %}
-		{% if request.path|slice:8 == "/instant" %}
+		{% if request.path|slice:":8" == "/instant" %}
 			{% include "instant/frontend/handlers.js" %}
 		{% endif %}
 	{% endif %}
