@@ -43,11 +43,11 @@ if (event_class == 'test') {
 
 ### Example apps
 
-[Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): realtime application events and logs
-
 [Django Presence](https://github.com/synw/django-presence): user presence notification widget
 
-[Django Hitsfeed](https://github.com/synw/django-hitsfeed): realtime hits monitoring
+[Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): realtime application events and logs
+
+[Django Autoreload](https://github.com/synw/django-autoreload): watch directories and autoreload the browser on file change
 
 [Django Rechat](https://github.com/synw/django-rechat): basic chat app
 
@@ -64,8 +64,3 @@ new concept.
 
 We are trying to ship a fully compatible, easy to install and ready to use websockets solution for Django: 
 websockets in Django should not be a big deal.
-
-### Todo
-
-- Improve the user interface
-- Dashboard with stats
