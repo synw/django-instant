@@ -24,4 +24,4 @@ var staff_callbacks_{% get_staff_channel %} = {
     {% include "instant/js/join_events.js" %}
 }
 
-var subscription = centrifuge.subscribe("{% get_staff_channel %}", staff_callbacks_{% get_staff_channel %});
+var staff_subscription = centrifuge.subscribe("{% get_staff_channel %}", staff_callbacks_{% get_staff_channel %});

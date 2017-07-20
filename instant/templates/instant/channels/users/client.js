@@ -24,4 +24,4 @@ var mq_callbacks_{% get_users_channel %} = {
     {% include "instant/js/join_events.js" %}
 }
 
-var subscription = centrifuge.subscribe("{% get_users_channel %}", mq_callbacks_{% get_users_channel %});
+var users_subscription = centrifuge.subscribe("{% get_users_channel %}", mq_callbacks_{% get_users_channel %});

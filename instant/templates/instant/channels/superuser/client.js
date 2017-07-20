@@ -24,4 +24,4 @@ var superuser_callbacks_{% get_superuser_channel %} = {
     {% include "instant/js/join_events.js" %}
 }
 
-var subscription = centrifuge.subscribe("{% get_superuser_channel %}", superuser_callbacks_{% get_superuser_channel %});
+var superuser_subscription = centrifuge.subscribe("{% get_superuser_channel %}", superuser_callbacks_{% get_superuser_channel %});

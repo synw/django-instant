@@ -32,7 +32,7 @@ var public_callbacks = {
     {% include "instant/js/join_events.js" %}
 }
 
-var subscription = centrifuge.subscribe("{% get_public_channel %}", public_callbacks);
+var public_subscription = centrifuge.subscribe("{% get_public_channel %}", public_callbacks);
 
 centrifuge.on('connect', function(context) {
 	if ( instantDebug === true ) {console.log("Connection ("+context.latency+"ms)")};
