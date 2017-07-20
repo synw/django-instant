@@ -1,6 +1,9 @@
 Client-side event handlers
 ==========================
 
+Messages handlers
+-----------------
+
 You can customize the javascript that will handle each class of event of the default public channel. 
 
 Create a template ``instant/extra_handlers.js`` with this content:
@@ -25,6 +28,21 @@ Note: for javascript debugging you can set a ``INSTANT_DEBUG = True`` in setting
 
 Note: this is only available for the default public channel events. To handle events in private channels
 see next section.
+
+Connection handler
+------------------
+
+To perform custom actions on connect and disconnect events create templates:
+
+Template `instant/events/connect.js` or `instant/events/disconnect.js`:
+
+.. highlight:: javascript
+
+::
+   
+	{% include "myapp/myjs.js %}
+
+This javascript will be executed on the selected event
 
 Message label formating
 -----------------------

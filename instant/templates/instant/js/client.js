@@ -36,10 +36,12 @@ var subscription = centrifuge.subscribe("{% get_public_channel %}", public_callb
 
 centrifuge.on('connect', function(context) {
 	if ( instantDebug === true ) {console.log("Connection ("+context.latency+"ms)")};
+	{% include "instant/events/connect.js" %}
 });
 
 centrifuge.on('disconnect', function(context) {
 	if ( instantDebug === true ) {console.log("Disconnection: "+context.reason)};
+	{% include "instant/events/disconnect.js" %}
 });
 {% endif %}
 
