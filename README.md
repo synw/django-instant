@@ -41,15 +41,15 @@ if (event_class == 'test') {
 }
   ```
 
-### Example apps
+### Using this
 
 [Django Presence](https://github.com/synw/django-presence): user presence notification widget
 
-[Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): realtime application events and logs
+[Django Mqueue](https://github.com/synw/django-mqueue) with the Centrifugo hook: realtime application events and logs
 
 [Django Autoreload](https://github.com/synw/django-autoreload): watch directories and autoreload the browser on file change
 
-[Django Rechat](https://github.com/synw/django-rechat): basic chat app
+[Django Rechat](https://github.com/synw/django-rechat): basic chat app (toy app for now)
 
 ### Why?
 
