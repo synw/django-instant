@@ -17,7 +17,11 @@ if ENABLE_SUPERUSER_CHANNEL is True:
 
 
 class BroadcastForm(forms.Form):
-    message = forms.CharField(max_length=300, label="Message", widget=forms.Textarea(attrs={'rows': '2'}), required=True)
-    event_class = forms.CharField(max_length=60, label="Event class", required=False)
-    default_channel = forms.CharField(max_length=60, label="Channels", required=False, widget=forms.RadioSelect(choices=choices))
-    channel = forms.CharField(max_length=60, label="Other channel", required=False)
+    message = forms.CharField(max_length=300, label="Message", widget=forms.Textarea(
+        attrs={'rows': '2'}), required=True)
+    event_class = forms.CharField(
+        max_length=60, label="Event class", required=False)
+    default_channel = forms.CharField(
+        max_length=60, label="Channels", required=False, widget=forms.RadioSelect(choices=choices))
+    channel = forms.CharField(
+        max_length=60, label="Other channel", required=False)
