@@ -1,7 +1,37 @@
 Install and configure
 =====================
 
-1. Install Django Instant:
+1. Install Centrifugo:
+
+Download it `here <https://github.com/centrifugal/centrifugo/releases>`_
+
+.. highlight:: bash
+
+::
+
+   unzip centrifugo-1.x.x.zip
+   cd centrifugo-1.x.x
+
+
+2. Configure Centrifugo
+
+::
+
+   ./centrifugo genconfig
+   
+This will generate your secret key in a ``config.json`` file. Edit it and set anonymous to true if you want 
+to use public events. Leave it if you want only the logged in users to receive the events.
+
+.. highlight:: javascript
+
+::
+
+   {
+  "secret": "70b651f6-775a-4949-982b-b387b31c1d84",
+  "anonymous": true
+  }
+
+3. Install Django Instant:
 
 ::
 
@@ -22,32 +52,9 @@ Set the urls:
    
    # required only if you want to use the frontend at /instant/
    url('^instant/', include('instant.urls')),
-   
-2. Install the websockets server
-
-An installer is available for Linux only:
-
-.. highlight:: bash
-
-::
-
-   python3 manage.py installws
-   
-This will download the Centrifugo websockets server, install it and update your settings.py file with the 
-appropriate configuration.
-
-For other systems you have to install Centrifugo `manually <https://fzambia.gitbooks.io/centrifugal/content/server/start.html>`_
-
-Templates
-~~~~~~~~~
-
-Include the template ``{% include "instant/client.html" %}`` anywhere: nothing will be displayed it is the engine. 
-See next section for messages handling. 
 
 Settings
 ~~~~~~~~
-
-Note: if you use the management command to install the server the settings will already be configured
 
 Configure settings.py:
 
@@ -88,3 +95,9 @@ Performance test: 1000 messages:
 - Go: 14.44 seconds
 
 Note: this test uses the standard publish function so that each new event sent makes an new connection to Centrifugo.
+
+Templates
+~~~~~~~~~
+
+Include the template ``{% include "instant/client.html" %}`` anywhere: nothing will be displayed it is the engine. 
+See next section for messages handling. 

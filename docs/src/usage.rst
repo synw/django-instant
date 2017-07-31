@@ -1,23 +1,17 @@
 Send events
 ===========
 
-Run the websockets server:
+Run the Centrifugo server:
 
 .. highlight:: bash
 
 ::
 
-   python3 manage.py runws
+   ./centrifugo --config=config.json --port=8001
    
+Use the ``-d`` flag for debug. See the `Centrifugo config options <https://fzambia.gitbooks.io/centrifugal/content/server/configuration.html>`_.
+
 There are two ways to publish events:
-
-Direct publish of events
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Go to ``/instant/`` as superuser and use the form to publish a message to a channel.
-
-The next section will describe how to 
-customize the handlers on the client side according to the event class.
 
 Stream events from code
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -41,3 +35,11 @@ The only required parameter is ``message``.
 To send extra data pass some json into ``data``.
 
 **Note**: if no channel is provided the events are published to the default public channel.
+
+Direct publish of events
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Go to ``/instant/`` as superuser and use the form to publish a message to a channel.
+
+The next section will describe how to 
+customize the handlers on the client side according to the event class.

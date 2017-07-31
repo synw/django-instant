@@ -3,4 +3,4 @@ recursive-include instant/migrations *
 recursive-include instant/templates *
 recursive-include instant/templatetags *
 recursive-include instant/go *
-recursive-include management/commands/*.sh
+recursive-include management/commands/*
