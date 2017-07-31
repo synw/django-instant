@@ -1,5 +1,5 @@
-Send events
-===========
+Send messages
+=============
 
 Run the websockets server:
 
@@ -9,18 +9,18 @@ Run the websockets server:
 
    python3 manage.py runws
    
-There are two ways to publish events:
+There are two ways to publish messages:
 
-Direct publish of events
-~~~~~~~~~~~~~~~~~~~~~~~~
+Direct publish of messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Go to ``/instant/`` as superuser and use the form to publish a message to a channel.
 
 The next section will describe how to 
 customize the handlers on the client side according to the event class.
 
-Stream events from code
-~~~~~~~~~~~~~~~~~~~~~~~
+Stream messages from code
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. highlight:: python
 
@@ -28,7 +28,7 @@ Stream events from code
 
    from instant.producers import publish 
 
-   # fire an event on the public channel whith error handling
+   # fire a message on the public channel whith error handling
    err = publish(message='Hello world', event_class="infos", channel="public", data={"myfield":"my_value"})
    if err != None:
       print("Error", str(err))
