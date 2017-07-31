@@ -2,6 +2,7 @@ from __future__ import print_function
 from django.core.management.base import BaseCommand
 import os
 import subprocess
+from instant.conf import CENTRIFUGO_PORT
 
 
 class Command(BaseCommand):
@@ -10,9 +11,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         basepath = os.getcwd()
         c = basepath + "/centrifugo/centrifugo"
+        conf = basepath + "/centrifugo/config.json"
         cmd = [
             c,
-            "--config", "config.json"
+            "--config", conf,
+            "--port", str(CENTRIFUGO_PORT)
         ]
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         for line in p.stdout:
