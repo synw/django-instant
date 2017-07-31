@@ -46,6 +46,7 @@ const app = new Vue({
 			var url = "{% url 'instant-post-msg' %}";
 			function error(err) {
 				console.log(err);
+				app.setErrMsg(errmsg, true);
 			}
 			function action(response) {	
 				if (response.data.ok == 1) {
@@ -55,7 +56,7 @@ const app = new Vue({
 				} else {
 					var err = response.data.err;
 					var errmsg = '<i class="fa fa-close" style="color:red"></i>&nbsp;'+err;
-					app.errMsg(errmsg, true);
+					app.setErrMsg(errmsg, true);
 				}
 				
 			}
@@ -66,7 +67,7 @@ const app = new Vue({
 			app.msgStatus = msg;
 			app.hide("msg_status", 2500);
 		},
-		errMsg: function(msg) {
+		setErrMsg: function(msg) {
 			app.show("msg_status");
 			app.msgStatus = msg;
 		},
@@ -82,8 +83,6 @@ const app = new Vue({
 			var chan = document.getElementById(channel);		
 			chan.classList.remove("label-default");
 			chan.classList.add("label-success");
-			console.log("A", this.activeChannel)
-			
 			if (this.activeChannel === "") {
 				// init
 				document.getElementById("submitMsg").classList.remove("disabled");
