@@ -19,18 +19,14 @@ check "The websockets has been downloaded"
 
 title $yellow "2." "Installing the websockets server"
 mv $dirname "centrifugo"
-ls
 rm -f $dirname".zip"
 sleep 1
 check "The websockets server is installed"
 
 title $yellow "3." "Configuring websockets server"
 echo "Generating Centrifugo config"
-pwd
-ls
 cd centrifugo
 ./centrifugo genconfig
-ls
 echo "Updating Django settings"
 python3 $pyconf $project_name $base_dir ok
 check "Websockets server config generated and settings updated."
