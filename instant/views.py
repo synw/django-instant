@@ -25,7 +25,6 @@ def instant_auth(request):
     channels = data["channels"]
     client = data['client']
     response = {}
-    print("CHAN", channels, SUPERUSER_CHANNELS)
     for channel in channels:
         signature = None
         if channel in USERS_CHANNELS:
@@ -35,9 +34,7 @@ def instant_auth(request):
             if request.user.is_staff:
                 signature = signed_response(channel, client)
         if channel in SUPERUSER_CHANNELS or channel == DEFAULT_SUPERUSER_CHANNEL:
-            print("SUP CHAN")
             if request.user.is_superuser:
-                print("SUP USER")
                 signature = signed_response(channel, client)
         if signature is not None:
             response[channel] = signature
