@@ -31,8 +31,8 @@ Edit ``myapp/client.js``:
    
    var my_callbacks = {
        "message": function(dataset) {
-   	// the debug variable is set via INSTANT_DEBUG = True in settings.py
-       	if (debug === true) { console.log('EVENT: '+JSON.stringify(dataset));};
+   	    // the instantDebug variable is set via INSTANT_DEBUG = True in settings.py
+       	if (instantDebug === true) { console.log('EVENT: '+JSON.stringify(dataset));};
        	res = unpack_data(dataset);
     	var message = res['message']
     	var event_class = res['event_class']
@@ -40,10 +40,10 @@ Edit ``myapp/client.js``:
     	var data = res['data']
     	var channel = res['channel'];
     	if ( data.hasOwnProperty('my_field) ) {
-   		my_field = data['myfield']
+   		   my_field = data['myfield']
     	}
     	// do something with the data
-    	$('#message_box').prepend(message);
+    	console.log(message);
     },
 	{% include "instant/js/join_events.js" %}
    }
