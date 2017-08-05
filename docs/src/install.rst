@@ -44,6 +44,15 @@ Templates
 Include the template ``{% include "instant/client.html" %}`` anywhere: nothing will be displayed it is the engine. 
 See next section for messages handling. 
 
+Run the websockets server
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. highlight:: bash
+
+::
+
+   python3 manage.py runws
+
 Settings
 ~~~~~~~~
 

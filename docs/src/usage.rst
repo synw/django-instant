@@ -1,13 +1,5 @@
 Send messages
 =============
-
-Run the websockets server:
-
-.. highlight:: bash
-
-::
-
-   python3 manage.py runws
    
 There are two ways to publish messages:
 
