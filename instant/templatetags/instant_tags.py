@@ -31,6 +31,9 @@ ENABLE_SUPERUSER_CHANNEL = getattr(
     settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
 EXCLUDE = getattr(settings, 'INSTANT_EXCLUDE', ["__presence__"])
 
+SUPERUSER_CHANNELS = getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [])
+print("CCC", SUPERUSER_CHANNELS)
+
 # javascript debug messages
 debug_mode = getattr(settings, 'INSTANT_DEBUG', False)
 if debug_mode is True:
@@ -100,6 +103,18 @@ def is_superuser_channel():
 @register.simple_tag
 def get_superuser_channel():
     return '$' + SITE_SLUG + '_admin'
+
+
+@register.simple_tag
+def get_superuser_channels():
+    return SUPERUSER_CHANNELS
+
+
+@register.simple_tag
+def get_handlers_url(chan):
+    url = "instant/handlers/" + chan + ".js"
+    name = chan.replace("$", "")
+    return [url, name]
 
 
 @register.simple_tag

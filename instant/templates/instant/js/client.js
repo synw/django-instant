@@ -47,11 +47,20 @@ centrifuge.on('disconnect', function(context) {
 
 {% include "instant/extra_clients.js" %}
 
-{% is_superuser_channel as enable_superuser_channel %}
-{% if enable_superuser_channel %}
-	{% if user.is_superuser %}
+{% if user.is_superuser %}
+	{% is_superuser_channel as enable_superuser_channel %}
+	{% if enable_superuser_channel %}
 		{% include "instant/channels/superuser/client.js" %}
 	{% endif %}
+	{% get_superuser_channels as supchans %}
+	{% for chan in supchans %}
+		{% get_handlers_url chan as handlers %}
+		{% with handlers.0 as url %}
+		{% with handlers.1 as chan_name %}
+			{% include "instant/channels/client.js" %}
+		{% endwith %}
+		{% endwith %}
+	{% endfor %}
 {% endif %}
 
 {% is_staff_channel as enable_staff_channel %}
