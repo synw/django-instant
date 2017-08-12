@@ -34,7 +34,7 @@ the channel will autoconnect on every path. Example:
     ('$mysite_users1',)
    )
    INSTANT_PUBLIC_CHANNELS = (
-    ('mysite_public1',)
+    ('mysite_public1',),
     ('mysite_public2',)
    )
    
@@ -45,5 +45,6 @@ To declare channels your must create a ``/templates/instant/handlers/default.js`
 the channels.
 
 Each channel can have its own handler: just create it in the handlers directory: example: if a ``$mychan`` is declared in
-settings I can create a ``$mychan.js`` file in the handlers directory to manage the handling logics just for that channel
+settings it is possible to create a ``$mychan.js`` file in the handlers directory to manage the handling logics 
+just for that channel
 
