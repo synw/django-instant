@@ -52,7 +52,7 @@ centrifuge.on('disconnect', function(context) {
 	{% if enable_superuser_channel %}
 		{% include "instant/channels/superuser/client.js" %}
 	{% endif %}
-	{% get_superuser_channels as supchans %}
+	{% get_channels request.path "superuser" as supchans %}
 	{% for chan in supchans %}
 		{% get_handlers_url chan as handlers %}
 		{% with handlers.0 as url %}
@@ -63,18 +63,46 @@ centrifuge.on('disconnect', function(context) {
 	{% endfor %}
 {% endif %}
 
-{% is_staff_channel as enable_staff_channel %}
-{% if enable_staff_channel %}
-	{% if user.is_staff %}
+{% if user.is_staff %}
+	{% is_staff_channel as enable_staff_channel %}
+	{% if enable_staff_channel %}
 		{% include "instant/channels/staff/client.js" %}
 	{% endif %}
+	{% get_channels request.path "staff" as staffchans %}
+	{% for chan in staffchans %}
+		{% get_handlers_url chan as handlers %}
+		{% with handlers.0 as url %}
+		{% with handlers.1 as chan_name %}
+			{% include "instant/channels/client.js" %}
+		{% endwith %}
+		{% endwith %}
+	{% endfor %}
 {% endif %}
 
-{% is_users_channel as enable_users_channel %}
-{% if enable_users_channel %}
-	{% if user.is_authenticated %}
+{% if user.is_authenticated %}
+	{% is_users_channel as enable_user_channel %}
+	{% if enable_user_channel %}
 		{% include "instant/channels/users/client.js" %}
 	{% endif %}
+	{% get_channels request.path "users" as userchans %}
+	{% for chan in userchans %}
+		{% get_handlers_url chan as handlers %}
+		{% with handlers.0 as url %}
+		{% with handlers.1 as chan_name %}
+			{% include "instant/channels/client.js" %}
+		{% endwith %}
+		{% endwith %}
+	{% endfor %}
 {% endif %}
+
+{% get_channels request.path "public" as pubchans %}
+{% for chan in pubchans %}
+	{% get_handlers_url chan as handlers %}
+	{% with handlers.0 as url %}
+	{% with handlers.1 as chan_name %}
+		{% include "instant/channels/client.js" %}
+	{% endwith %}
+	{% endwith %}
+{% endfor %}
 
 centrifuge.connect();

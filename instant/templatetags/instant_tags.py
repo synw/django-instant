@@ -32,7 +32,9 @@ ENABLE_SUPERUSER_CHANNEL = getattr(
 EXCLUDE = getattr(settings, 'INSTANT_EXCLUDE', ["__presence__"])
 
 SUPERUSER_CHANNELS = getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [])
-print("CCC", SUPERUSER_CHANNELS)
+STAFF_CHANNELS = getattr(settings, 'INSTANT_STAFF_CHANNELS', [])
+USERS_CHANNELS = getattr(settings, 'INSTANT_USERS_CHANNELS', [])
+PUBLIC_CHANNELS = getattr(settings, 'INSTANT_PUBLIC_CHANNELS', [])
 
 # javascript debug messages
 debug_mode = getattr(settings, 'INSTANT_DEBUG', False)
@@ -106,8 +108,32 @@ def get_superuser_channel():
 
 
 @register.simple_tag
-def get_superuser_channels():
-    return SUPERUSER_CHANNELS
+def get_channels(path, level):
+    chanconf = []
+    if level == "superuser":
+        chanconf = SUPERUSER_CHANNELS
+    elif level == "staff":
+        chanconf = STAFF_CHANNELS
+    elif level == "users":
+        chanconf = USERS_CHANNELS
+    elif level == "public":
+        chanconf = PUBLIC_CHANNELS
+    lastchar = path[-1:]
+    if lastchar == "/":
+        path = path[:-1]
+    chans = []
+    for chantup in chanconf:
+        chan = chantup[0]
+        chanpaths = []
+        if len(chantup) == 1:
+            chans.append(chan)
+            continue
+        else:
+            chanpaths = chantup[1]
+            for chanpath in chanpaths:
+                if chanpath == path:
+                    chans.append(chan)
+    return chans
 
 
 @register.simple_tag
@@ -132,7 +158,7 @@ def is_in_apps(app):
 
 
 @register.simple_tag
-def get_channels():
+def get_default_channels():
     channels = []
     if ENABLE_PUBLIC_CHANNEL is True:
         channels.append(PUBLIC_CHANNEL)

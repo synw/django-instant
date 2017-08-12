@@ -24,13 +24,13 @@ public_channel = SITE_SLUG + '_public'
 PUBLIC_CHANNEL = getattr(settings, 'INSTANT_PUBLIC_CHANNEL', public_channel)
 USERS_CHANNELS = getattr(settings, 'INSTANT_USERS_CHANNELS', [
                          DEFAULT_USERS_CHANNEL])
-STAFF_CHANNELS = getattr(settings, 'INSTANT_STAFF_CHANNELS', [
-                         DEFAULT_STAFF_CHANNEL])
-SUPERUSER_CHANNELS = getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [
-                             DEFAULT_SUPERUSER_CHANNEL])
+STAFF_CHANNELS = getattr(settings, 'INSTANT_STAFF_CHANNELS', [])
+SUPERUSER_CHANNELS = getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [])
+USERS_CHANNELS = getattr(settings, 'INSTANT_USERS_CHANNELS', [])
 
 EXCLUDE = getattr(settings, 'INSTANT_EXCLUDE', ["__presence__"])
 
+"""
 # ensure that the private channels will always be treated as private by
 # Centrifugo
 chans = []
@@ -47,7 +47,8 @@ for chan in STAFF_CHANNELS:
 STAFF_CHANNELS = schans
 achans = []
 for chan in SUPERUSER_CHANNELS:
-    if not chan.startswith("$"):
-        chan = u"$" + chan
-    achans.append(chan)
+    if not chan[0].startswith("$"):
+        chan[0] = u"$" + chan[0]
+    achans.append(chan[0])
 SUPERUSER_CHANNELS = achans
+"""

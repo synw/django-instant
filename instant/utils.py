@@ -11,3 +11,22 @@ def signed_response(channel, client):
 
 def _get_public_channel():
     return PUBLIC_CHANNEL
+
+
+def _get_chans_from_conf(chanconf, path=None):
+    if path is not None:
+        lastchar = path[-1:]
+        if lastchar == "/":
+            path = path[:-1]
+    chans = []
+    for chantup in chanconf:
+        chan = chantup[0]
+        chanpaths = []
+        if len(chantup) == 1 or path is None:
+            chans.append(chan)
+        else:
+            chanpaths = chantup[1]
+            for chanpath in chanpaths:
+                if chanpath == path:
+                    chans.append(chan)
+    return chans

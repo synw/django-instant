@@ -12,13 +12,21 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 from instant.producers import publish
 from instant.forms import BroadcastForm
-from instant.utils import signed_response
+from instant.utils import signed_response, _get_chans_from_conf
 from instant.conf import USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS,\
-    DEFAULT_SUPERUSER_CHANNEL, DEFAULT_STAFF_CHANNEL
+    DEFAULT_SUPERUSER_CHANNEL, DEFAULT_STAFF_CHANNEL, USERS_CHANNELS
+
+
+SUPERCHANS = _get_chans_from_conf(SUPERUSER_CHANNELS)
+STAFFCHANS = _get_chans_from_conf(STAFF_CHANNELS)
+USERSCHANS = _get_chans_from_conf(USERS_CHANNELS)
 
 
 @csrf_exempt
 def instant_auth(request):
+    global SUPERCHANS
+    global STAFFCHANS
+    global USERSCHANS
     if not request.is_ajax() or not request.method == "POST":
         raise Http404
     data = json.loads(request.body.decode("utf-8"))
@@ -27,15 +35,30 @@ def instant_auth(request):
     response = {}
     for channel in channels:
         signature = None
+        # old systems: will be DEPRECATED
         if channel in USERS_CHANNELS:
             if request.user.is_authenticated():
                 signature = signed_response(channel, client)
         if channel in STAFF_CHANNELS or channel == DEFAULT_STAFF_CHANNEL:
             if request.user.is_staff:
                 signature = signed_response(channel, client)
-        if channel in SUPERUSER_CHANNELS or channel == DEFAULT_SUPERUSER_CHANNEL:
+        if channel == DEFAULT_SUPERUSER_CHANNEL:
             if request.user.is_superuser:
                 signature = signed_response(channel, client)
+        # new system
+        if request.user.is_superuser:
+            for chan in SUPERCHANS:
+                if chan == channel:
+                    signature = signed_response(channel, client)
+        if request.user.is_staff:
+            for chan in STAFFCHANS:
+                if chan == channel:
+                    signature = signed_response(channel, client)
+        if request.user.is_authenticated:
+            for chan in USERSCHANS:
+                if chan == channel:
+                    signature = signed_response(channel, client)
+        # response
         if signature is not None:
             response[channel] = signature
         else:
