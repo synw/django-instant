@@ -14,6 +14,12 @@ Instant delivers events in real time to the userland using the
 	:caption: Install
    
 	src/install
+	
+.. toctree::
+	:maxdepth: 2
+	:caption: Create channels
+   
+	src/create_chans
 
 .. toctree::
 	:maxdepth: 2
