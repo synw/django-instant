@@ -5,8 +5,9 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from django.conf import settings
 from django.utils.html import mark_safe
+from django.core.exceptions import ImproperlyConfigured
 from cent.core import generate_token
-
+from instant.apps import HANDLERS
 
 DEBUG = False
 
@@ -138,7 +139,11 @@ def get_channels(path, level):
 
 @register.simple_tag
 def get_handlers_url(chan):
-    url = "instant/handlers/" + chan + ".js"
+    global HANDLERS
+    if chan in HANDLERS:
+        url = "instant/handlers/" + chan + ".js"
+    else:
+        url = "instant/handlers/default.js"
     name = chan.replace("$", "")
     return [url, name]
 
