@@ -72,7 +72,7 @@ const app = new Vue({
 			app.msgStatus = msg;
 		},
 		activateChannel: function(channel) {
-			{% get_channels as channels %}
+			{% get_channels request.path "all" as channels %}
 			{% for ch in channels %}
 				var el = document.getElementById('{{ ch }}');
 				if (el.classList.contains("label-success")) {

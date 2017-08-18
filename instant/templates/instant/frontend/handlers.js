@@ -20,12 +20,4 @@ setTimeout(function(){
 },1200);
 app.msgs.unshift({"event_class": event_class, "message": message, "uid": uid});
 document.getElementById("instant_msgs").style.display = "inline-block";
-
-//console.log("AUTOMSG", app.autoMsg);
-
-if (app.autoMsg === true ) {
-	if (app.sidebar === false) {
-		app.toggleSidebar()
-	}
-}
 app.numMsgs++;
