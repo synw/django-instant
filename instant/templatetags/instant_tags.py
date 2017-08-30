@@ -32,10 +32,12 @@ ENABLE_SUPERUSER_CHANNEL = getattr(
     settings, 'INSTANT_ENABLE_SUPERUSER_CHANNEL', False)
 EXCLUDE = getattr(settings, 'INSTANT_EXCLUDE', ["__presence__"])
 
-SUPERUSER_CHANNELS = getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [])
-STAFF_CHANNELS = getattr(settings, 'INSTANT_STAFF_CHANNELS', [])
-USERS_CHANNELS = getattr(settings, 'INSTANT_USERS_CHANNELS', [])
-PUBLIC_CHANNELS = getattr(settings, 'INSTANT_PUBLIC_CHANNELS', [])
+PUBLIC_CHANNELS = getattr(settings, 'INSTANT_PUBLIC_CHANNELS', ())
+USERS_CHANNELS = getattr(
+    settings, 'INSTANT_USERS_CHANNELS', ())
+STAFF_CHANNELS = getattr(settings, 'INSTANT_STAFF_CHANNELS', ())
+SUPERUSER_CHANNELS = getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', ())
+USERS_CHANNELS = getattr(settings, 'INSTANT_USERS_CHANNELS', ())
 
 # javascript debug messages
 debug_mode = getattr(settings, 'INSTANT_DEBUG', False)
