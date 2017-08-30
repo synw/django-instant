@@ -23,7 +23,11 @@ var {{ chan_name }}_callbacks = {
 					"Data: ", JSON.stringify(data, null, 2)
 			);
     	}
-    	handlers_for_{{ chan_name }}(event_class, channel, message, data, site, uid);
+    	{% if request.path|slice:'8' == "/instant" %}
+    		handlers_for_event(event_class, channel, message, data, site, uid);
+    	{% else %}
+    		handlers_for_{{ chan_name }}(event_class, channel, message, data, site, uid);
+    	{% endif %}
     },
     {% include "instant/js/join_events.js" %}
 }
