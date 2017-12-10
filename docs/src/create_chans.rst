@@ -1,7 +1,7 @@
 Create channels
 ===============
 
-*New in 0.6 to come (still in master for now)*
+*New in 0.6 - still experimental*: declarative channels
 
 Declare channels
 ~~~~~~~~~~~~~~~~
