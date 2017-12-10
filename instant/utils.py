@@ -17,22 +17,3 @@ def _ensure_channel_is_private(chanconf):
     if chan.startswith("$") is False:
         msg = "Channel " + chan + " must start with a $ to be considered private"
         raise ImproperlyConfigured(msg)
-
-
-def _get_chans_from_conf(chanconf, path=None):
-    if path is not None:
-        lastchar = path[-1:]
-        if lastchar == "/":
-            path = path[:-1]
-    chans = []
-    for chantup in chanconf:
-        chan = chantup[0]
-        chanpaths = []
-        if len(chantup) == 1 or path is None:
-            chans.append(chan)
-        else:
-            chanpaths = chantup[1]
-            for chanpath in chanpaths:
-                if chanpath == path:
-                    chans.append(chan)
-    return chans

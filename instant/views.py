@@ -12,21 +12,22 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 from instant.producers import publish
 from instant.forms import BroadcastForm
-from instant.utils import signed_response, _get_chans_from_conf
-from instant.conf import USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS,\
+from instant.utils import signed_response
+from instant.conf import STAFF_CHANNELS, SUPERUSER_CHANNELS,\
     DEFAULT_SUPERUSER_CHANNEL, DEFAULT_STAFF_CHANNEL, USERS_CHANNELS
 
 
-SUPERCHANS = _get_chans_from_conf(SUPERUSER_CHANNELS)
-STAFFCHANS = _get_chans_from_conf(STAFF_CHANNELS)
-USERSCHANS = _get_chans_from_conf(USERS_CHANNELS)
+SUPERUSER_CHANNELS = SUPERUSER_CHANNELS
+STAFF_CHANNELS = STAFF_CHANNELS
+USERS_CHANNELS = USERS_CHANNELS
 
 
 @csrf_exempt
 def instant_auth(request):
-    global SUPERCHANS
-    global STAFFCHANS
-    global USERSCHANS
+    global SUPERUSER_CHANNELS
+    global STAFF_CHANNELS
+    global USERS_CHANNELS
+    print("SUP", SUPERUSER_CHANNELS)
     if not request.is_ajax() or not request.method == "POST":
         raise Http404
     data = json.loads(request.body.decode("utf-8"))
@@ -47,15 +48,15 @@ def instant_auth(request):
                 signature = signed_response(channel, client)
         # new system
         if request.user.is_superuser:
-            for chan in SUPERCHANS:
+            for chan in SUPERUSER_CHANNELS:
                 if chan == channel:
                     signature = signed_response(channel, client)
         if request.user.is_staff:
-            for chan in STAFFCHANS:
+            for chan in STAFF_CHANNELS:
                 if chan == channel:
                     signature = signed_response(channel, client)
         if request.user.is_authenticated:
-            for chan in USERSCHANS:
+            for chan in USERS_CHANNELS:
                 if chan == channel:
                     signature = signed_response(channel, client)
         # response
