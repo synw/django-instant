@@ -27,7 +27,6 @@ def instant_auth(request):
     global SUPERUSER_CHANNELS
     global STAFF_CHANNELS
     global USERS_CHANNELS
-    print("SUP", SUPERUSER_CHANNELS)
     if not request.is_ajax() or not request.method == "POST":
         raise Http404
     data = json.loads(request.body.decode("utf-8"))
