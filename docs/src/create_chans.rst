@@ -38,10 +38,12 @@ the channel will autoconnect on every path. Example:
     ('mysite_public2',)
    )
    
+Note: be sure to configure auth if you use private channels: see private channels section for instructions.
+   
 Handlers
 ~~~~~~~~
 
-To declare channels your must create a ``/templates/instant/handlers/default.js`` file that will be the default handler for
+You can create a ``/templates/instant/handlers/default.js`` file that will be the default handler for
 the channels.
 
 Each channel can have its own handler: just create it in the handlers directory: example: if a ``$mychan`` is declared in
