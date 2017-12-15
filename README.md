@@ -45,6 +45,8 @@ if (event_class == 'test') {
 
 [Django Presence](https://github.com/synw/django-presence): user presence notification widget
 
+[Django Autoreloader](https://github.com/synw/django-autoreloader): watches files change and autoreload in browser
+
 [Django Mqueue](https://github.com/synw/django-mqueue) with the Centrifugo hook: realtime application events and logs
 
 [Django Rechat](https://github.com/synw/django-rechat): basic chat app (toy app for now)
