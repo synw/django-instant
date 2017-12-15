@@ -17,18 +17,24 @@ from instant.conf import STAFF_CHANNELS, SUPERUSER_CHANNELS,\
     DEFAULT_SUPERUSER_CHANNEL, DEFAULT_STAFF_CHANNEL, USERS_CHANNELS
 
 
-SUPERUSER_CHANNELS = SUPERUSER_CHANNELS
-STAFF_CHANNELS = STAFF_CHANNELS
-USERS_CHANNELS = USERS_CHANNELS
+def _get_chans_names():
+    users_chans = []
+    for chan in USERS_CHANNELS:
+        users_chans.append(chan[0])
+    staff_chans = []
+    for chan in STAFF_CHANNELS:
+        staff_chans.append(chan[0])
+    superuser_chans = []
+    for chan in SUPERUSER_CHANNELS:
+        superuser_chans.append(chan[0])
+    return users_chans, staff_chans, superuser_chans
 
 
 @csrf_exempt
 def instant_auth(request):
-    global SUPERUSER_CHANNELS
-    global STAFF_CHANNELS
-    global USERS_CHANNELS
     if not request.is_ajax() or not request.method == "POST":
         raise Http404
+    users_chans, staff_chans, superuser_chans = _get_chans_names()
     data = json.loads(request.body.decode("utf-8"))
     channels = data["channels"]
     client = data['client']
@@ -36,10 +42,10 @@ def instant_auth(request):
     for channel in channels:
         signature = None
         # old systems: will be DEPRECATED
-        if channel in USERS_CHANNELS:
+        if channel in users_chans:
             if request.user.is_authenticated():
                 signature = signed_response(channel, client)
-        if channel in STAFF_CHANNELS or channel == DEFAULT_STAFF_CHANNEL:
+        if channel in staff_chans or channel == DEFAULT_STAFF_CHANNEL:
             if request.user.is_staff:
                 signature = signed_response(channel, client)
         if channel == DEFAULT_SUPERUSER_CHANNEL:
@@ -47,15 +53,15 @@ def instant_auth(request):
                 signature = signed_response(channel, client)
         # new system
         if request.user.is_superuser:
-            for chan in SUPERUSER_CHANNELS:
+            for chan in superuser_chans:
                 if chan == channel:
                     signature = signed_response(channel, client)
         if request.user.is_staff:
-            for chan in STAFF_CHANNELS:
+            for chan in superuser_chans:
                 if chan == channel:
                     signature = signed_response(channel, client)
         if request.user.is_authenticated:
-            for chan in USERS_CHANNELS:
+            for chan in superuser_chans:
                 if chan == channel:
                     signature = signed_response(channel, client)
         # response
