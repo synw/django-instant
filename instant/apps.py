@@ -39,10 +39,16 @@ class InstantConfig(AppConfig):
                 handlers = os.listdir(handlers_dir)
                 for handler in handlers:
                     HANDLERS.append(handler.replace(".js", ""))
-                if settings.INSTANT_DEBUG is True:
-                    print("Handlers:", HANDLERS)
+                try:
+                    if settings.INSTANT_DEBUG is True:
+                        print("Handlers:", HANDLERS)
+                except:
+                    pass
             except FileNotFoundError as e:
-                if settings.INSTANT_DEBUG is True:
-                    print("No handlers found for custom channels")
+                try:
+                    if settings.INSTANT_DEBUG is True:
+                        print("No handlers found for custom channels")
+                except:
+                    pass
             except Exception as e:
                 raise(e)
