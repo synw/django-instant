@@ -12,7 +12,7 @@ To declare new channels in settings.py use this format:
 
 ::
 
-   ( ("channel_name"), ("/path/where/to/connect/it",) )
+   ( "channel_name", ("/path/where/to/connect/it",), )
    
    
 If the second element of the tuple is set the channels will be connected only for the listed path. If not set
@@ -24,18 +24,18 @@ the channel will autoconnect on every path. Example:
 
    INSTANT_SUPERUSER_CHANNELS = (
     ("$mysite_admin1", ("/a/path", "/another/path")),
-    ('$mysite_admin2',)
+    ('$mysite_admin2',),
    )
    INSTANT_STAFF_CHANNELS = (
     ("$mysite_staff1", ("/a/path",)),
-    ('$mysite_staff2',)
+    ('$mysite_staff2',),
    )
    INSTANT_USERS_CHANNELS = (
-    ('$mysite_users1',)
+    ('$mysite_users1',),
    )
    INSTANT_PUBLIC_CHANNELS = (
     ('mysite_public1',),
-    ('mysite_public2',)
+    ('mysite_public2',),
    )
    
 Note: be sure to configure auth if you use private channels: see private channels section for instructions.
