@@ -21,12 +21,15 @@ class InstantConfig(AppConfig):
         for chan in private_chans:
             _ensure_channel_is_private(chan)
         all_chans = private_chans + PUBLIC_CHANNELS
-        if settings.INSTANT_DEBUG is True:
-            print("Django Instant registered channels:")
-            print("- Public:", PUBLIC_CHANNELS)
-            print("- Users:", USERS_CHANNELS)
-            print("- Staff", STAFF_CHANNELS)
-            print("- Superuser", SUPERUSER_CHANNELS)
+        try:
+            if settings.INSTANT_DEBUG is True:
+                print("Django Instant registered channels:")
+                print("- Public:", PUBLIC_CHANNELS)
+                print("- Users:", USERS_CHANNELS)
+                print("- Staff", STAFF_CHANNELS)
+                print("- Superuser", SUPERUSER_CHANNELS)
+        except:
+            pass
         # check if the default handler exists
         if len(all_chans) > 0:
             try:
