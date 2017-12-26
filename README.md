@@ -49,6 +49,8 @@ if (event_class == 'test') {
 
 [Django Mqueue](https://github.com/synw/django-mqueue) with the Centrifugo hook: realtime application events and logs
 
+[Django Term](https://github.com/synw/django-term): in browser terminal for Django
+ 
 [Django Rechat](https://github.com/synw/django-rechat): basic chat app (toy app for now)
 
 ### Why?
