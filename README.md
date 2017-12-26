@@ -21,15 +21,15 @@ Push events in channels from anywhere in the code:
   ```python
 from instant.producers import publish
   
-# push an event on the default public channel
-publish(message='Message for everyone', event_class="test")
+# Publish on the default public channel
+publish(message="Message for everyone", event_class="test")
 
-# push an event to the logged in users channel
-publish(message='Message for users', target="users")
+# Publish to a private channel
+publish(message="Message in private channel", channel="$private_chan")
 
-# push an event to the staff channel with an extra json data payload
+# Publish to the staff channel with an extra json data payload
 data = {"field1":"value1","field2":[1,2]}
-publish(message='Message for staff', target="staff", data=data)
+publish(message="Message for staff", target="staff", data=data)
   ```
 
 Handle the events client-side in a template:
@@ -47,7 +47,7 @@ if (event_class == 'test') {
 
 [Django Autoreloader](https://github.com/synw/django-autoreloader): watches files change and autoreload in browser
 
-[Django Mqueue](https://github.com/synw/django-mqueue) with the Centrifugo hook: realtime application events and logs
+[Django Mqueue](https://github.com/synw/django-mqueue): realtime application events and logs
 
 [Django Term](https://github.com/synw/django-term): in browser terminal for Django
  
