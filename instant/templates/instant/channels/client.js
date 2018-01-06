@@ -1,6 +1,6 @@
 {% load instant_tags %}
 
-function handlers_for_{{ chan_name }}(event_class, channel, message, data, site, uid) {
+function handlers_for_{{ chan_name }}(event_class, channel, message, data, site, uid, timestamp) {
 	{% include url %}
 }
 
@@ -15,6 +15,7 @@ var {{ chan_name }}_callbacks = {
     	var channel = res['channel'];
     	var uid = res['UID'];
     	var site = res["site"];
+    	var timestamp = res['timestamp']
     	// handlers
     	if (instantDebug === true) {
 			console.log('Msg:', message,
@@ -24,9 +25,9 @@ var {{ chan_name }}_callbacks = {
 			);
     	}
     	{% if request.path|slice:'8' == "/instant" %}
-    		handlers_for_event(event_class, channel, message, data, site, uid);
+    		handlers_for_event(event_class, channel, message, data, site, uid, timestamp);
     	{% else %}
-    		handlers_for_{{ chan_name }}(event_class, channel, message, data, site, uid);
+    		handlers_for_{{ chan_name }}(event_class, channel, message, data, site, uid, timestamp);
     	{% endif %}
     },
     {% include "instant/js/join_events.js" %}
