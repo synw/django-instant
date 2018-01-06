@@ -24,8 +24,6 @@ class InstantConfig(AppConfig):
             private_chans.append(STAFF_CHANNELS)
         if len(SUPERUSER_CHANNELS) > 0:
             private_chans.append(SUPERUSER_CHANNELS)
-        print("PRIV", private_chans)
-
         for chan in private_chans:
             _ensure_channel_is_private(chan)
         all_chans = [private_chans, PUBLIC_CHANNELS]

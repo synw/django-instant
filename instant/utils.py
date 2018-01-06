@@ -13,9 +13,7 @@ def _get_public_channel():
 
 
 def _ensure_channel_is_private(chanconf):
-    print("CONF", chanconf)
     chan = chanconf[0][0]
-    print("1", chanconf[0][0])
     if chan.startswith("$") is False:
         msg = "Channel " + chan + " must start with a $ to be considered private"
         raise ImproperlyConfigured(msg)
