@@ -48,5 +48,30 @@ the channels.
 
 Each channel can have its own handler: just create it in the handlers directory: example: if a ``$mychan`` is declared in
 settings it is possible to create a ``$mychan.js`` file in the handlers directory to manage the handling logics 
-just for that channel
+just for that channel.
 
+Example handler:
+
+.. highlight:: javascript
+
+::
+
+   if (event_class === "someclass") {
+      console.log(message)
+   } 
+
+Available variables:
+
+``event_class`` : class of the event
+
+``channel`` : name of the channel
+
+``message`` : text message
+
+``data`` : json payload
+
+``site`` : site slug
+
+``uid`` : unique id of the message
+
+``timestamp`` : date timestamp
