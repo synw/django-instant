@@ -1,12 +1,7 @@
-from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 
 
-try:
-    SECRET_KEY = getattr(settings, 'CENTRIFUGO_SECRET_KEY')
-except ImportError:
-    raise ImproperlyConfigured(
-        u"The Centrifugo secret key must be set in settings.py with CENTRIFUGO_SECRET_KEY")
+SECRET_KEY = getattr(settings, 'CENTRIFUGO_SECRET_KEY', "secret_key")
 CENTRIFUGO_HOST = getattr(settings, 'CENTRIFUGO_HOST', 'http://localhost')
 CENTRIFUGO_PORT = getattr(settings, 'CENTRIFUGO_PORT', 8001)
 
