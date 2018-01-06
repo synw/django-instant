@@ -125,7 +125,6 @@ def get_channels(path, level):
     if lastchar == "/":
         path = path[:-1]
     chans = []
-    print("CONF", chanconf)
     for chantup in chanconf:
         print(chantup)
         chan = chantup[0]
