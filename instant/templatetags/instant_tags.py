@@ -121,13 +121,13 @@ def get_channels(path, level):
         chanconf = USERS_CHANNELS
     elif level == "public":
         chanconf = PUBLIC_CHANNELS
-    elif level == "all":
-        chanconf = SUPERUSER_CHANNELS + STAFF_CHANNELS + USERS_CHANNELS + PUBLIC_CHANNELS
     lastchar = path[-1:]
     if lastchar == "/":
         path = path[:-1]
     chans = []
+    print("CONF", chanconf)
     for chantup in chanconf:
+        print(chantup)
         chan = chantup[0]
         chanpaths = []
         if len(chantup) == 1:
