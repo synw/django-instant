@@ -17,10 +17,18 @@ class InstantConfig(AppConfig):
         from instant.conf import PUBLIC_CHANNELS, USERS_CHANNELS, \
             STAFF_CHANNELS, SUPERUSER_CHANNELS
         # ensure that the private channels are really private
-        private_chans = USERS_CHANNELS + STAFF_CHANNELS + SUPERUSER_CHANNELS
+        private_chans = []
+        if len(USERS_CHANNELS) > 0:
+            private_chans.append(USERS_CHANNELS)
+        if len(STAFF_CHANNELS) > 0:
+            private_chans.append(STAFF_CHANNELS)
+        if len(SUPERUSER_CHANNELS) > 0:
+            private_chans.append(SUPERUSER_CHANNELS)
+        print("PRIV", private_chans)
+
         for chan in private_chans:
             _ensure_channel_is_private(chan)
-        all_chans = private_chans + PUBLIC_CHANNELS
+        all_chans = [private_chans, PUBLIC_CHANNELS]
         try:
             if settings.INSTANT_DEBUG is True:
                 print("Django Instant registered channels:")
@@ -28,7 +36,7 @@ class InstantConfig(AppConfig):
                 print("- Users:", USERS_CHANNELS)
                 print("- Staff", STAFF_CHANNELS)
                 print("- Superuser", SUPERUSER_CHANNELS)
-        except:
+        except Exception:
             pass
         # check if the default handler exists
         if len(all_chans) > 0:
@@ -42,13 +50,13 @@ class InstantConfig(AppConfig):
                 try:
                     if settings.INSTANT_DEBUG is True:
                         print("Handlers:", HANDLERS)
-                except:
+                except Exception:
                     pass
             except FileNotFoundError as e:
                 try:
                     if settings.INSTANT_DEBUG is True:
                         print("No handlers found for custom channels")
-                except:
+                except Exception:
                     pass
             except Exception as e:
                 raise(e)
