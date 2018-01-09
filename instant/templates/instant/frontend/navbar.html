@@ -1,13 +1,7 @@
 {% load instant_tags i18n %}
 <div style="text-align:center">
 	<div id="chans" class="inline" v-show="instantForm" style="display:none">Channels:
-		{% get_default_channels as dchannels %}
-		{% for dchannel in dchannels %}
-			<span id="{{ dchannel }}" class="label label-default chan" @click="activateChannel('{{ dchannel }}')">
-				{{ dchannel }}
-			</span>
-		{% endfor %}
-		{% get_channels request.path "all" as channels %}
+		{% get_all_channels as channels %}
 		{% for channel in channels %}
 			<span id="{{ channel }}" class="label label-default chan" @click="activateChannel('{{ channel }}')">
 				{{ channel }}

@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-
 import time
+from cent.core import generate_token
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.conf import settings
 from django.utils.html import mark_safe
 from django.core.exceptions import ImproperlyConfigured
-from cent.core import generate_token
-from instant.apps import HANDLERS
+from ..apps import CHANNELS, HANDLERS
 
 DEBUG = False
 
@@ -110,39 +109,42 @@ def get_superuser_channel():
     return '$' + SITE_SLUG + '_admin'
 
 
-@register.simple_tag
-def get_channels(path, level):
-    chanconf = []
-    if level == "superuser":
-        chanconf = SUPERUSER_CHANNELS
-    elif level == "staff":
-        chanconf = STAFF_CHANNELS
-    elif level == "users":
-        chanconf = USERS_CHANNELS
-    elif level == "public":
-        chanconf = PUBLIC_CHANNELS
-    lastchar = path[-1:]
-    if lastchar == "/":
-        path = path[:-1]
+def _get_channels_for_role(path, role):
+    if role == "all":
+        role_chans = CHANNELS["public"] + CHANNELS["users"] + \
+            CHANNELS["staff"] + CHANNELS["superuser"]
+    else:
+        role_chans = CHANNELS[role]
     chans = []
-    for chantup in chanconf:
-        print(chantup)
-        chan = chantup[0]
-        chanpaths = []
-        if len(chantup) == 1:
-            chans.append(chan)
-            continue
+    for chan in role_chans:
+        if chan["path"] is not None:
+            for chanpath in chan["path"]:
+                for cpath in chan["path"]:
+                    if chanpath == cpath:
+                        chans.append(chan["slug"])
+                        break
         else:
-            chanpaths = chantup[1]
-            for chanpath in chanpaths:
-                if chanpath == path:
-                    chans.append(chan)
+            chans.append(chan["slug"])
+    return chans
+
+
+@register.simple_tag
+def get_all_channels():
+    chans = []
+    for ctype in CHANNELS:
+        for chan in CHANNELS[ctype]:
+            chans.append(chan["slug"])
+    return chans
+
+
+@register.simple_tag
+def get_channels_for_role(path, role):
+    chans = _get_channels_for_role(path, role)
     return chans
 
 
 @register.simple_tag
 def get_handlers_url(chan):
-    global HANDLERS
     if chan in HANDLERS:
         url = "instant/handlers/" + chan + ".js"
     else:
