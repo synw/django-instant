@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from cent.core import generate_channel_sign
-from django.core.exceptions import ImproperlyConfigured
-from .models import Channel
 from .conf import PUBLIC_CHANNEL, SECRET_KEY, PUBLIC_CHANNELS, \
     USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS, ENABLE_PUBLIC_CHANNEL, \
     ENABLE_USERS_CHANNEL, ENABLE_STAFF_CHANNEL, ENABLE_SUPERUSER_CHANNEL, \
@@ -20,21 +18,21 @@ def _get_public_channel():
 
 def _ensure_channel_is_private(chan):
     if chan.startswith("$") is False:
-        msg = "Channel " + chan + " must start with a $ to be considered private"
-        raise ImproperlyConfigured(msg)
+        return "$" + chan
 
 
 def _check_chanconf(chanconf, private=True):
+    chan = chanconf[0]
     if private is True:
-        _ensure_channel_is_private(chanconf[0])
+        chan = _ensure_channel_is_private(chan)
     path = None
     if len(chanconf) > 0:
         path = chanconf[1]
-    chan = dict(slug=chanconf[0], path=path)
+    chan = dict(slug=chan, path=path)
     return chan
 
 
-def channels_for_role(role):
+def channels_for_role(role, db_chans):
     """
     Get the channels for a role
     """
@@ -46,18 +44,18 @@ def channels_for_role(role):
             chans.append(chan)
     elif role == "users":
         if ENABLE_USERS_CHANNEL is True:
-            _ensure_channel_is_private(DEFAULT_USERS_CHANNEL)
-            chan = dict(slug=DEFAULT_USERS_CHANNEL, path=None)
+            chan = _ensure_channel_is_private(DEFAULT_USERS_CHANNEL)
+            chan = dict(slug=chan, path=None)
             chans.append(chan)
     elif role == "staff":
         if ENABLE_STAFF_CHANNEL is True:
-            _ensure_channel_is_private(DEFAULT_STAFF_CHANNEL)
-            chan = dict(slug=DEFAULT_STAFF_CHANNEL, path=None)
+            chan = _ensure_channel_is_private(DEFAULT_STAFF_CHANNEL)
+            chan = dict(slug=chan, path=None)
             chans.append(chan)
     elif role == "superuser":
         if ENABLE_SUPERUSER_CHANNEL is True:
-            _ensure_channel_is_private(DEFAULT_SUPERUSER_CHANNEL)
-            chan = dict(slug=DEFAULT_SUPERUSER_CHANNEL, path=None)
+            chan = _ensure_channel_is_private(DEFAULT_SUPERUSER_CHANNEL)
+            chan = dict(slug=chan, path=None)
             chans.append(chan)
     # declared channels
     if role == "public":
@@ -80,17 +78,6 @@ def channels_for_role(role):
             for chanconf in SUPERUSER_CHANNELS:
                 chan = _check_chanconf(chanconf)
                 chans.append(chan)
-    # database channels
-    try:
-        db_chans = Channel.objects.filter(active=True)
-        for chan in db_chans:
-            path = None
-            if len(chan.paths) > 0:
-                path = ",".split(chan.path)
-            chans[chan.authorized].append(dict(slug=chan.slug, path=path))
-    except OperationalError:
-        # to be able to run the migrations
-        pass
     return chans
 
 
