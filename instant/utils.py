@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from cent.core import generate_channel_sign
 from django.core.exceptions import ImproperlyConfigured
-from instant.conf import PUBLIC_CHANNEL, SECRET_KEY, PUBLIC_CHANNELS, \
+from .models import Channel
+from .conf import PUBLIC_CHANNEL, SECRET_KEY, PUBLIC_CHANNELS, \
     USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS, ENABLE_PUBLIC_CHANNEL, \
     ENABLE_USERS_CHANNEL, ENABLE_STAFF_CHANNEL, ENABLE_SUPERUSER_CHANNEL, \
     DEFAULT_USERS_CHANNEL, DEFAULT_STAFF_CHANNEL, DEFAULT_SUPERUSER_CHANNEL
+from django.db.utils import OperationalError
 
 
 def signed_response(channel, client):
@@ -33,6 +35,9 @@ def _check_chanconf(chanconf, private=True):
 
 
 def channels_for_role(role):
+    """
+    Get the channels for a role
+    """
     chans = []
     # default chans
     if role == "public":
@@ -75,6 +80,17 @@ def channels_for_role(role):
             for chanconf in SUPERUSER_CHANNELS:
                 chan = _check_chanconf(chanconf)
                 chans.append(chan)
+    # database channels
+    try:
+        db_chans = Channel.objects.filter(active=True)
+        for chan in db_chans:
+            path = None
+            if len(chan.paths) > 0:
+                path = ",".split(chan.path)
+            chans[chan.authorized].append(dict(slug=chan.slug, path=path))
+    except OperationalError:
+        # to be able to run the migrations
+        pass
     return chans
 
 
