@@ -6,7 +6,6 @@ from django.template.defaultfilters import stringfilter
 from django.conf import settings
 from django.utils.html import mark_safe
 from django.core.exceptions import ImproperlyConfigured
-from ..apps import CHANNELS, HANDLERS
 
 DEBUG = False
 
@@ -110,6 +109,8 @@ def get_superuser_channel():
 
 
 def _get_channels_for_role(path, role):
+    from ..apps import CHANNELS
+    print("CHANNSS", CHANNELS["public"])
     if role == "all":
         role_chans = CHANNELS["public"] + CHANNELS["users"] + \
             CHANNELS["staff"] + CHANNELS["superuser"]
@@ -133,6 +134,7 @@ def _get_channels_for_role(path, role):
 
 @register.simple_tag
 def get_all_channels():
+    from ..apps import CHANNELS
     chans = []
     for ctype in CHANNELS:
         for chan in CHANNELS[ctype]:
@@ -148,6 +150,7 @@ def get_channels_for_role(path, role):
 
 @register.simple_tag
 def get_handlers_url(chan):
+    from ..apps import HANDLERS
     if chan in HANDLERS:
         url = "instant/handlers/" + chan + ".js"
     else:

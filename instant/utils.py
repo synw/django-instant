@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from cent.core import generate_channel_sign
+from django.db.utils import OperationalError
+from .models import Channel
 from .conf import PUBLIC_CHANNEL, SECRET_KEY, PUBLIC_CHANNELS, \
     USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS, ENABLE_PUBLIC_CHANNEL, \
     ENABLE_USERS_CHANNEL, ENABLE_STAFF_CHANNEL, ENABLE_SUPERUSER_CHANNEL, \
@@ -32,7 +34,7 @@ def _check_chanconf(chanconf, private=True):
     return chan
 
 
-def channels_for_role(role):
+def channels_for_role(role, db_chans):
     """
     Get the channels for a role
     """
@@ -87,6 +89,19 @@ def channels_for_role(role):
                 chan = _check_chanconf(chanconf)
                 chans.append(chan)
                 chans_names.append(chan["slug"])
+    # database channels
+    try:
+        db_chans = db_chans.filter(role=role)
+        for chan in db_chans:
+            lpath = None
+            if chan.paths is not None:
+                if len(chan.paths.split(",")) > 0:
+                    lpath = chan.paths.split(",")
+            chans.append(dict(slug=chan.slug, path=lpath))
+            chans_names.append(chan.slug)
+    except OperationalError:
+        # to be able to run the migrations
+        pass
     return chans, chans_names
 
 
@@ -94,8 +109,9 @@ def get_channels_for_roles():
     chans = dict(public=[], users=[], staff=[], superuser=[])
     chans_names = chans.copy()
     roles = ["public", "users", "staff", "superuser"]
+    db_chans = Channel.objects.filter(active=True)
     for role in roles:
-        ch, chn = channels_for_role(role)
+        ch, chn = channels_for_role(role, db_chans)
         chans[role] = ch
         chans_names[role] = chn
     return chans, chans_names

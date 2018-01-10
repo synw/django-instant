@@ -11,17 +11,31 @@ CHANNELS = {}
 CHANNELS_NAMES = {}
 
 
+def set_channels(settings):
+    from .utils import get_channels_for_roles
+    global CHANNELS, CHANNELS_NAMES
+    CHANNELS, CHANNELS_NAMES = get_channels_for_roles()
+    if settings.INSTANT_DEBUG is True:
+        print("Django Instant registered channels:")
+        print(json.dumps(CHANNELS, indent=2))
+    return CHANNELS
+
+
+def connect_signals():
+    from django.db.models.signals import post_save, post_delete
+    from .signals import channel_delete, channel_save
+    from .models import Channel
+    post_save.connect(channel_save, sender=Channel)
+    post_delete.connect(channel_delete, sender=Channel)
+
+
 class InstantConfig(AppConfig):
     name = 'instant'
 
     def ready(self):
         global HANDLERS, CHANNELS, CHANNELS_NAMES
         from django.conf import settings
-        from .utils import get_channels_for_roles
-        CHANNELS, CHANNELS_NAMES = get_channels_for_roles()
-        if settings.INSTANT_DEBUG is True:
-            print("Django Instant registered channels:")
-            print(json.dumps(CHANNELS, indent=2))
+        set_channels(settings)
         # check if the default handler exists
         try:
             d = "templates/instant/handlers"
@@ -43,3 +57,5 @@ class InstantConfig(AppConfig):
                 pass
         except Exception as e:
             raise(e)
+        # connect model signals
+        connect_signals()
