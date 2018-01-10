@@ -19,6 +19,7 @@ def _get_public_channel():
 def _ensure_channel_is_private(chan):
     if chan.startswith("$") is False:
         return "$" + chan
+    return chan
 
 
 def _check_chanconf(chanconf, private=True):
