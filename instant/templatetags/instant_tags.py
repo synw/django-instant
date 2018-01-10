@@ -110,7 +110,6 @@ def get_superuser_channel():
 
 def _get_channels_for_role(path, role):
     from ..apps import CHANNELS
-    print("CHANNSS", CHANNELS["public"])
     if role == "all":
         role_chans = CHANNELS["public"] + CHANNELS["users"] + \
             CHANNELS["staff"] + CHANNELS["superuser"]
