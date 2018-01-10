@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import json
 from django.http import JsonResponse
 from django.core.urlresolvers import reverse
@@ -10,65 +9,37 @@ from django.views.generic.base import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
-from instant.producers import publish
-from instant.forms import BroadcastForm
-from instant.utils import signed_response
-from instant.conf import STAFF_CHANNELS, SUPERUSER_CHANNELS,\
-    DEFAULT_SUPERUSER_CHANNEL, DEFAULT_STAFF_CHANNEL, USERS_CHANNELS
-
-
-def _get_chans_names():
-    users_chans = []
-    for chan in USERS_CHANNELS:
-        users_chans.append(chan[0])
-    staff_chans = []
-    for chan in STAFF_CHANNELS:
-        staff_chans.append(chan[0])
-    superuser_chans = []
-    for chan in SUPERUSER_CHANNELS:
-        superuser_chans.append(chan[0])
-    return users_chans, staff_chans, superuser_chans
+from .producers import publish
+from .forms import BroadcastForm
+from .utils import signed_response
+from .apps import CHANNELS_NAMES
 
 
 @csrf_exempt
 def instant_auth(request):
     if not request.is_ajax() or not request.method == "POST":
         raise Http404
-    users_chans, staff_chans, superuser_chans = _get_chans_names()
+    chans = CHANNELS_NAMES
     data = json.loads(request.body.decode("utf-8"))
     channels = data["channels"]
     client = data['client']
     response = {}
     for channel in channels:
         signature = None
-        # old systems: will be DEPRECATED
-        if channel in users_chans:
+        if channel in chans["users"]:
             if request.user.is_authenticated():
                 signature = signed_response(channel, client)
-        if channel in staff_chans or channel == DEFAULT_STAFF_CHANNEL:
+        if channel in chans["staff"]:
             if request.user.is_staff:
                 signature = signed_response(channel, client)
-        if channel == DEFAULT_SUPERUSER_CHANNEL:
+        if channel in chans["superuser"]:
             if request.user.is_superuser:
                 signature = signed_response(channel, client)
-        # new system
-        if request.user.is_superuser:
-            for chan in superuser_chans:
-                if chan == channel:
-                    signature = signed_response(channel, client)
-        if request.user.is_staff:
-            for chan in superuser_chans:
-                if chan == channel:
-                    signature = signed_response(channel, client)
-        if request.user.is_authenticated:
-            for chan in superuser_chans:
-                if chan == channel:
-                    signature = signed_response(channel, client)
-        # response
-        if signature is not None:
-            response[channel] = signature
-        else:
-            response[channel] = {"status": "403"}
+    # response
+    if signature is not None:
+        response[channel] = signature
+    else:
+        response[channel] = {"status": "403"}
     return JsonResponse(response)
 
 

@@ -8,16 +8,17 @@ from django.utils._os import safe_join
 
 HANDLERS = []
 CHANNELS = {}
+CHANNELS_NAMES = {}
 
 
 class InstantConfig(AppConfig):
     name = 'instant'
 
     def ready(self):
-        global HANDLERS, CHANNELS
+        global HANDLERS, CHANNELS, CHANNELS_NAMES
         from django.conf import settings
         from .utils import get_channels_for_roles
-        CHANNELS = get_channels_for_roles()
+        CHANNELS, CHANNELS_NAMES = get_channels_for_roles()
         if settings.INSTANT_DEBUG is True:
             print("Django Instant registered channels:")
             print(json.dumps(CHANNELS, indent=2))
