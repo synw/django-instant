@@ -12,11 +12,11 @@ from django.contrib import messages
 from .producers import publish
 from .forms import BroadcastForm
 from .utils import signed_response
-from .apps import CHANNELS_NAMES
 
 
 @csrf_exempt
 def instant_auth(request):
+    from .apps import CHANNELS_NAMES
     if not request.is_ajax() or not request.method == "POST":
         raise Http404
     chans = CHANNELS_NAMES
