@@ -116,13 +116,17 @@ def _get_channels_for_role(path, role):
     else:
         role_chans = CHANNELS[role]
     chans = []
+    if path.endswith("/"):
+        path = path[:-1]
     for chan in role_chans:
+        print("CHAN", chan)
         if chan["path"] is not None:
             for chanpath in chan["path"]:
-                for cpath in chan["path"]:
-                    if chanpath == cpath:
-                        chans.append(chan["slug"])
-                        break
+                if chanpath.endswith("/"):
+                    chanpath = chanpath[:-1]
+                if chanpath == path:
+                    chans.append(chan["slug"])
+                    break
         else:
             chans.append(chan["slug"])
     return chans
