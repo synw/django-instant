@@ -62,8 +62,6 @@ class FrontendView(FormView):
         return super(FrontendView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        print(form.cleaned_data)
-
         msg = form.cleaned_data['message']
         event_class = "default"
         if "event_class" in form.cleaned_data:
