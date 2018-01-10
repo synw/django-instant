@@ -4,7 +4,6 @@ from .conf import PUBLIC_CHANNEL, SECRET_KEY, PUBLIC_CHANNELS, \
     USERS_CHANNELS, STAFF_CHANNELS, SUPERUSER_CHANNELS, ENABLE_PUBLIC_CHANNEL, \
     ENABLE_USERS_CHANNEL, ENABLE_STAFF_CHANNEL, ENABLE_SUPERUSER_CHANNEL, \
     DEFAULT_USERS_CHANNEL, DEFAULT_STAFF_CHANNEL, DEFAULT_SUPERUSER_CHANNEL
-from django.db.utils import OperationalError
 
 
 def signed_response(channel, client):
@@ -27,18 +26,18 @@ def _check_chanconf(chanconf, private=True):
     if private is True:
         chan = _ensure_channel_is_private(chan)
     path = None
-    if len(chanconf) > 0:
+    if len(chanconf) > 1:
         path = chanconf[1]
     chan = dict(slug=chan, path=path)
     return chan
 
 
-def channels_for_role(role, db_chans):
+def channels_for_role(role):
     """
     Get the channels for a role
     """
     chans = []
-    # default chans
+    # default channels
     if role == "public":
         if ENABLE_PUBLIC_CHANNEL is True:
             chan = dict(slug=PUBLIC_CHANNEL, path=None)
