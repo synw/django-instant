@@ -16,24 +16,33 @@ from .utils import signed_response
 
 @csrf_exempt
 def instant_auth(request):
-    from .apps import CHANNELS_NAMES
+    from .apps import CHANNELS, CHANNELS_NAMES
     if not request.is_ajax() or not request.method == "POST":
         raise Http404
-    chans = CHANNELS_NAMES
     data = json.loads(request.body.decode("utf-8"))
     channels = data["channels"]
     client = data['client']
     response = {}
     for channel in channels:
+        if request.user.is_superuser:
+            signature = signed_response(channel, client)
+            continue
         signature = None
-        if channel in chans["users"]:
+        if channel in CHANNELS_NAMES["users"]:
             if request.user.is_authenticated():
                 signature = signed_response(channel, client)
-        if channel in chans["staff"]:
+        if channel in CHANNELS_NAMES["groups"]:
+            groups = request.user.groups.all()
+            changroups = []
+            for c in CHANNELS["groups"]:
+                if c["slug"] == channel:
+                    changroups = c["groups"]
+            for group in groups:
+                if group.name in changroups:
+                    signature = signed_response(channel, client)
+                    break
+        if channel in CHANNELS_NAMES["staff"]:
             if request.user.is_staff:
-                signature = signed_response(channel, client)
-        if channel in chans["superuser"]:
-            if request.user.is_superuser:
                 signature = signed_response(channel, client)
     # response
     if signature is not None:

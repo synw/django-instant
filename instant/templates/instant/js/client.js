@@ -60,6 +60,16 @@ var centrifuge = new Centrifuge({
 		{% endwith %}
 		{% endwith %}
 	{% endfor %}
+	
+	{% get_channels_for_role request.path "groups" as groupchans %}
+	{% for chan in groupchans %}
+		{% get_handlers_url chan as handlers %}
+		{% with handlers.0 as url %}
+		{% with handlers.1 as chan_name %}
+			{% include "instant/channels/client.js" %}
+		{% endwith %}
+		{% endwith %}
+	{% endfor %}
 {% endif %}
 
 {% get_channels_for_role request.path "public" as pubchans %}
