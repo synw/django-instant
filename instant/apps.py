@@ -5,7 +5,7 @@ import json
 from django.apps import AppConfig
 from django.utils._os import safe_join
 
-
+# -*- coding: utf-8 -*-
 HANDLERS = []
 CHANNELS = {}
 CHANNELS_NAMES = {}
@@ -15,9 +15,12 @@ def set_channels(settings):
     from .utils import get_channels_for_roles
     global CHANNELS, CHANNELS_NAMES
     CHANNELS, CHANNELS_NAMES = get_channels_for_roles()
-    if settings.INSTANT_DEBUG is True:
-        print("Django Instant registered channels:")
-        print(json.dumps(CHANNELS, indent=2))
+    try:
+        if settings.INSTANT_DEBUG is True:
+            print("Django Instant registered channels:")
+            print(json.dumps(CHANNELS, indent=2))
+    except Exception:
+        pass
     return CHANNELS
 
 
