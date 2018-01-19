@@ -23,11 +23,10 @@ def instant_auth(request):
     channels = data["channels"]
     client = data['client']
     response = {}
+    signature = None
     for channel in channels:
         if request.user.is_superuser:
             signature = signed_response(channel, client)
-            continue
-        signature = None
         if channel in CHANNELS_NAMES["users"]:
             if request.user.is_authenticated():
                 signature = signed_response(channel, client)
@@ -44,11 +43,11 @@ def instant_auth(request):
         if channel in CHANNELS_NAMES["staff"]:
             if request.user.is_staff:
                 signature = signed_response(channel, client)
-    # response
-    if signature is not None:
-        response[channel] = signature
-    else:
-        response[channel] = {"status": "403"}
+        # response
+        if signature is not None:
+            response[channel] = signature
+        else:
+            response[channel] = {"status": "403"}
     return JsonResponse(response)
 
 
