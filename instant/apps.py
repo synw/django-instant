@@ -19,9 +19,12 @@ class InstantConfig(AppConfig):
         from django.conf import settings
         from .utils import get_channels_for_roles
         CHANNELS, CHANNELS_NAMES = get_channels_for_roles()
-        if settings.INSTANT_DEBUG is True:
-            print("Django Instant registered channels:")
-            print(json.dumps(CHANNELS, indent=2))
+        try:
+            if settings.INSTANT_DEBUG is True:
+                print("Django Instant registered channels:")
+                print(json.dumps(CHANNELS, indent=2))
+        except AttributeError:
+            pass
         # check if the default handler exists
         try:
             d = "templates/instant/handlers"
@@ -33,13 +36,13 @@ class InstantConfig(AppConfig):
             try:
                 if settings.INSTANT_DEBUG is True:
                     print("Handlers:", HANDLERS)
-            except Exception:
+            except AttributeError:
                 pass
         except FileNotFoundError as e:
             try:
                 if settings.INSTANT_DEBUG is True:
                     print("No handlers found for custom channels")
-            except Exception:
+            except AttributeError:
                 pass
         except Exception as e:
             raise(e)
