@@ -45,9 +45,9 @@ if (event_class == 'test') {
 
 [Django Presence](https://github.com/synw/django-presence): user presence notification widget
 
-[Django Autoreloader](https://github.com/synw/django-autoreloader): watches files change and autoreload in browser
+[Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): multi-sites realtime application events and logs
 
-[Django Mqueue](https://github.com/synw/django-mqueue): realtime application events and logs
+[Django Autoreloader](https://github.com/synw/django-autoreloader): watches files change and autoreload in browser
 
 [Django Term](https://github.com/synw/django-term): in browser terminal for Django
  
