@@ -35,11 +35,11 @@ def instant_auth(request):
         if channel in chans["superuser"]:
             if request.user.is_superuser:
                 signature = signed_response(channel, client)
-    # response
-    if signature is not None:
-        response[channel] = signature
-    else:
-        response[channel] = {"status": "403"}
+        # response
+        if signature is not None:
+            response[channel] = signature
+        else:
+            response[channel] = {"status": "403"}
     return JsonResponse(response)
 
 
