@@ -8,8 +8,8 @@ var instantDebug = {% debug_mode %};
 var centrifuge = new Centrifuge({
 	url: "{% get_centrifugo_url %}",
     user: "{% if user.is_anonymous %}anonymous{% else %}{{ request.user.username }}{% endif %}",
-    timestamp: "{{ timestamp }}",
-    token: "{% if user.is_anonymous %}{% mq_generate_token 'anonymous' timestamp %}{% else %}{% mq_generate_token user.username timestamp %}{% endif %}"
+    exp: "{{ timestamp }}",
+    sign: "{% if user.is_anonymous %}{% mq_generate_token 'anonymous' timestamp %}{% else %}{% mq_generate_token user.username timestamp %}{% endif %}"
 });
 
 {% include "instant/extra_clients.js" %}
