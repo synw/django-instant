@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = 'Install the Centrifugo websockets server for Linux'
 
     def handle(self, *args, **options):
-        centrifugo_version = "1.7.6"
+        centrifugo_version = "1.7.7"
         fetch_url = "https://github.com/centrifugal/centrifugo/releases/download/v" + \
             centrifugo_version + "/centrifugo-" + centrifugo_version + "-linux-386.zip"
         subprocess.call(["wget", fetch_url])
