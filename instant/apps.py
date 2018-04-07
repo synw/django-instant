@@ -5,7 +5,6 @@ import json
 from django.apps import AppConfig
 from django.utils._os import safe_join
 
-# -*- coding: utf-8 -*-
 HANDLERS = []
 CHANNELS = {}
 CHANNELS_NAMES = {}
