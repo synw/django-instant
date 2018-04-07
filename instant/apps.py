@@ -11,12 +11,12 @@ CHANNELS = {}
 CHANNELS_NAMES = {}
 
 
-def set_channels(settings):
+def set_channels(debug):
     from .utils import get_channels_for_roles
     global CHANNELS, CHANNELS_NAMES
     CHANNELS, CHANNELS_NAMES = get_channels_for_roles()
     try:
-        if getattr(settings, "INSTANT_DEBUG", False) is True:
+        if debug is True:
             print("Django Instant registered channels:")
             print(json.dumps(CHANNELS, indent=2))
     except Exception:
@@ -38,8 +38,8 @@ class InstantConfig(AppConfig):
     def ready(self):
         global HANDLERS, CHANNELS, CHANNELS_NAMES
         from django.conf import settings
-        DEBUG = getattr(settings, "INSTANT_DEBUG", False)
-        set_channels(settings)
+        debug = getattr(settings, "INSTANT_DEBUG", False)
+        set_channels(debug)
         # check if the default handler exists
         try:
             d = "templates/instant/handlers"
@@ -49,13 +49,13 @@ class InstantConfig(AppConfig):
             for handler in handlers:
                 HANDLERS.append(handler.replace(".js", ""))
             try:
-                if DEBUG is True:
+                if debug is True:
                     print("Handlers:", HANDLERS)
             except Exception:
                 pass
         except FileNotFoundError as e:
             try:
-                if DEBUG is True:
+                if debug is True:
                     print("No handlers found for custom channels")
             except Exception:
                 pass
