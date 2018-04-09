@@ -108,6 +108,13 @@ def get_superuser_channel():
     return '$' + SITE_SLUG + '_admin'
 
 
+def _clean_chanpath(chanslug):
+    name = chanslug
+    name = name.replace("$", "")
+    name = name.replace(":", "_")
+    return name
+
+
 def _get_channels_for_role(path, role):
     from ..apps import CHANNELS
     if role == "all":
@@ -124,10 +131,12 @@ def _get_channels_for_role(path, role):
                 if chanpath.endswith("/"):
                     chanpath = chanpath[:-1]
                 if chanpath == path:
-                    chans.append(chan["slug"])
+                    name = _clean_chanpath(chan["slug"])
+                    chans.append(name)
                     break
         else:
-            chans.append(chan["slug"])
+            name = _clean_chanpath(chan["slug"])
+            chans.append(name)
     return chans
 
 
