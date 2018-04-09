@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
+from .init import _ensure_channel_is_private
 
 
 levels = (("public", "Public"),
@@ -35,9 +36,10 @@ class Channel(models.Model):
 
     def save(self, *args, **kwargs):
         # chack channel name
+        print("SAVE", self.role, self.slug)
         if self.role != "public":
             if self.slug.startswith("$") is False:
-                self.slug = "$" + self.slug
+                self.slug = _ensure_channel_is_private(self.slug)
         # check paths
         if self.paths == "":
             self.paths = None

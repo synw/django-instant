@@ -131,11 +131,9 @@ def _get_channels_for_role(path, role):
                 if chanpath.endswith("/"):
                     chanpath = chanpath[:-1]
                 if chanpath == path:
-                    # name = _clean_chanpath(chan["slug"])
                     chans.append(chan["slug"])
                     break
         else:
-            # name = _clean_chanpath(chan["slug"])
             chans.append(chan["slug"])
     return chans
 
