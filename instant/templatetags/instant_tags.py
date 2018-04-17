@@ -6,6 +6,7 @@ from django.template.defaultfilters import stringfilter
 from django.conf import settings
 from django.utils.html import mark_safe
 from django.core.exceptions import ImproperlyConfigured
+from ..init import get_role_channels, clean_chanpath
 
 DEBUG = False
 
@@ -108,36 +109,6 @@ def get_superuser_channel():
     return '$' + SITE_SLUG + '_admin'
 
 
-def _clean_chanpath(chanslug):
-    name = chanslug
-    name = name.replace("$", "")
-    name = name.replace(":", "_")
-    return name
-
-
-def _get_channels_for_role(path, role):
-    from ..apps import CHANNELS
-    if role == "all":
-        role_chans = CHANNELS["public"] + CHANNELS["users"] + \
-            CHANNELS["staff"] + CHANNELS["superuser"]
-    else:
-        role_chans = CHANNELS[role]
-    chans = []
-    if path.endswith("/"):
-        path = path[:-1]
-    for chan in role_chans:
-        if chan["path"] is not None:
-            for chanpath in chan["path"]:
-                if chanpath.endswith("/"):
-                    chanpath = chanpath[:-1]
-                if chanpath == path:
-                    chans.append(chan["slug"])
-                    break
-        else:
-            chans.append(chan["slug"])
-    return chans
-
-
 @register.simple_tag
 def get_all_channels():
     from ..apps import CHANNELS
@@ -150,19 +121,40 @@ def get_all_channels():
 
 @register.simple_tag
 def get_channels_for_role(path, role):
-    chans = _get_channels_for_role(path, role)
+    chans = get_role_channels(path, role)
     return chans
 
 
 @register.simple_tag
-def get_handlers_url(chan):
-    from ..apps import HANDLERS
+def get_db_handler(chan_name):
+    from ..apps import CHANNELS
+    print("CHANS", CHANNELS)
+    for chan in CHANNELS:
+        if chan.slug == chan_name:
+            return chan
+    return None
+
+
+@register.simple_tag
+def get_handlers(chan):
+    from ..apps import HANDLERS, CHANNELS
+    name = clean_chanpath(chan)
+    serializer = ""
+    # database channels
+    for role in CHANNELS:
+        for channel in CHANNELS[role]:
+            if channel["slug"] == chan:
+                if "serializer" in channel:
+                    if channel["serializer"] != "":
+                        serializer = channel["serializer"]
+                if "handler" in channel:
+                    return None, name, channel["handler"], serializer
+    # registered channels
     if chan in HANDLERS:
         url = "instant/handlers/" + chan + ".js"
     else:
         url = "instant/handlers/default.js"
-    name = _clean_chanpath(chan)
-    return [url, name]
+        return url, name, None, serializer
 
 
 @register.simple_tag

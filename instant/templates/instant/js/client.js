@@ -3,6 +3,7 @@
 var instantDebug = {% debug_mode %};
 
 {% include "instant/js/utils.js" %}
+{% include "instant/js/serializer.js" %}
 
 {% get_timestamp as timestamp %}
 var centrifuge = new Centrifuge({
@@ -21,10 +22,14 @@ var centrifuge = new Centrifuge({
 	{% endif %}
 	{% get_channels_for_role request.path "superuser" as supchans %}
 	{% for chan in supchans %}
-		{% get_handlers_url chan as handlers %}
+		{% get_handlers chan as handlers %}
 		{% with handlers.0 as url %}
 		{% with handlers.1 as chan_name %}
+		{% with handlers.2|safe as handler %}
+		{% with handlers.3|safe as serializer %}
 			{% include "instant/channels/client.js" %}
+		{% endwith %}
+		{% endwith %}
 		{% endwith %}
 		{% endwith %}
 	{% endfor %}
@@ -37,10 +42,12 @@ var centrifuge = new Centrifuge({
 	{% endif %}
 	{% get_channels_for_role request.path "staff" as staffchans %}
 	{% for chan in staffchans %}
-		{% get_handlers_url chan as handlers %}
+		{% get_handlers chan as handlers %}
 		{% with handlers.0 as url %}
 		{% with handlers.1 as chan_name %}
+		{% with handlers.2|safe as handler %}
 			{% include "instant/channels/client.js" %}
+		{% endwith %}
 		{% endwith %}
 		{% endwith %}
 	{% endfor %}
@@ -53,20 +60,24 @@ var centrifuge = new Centrifuge({
 	{% endif %}
 	{% get_channels_for_role request.path "users" as userchans %}
 	{% for chan in userchans %}
-		{% get_handlers_url chan as handlers %}
+		{% get_handlers chan as handlers %}
 		{% with handlers.0 as url %}
 		{% with handlers.1 as chan_name %}
+		{% with handlers.2|safe as handler %}
 			{% include "instant/channels/client.js" %}
+		{% endwith %}
 		{% endwith %}
 		{% endwith %}
 	{% endfor %}
 	
 	{% get_channels_for_role request.path "groups" as groupchans %}
 	{% for chan in groupchans %}
-		{% get_handlers_url chan as handlers %}
+		{% get_handlers chan as handlers %}
 		{% with handlers.0 as url %}
 		{% with handlers.1 as chan_name %}
+		{% with handlers.2|safe as handler %}
 			{% include "instant/channels/client.js" %}
+		{% endwith %}
 		{% endwith %}
 		{% endwith %}
 	{% endfor %}
@@ -74,10 +85,12 @@ var centrifuge = new Centrifuge({
 
 {% get_channels_for_role request.path "public" as pubchans %}
 {% for chan in pubchans %}
-	{% get_handlers_url chan as handlers %}
+	{% get_handlers chan as handlers %}
 	{% with handlers.0 as url %}
 	{% with handlers.1 as chan_name %}
+	{% with handlers.2|safe as handler %}
 		{% include "instant/channels/client.js" %}
+	{% endwith %}
 	{% endwith %}
 	{% endwith %}
 {% endfor %}

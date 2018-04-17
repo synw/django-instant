@@ -19,13 +19,15 @@ class Channel(models.Model):
                                         "ex: $private_chan"))
     role = models.CharField(max_length=20, choices=levels,
                             verbose_name=_(u"Authorized for"))
-    handler = models.TextField(blank=True,
-                               verbose_name=_(u"Javascript handler"))
-    paths = models.CharField(max_length=255, blank=True, null=True,
-                             verbose_name=_(u"Connect from paths"))
     active = models.BooleanField(default=True, verbose_name=_(u"Active"))
     groups = models.ManyToManyField(Group, blank=True,
                                     verbose_name=_(u"Groups"))
+    paths = models.CharField(max_length=255, blank=True, null=True,
+                             verbose_name=_(u"Connect from paths"))
+    handler = models.TextField(blank=True,
+                               verbose_name=_(u"Javascript handler"))
+    serializer = models.TextField(blank=True,
+                                  verbose_name=_(u"Javascript serializer"))
 
     class Meta:
         verbose_name = _(u'Channel')

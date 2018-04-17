@@ -111,7 +111,12 @@ def channels_for_role(role, db_chans):
                         path=lpath,
                         groups=group_names))
             else:
-                chans.append(dict(slug=chan.slug, path=lpath))
+                chans.append(
+                    dict(
+                        slug=chan.slug,
+                        path=lpath,
+                        handler=chan.handler,
+                        serializer=chan.serializer))
             chans_names.append(chan.slug)
     except OperationalError:
         # to be able to run the migrations

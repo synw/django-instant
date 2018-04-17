@@ -1,13 +1,25 @@
 {% load instant_tags %}
 
 function handlers_for_{{ chan_name }}(event_class, channel, message, data, site, uid, timestamp) {
-	{% include url %}
+	{% if handler %}
+		{{ handler }}
+	{% else %}
+		{% if url %}
+			{% include url %}
+		{% endif %}
+	{% endif %}
 }
 
 var {{ chan_name }}_callbacks = {
     "message": function(dataset) {
     	if (instantDebug === true) { console.log('DATASET from {{ chan }}: '+JSON.stringify(dataset));};
+    	{% if serializer %}console.log("SER", '{{chan}}');{% endif %}
+    	{% if serializer %}
+    	payload = dataset;
+    	res = {{serializer}};
+    	{% else %}
     	res = unpack_data(dataset);
+    	{% endif %}
     	var message = res['message'];
     	var event_class = res['event_class'];
     	var message_label = res['message_label'];
