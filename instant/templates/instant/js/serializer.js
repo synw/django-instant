@@ -22,6 +22,5 @@ function unpack_data(dataset) {
 		var site = dataset['data']['site'];
 	}
 	var res = {"channel":channel, "message": message, "event_class": event_class, "message_label": message_label, "data": data, "site":site, "uid": uid}
-	console.log("UNPACK", res);
 	return res
 }
