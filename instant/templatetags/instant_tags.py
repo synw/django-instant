@@ -137,24 +137,33 @@ def get_db_handler(chan_name):
 
 @register.simple_tag
 def get_handlers(chan):
+    """
+    Get handlers for a channel either from a template
+    or from the database
+    Return: handler url, channel name, js handler, js deserializer
+    """
     from ..apps import HANDLERS, CHANNELS
     name = clean_chanpath(chan)
-    serializer = ""
+    deserializer = ""
+    handler = ""
     # database channels
     for role in CHANNELS:
         for channel in CHANNELS[role]:
             if channel["slug"] == chan:
-                if "serializer" in channel:
-                    if channel["serializer"] != "":
-                        serializer = channel["serializer"]
-                if "handler" in channel:
-                    return None, name, channel["handler"], serializer
+                # check templates handlers
+                if channel["handler_template"] != "":
+                    return channel["handler_template"], name, handler, deserializer
+                # check database handlers
+                if channel["deserializer"] != "":
+                    deserializer = channel["deserializer"]
+                if channel["handler"] != "":
+                    return None, name, channel["handler"], handler, deserializer
     # registered channels
     if chan in HANDLERS:
         url = "instant/handlers/" + chan + ".js"
     else:
         url = "instant/handlers/default.js"
-        return url, name, None, serializer
+        return url, name, handler, deserializer
 
 
 @register.simple_tag

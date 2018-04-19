@@ -22,10 +22,14 @@ class Channel(models.Model):
     active = models.BooleanField(default=True, verbose_name=_(u"Active"))
     groups = models.ManyToManyField(Group, blank=True,
                                     verbose_name=_(u"Groups"))
-    paths = models.CharField(max_length=255, blank=True, null=True,
+    paths = models.CharField(max_length=255, blank=True,
                              verbose_name=_(u"Connect from paths"))
+    handler_template = models.CharField(max_length=255, blank=True,
+                                        verbose_name=_(u"Handler template url"))
     handler = models.TextField(blank=True,
                                verbose_name=_(u"Javascript handler"))
+    deserializer_template = models.CharField(max_length=255, blank=True,
+                                             verbose_name=_(u"Deserializer template url"))
     deserializer = models.TextField(blank=True,
                                     verbose_name=_(u"Javascript deserializer"))
 

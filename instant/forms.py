@@ -74,4 +74,6 @@ class InstantAdminForm(forms.ModelForm):
             "paths",
             "groups",
             "handler",
-            "deserializer")
+            "handler_template",
+            "deserializer",
+            "deserializer_template")
