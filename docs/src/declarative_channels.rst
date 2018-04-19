@@ -1,10 +1,8 @@
-Create channels
-===============
+Declarative channels
+====================
 
-*New in 0.6 - still experimental*: declarative channels
-
-Declare channels
-~~~~~~~~~~~~~~~~
+Create channels in settings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To declare new channels in settings.py use this format:
 

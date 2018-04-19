@@ -19,7 +19,8 @@ Instant delivers events in real time to the userland using the
 	:maxdepth: 2
 	:caption: Create channels
    
-	src/create_chans
+	src/declarative_channels
+	src/db_channels
 
 .. toctree::
 	:maxdepth: 2
