@@ -47,7 +47,7 @@ class InstantAdminForm(forms.ModelForm):
             modes=['css', 'xml', 'javascript', 'htmlmixed'],
         )
     )
-    serializer = forms.CharField(
+    deserializer = forms.CharField(
         widget=CodeMirrorEditor(options={
             'mode': 'javascript',
             'width': '1170px',
@@ -63,7 +63,7 @@ class InstantAdminForm(forms.ModelForm):
         )
     )
     handler.required = False
-    serializer.required = False
+    deserializer.required = False
 
     class Meta:
         model = Channel
@@ -74,4 +74,4 @@ class InstantAdminForm(forms.ModelForm):
             "paths",
             "groups",
             "handler",
-            "serializer")
+            "deserializer")

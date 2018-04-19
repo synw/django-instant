@@ -116,7 +116,7 @@ def channels_for_role(role, db_chans):
                         slug=chan.slug,
                         path=lpath,
                         handler=chan.handler,
-                        serializer=chan.serializer))
+                        deserializer=chan.deserializer))
             chans_names.append(chan.slug)
     except OperationalError:
         # to be able to run the migrations

@@ -26,8 +26,8 @@ class Channel(models.Model):
                              verbose_name=_(u"Connect from paths"))
     handler = models.TextField(blank=True,
                                verbose_name=_(u"Javascript handler"))
-    serializer = models.TextField(blank=True,
-                                  verbose_name=_(u"Javascript serializer"))
+    deserializer = models.TextField(blank=True,
+                                    verbose_name=_(u"Javascript deserializer"))
 
     class Meta:
         verbose_name = _(u'Channel')
