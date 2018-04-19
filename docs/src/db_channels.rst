@@ -49,7 +49,7 @@ Example: a ``mymodule/handlers.js`` value will load the ``templates/mymodule/han
 to handle the messages for the channel in javascript.
 
 **2. In the handlers field**: write your handler function directly in the field. 
-Example ``handler_template`` value:
+Example ``handler`` value:
 
 .. highlight:: javascript
 
