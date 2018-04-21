@@ -40,6 +40,22 @@ if (event_class == 'test') {
         return true
 }
   ```
+  
+### Create channels
+
+*New in 0.7*
+
+  ```python
+  from instant.models import Channel
+   
+  Channel.objects.get_or_create(
+            slug="$myPrivateChan",
+            role="superuser",
+            paths="/somewhere,/somewhere/else")
+  ```
+  
+The created channel will automatically check credentials and connect at the provided paths.
+If no paths are provided the channel will autoconnect on every url.
 
 ### Using this
 
