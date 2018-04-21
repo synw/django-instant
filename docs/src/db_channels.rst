@@ -76,6 +76,21 @@ Available javascript variables for handler functions:
 Deserializers
 ~~~~~~~~~~~~~
 
-Custom deserializers can be used with the ``deserializer`` and ``deserializer_template`` fields. 
+Custom deserializers can be used with the ``deserializer`` and ``deserializer_template`` fields. It is
+a function body that have to return the above variables in a ``data`` dictionnary.
 
-TODO: example and detailed doc
+Example:
+
+.. highlight:: javascript
+
+::
+
+   data = {
+	"UID": payload.data.Id,
+	"message": payload.data.ReturnValues.join(" "),
+	"timestamp": payload.data.Date,
+	"channel": payload.channel,
+	"event_class": "Command",
+	"data": {}
+	}
+	return data
