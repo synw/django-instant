@@ -140,30 +140,36 @@ def get_handlers(chan):
     """
     Get handlers for a channel either from a template
     or from the database
-    Return: handler url, channel name, js handler, js deserializer
+    Return: handler template, channel name, js handler,
+    js deserializer, deserializer_template
     """
     from ..apps import HANDLERS, CHANNELS
     name = clean_chanpath(chan)
     deserializer = ""
+    handler_template = ""
     handler = ""
+    deserializer_template = ""
     # database channels
     for role in CHANNELS:
         for channel in CHANNELS[role]:
             if channel["slug"] == chan:
-                # check templates handlers
+                # check templates handlers and deserializer
                 if channel["handler_template"] != "":
-                    return channel["handler_template"], name, handler, deserializer
-                # check database handlers
-                if channel["deserializer"] != "":
+                    handler_template = channel["handler_template"]
+                elif channel["handler"] != "":
+                    handler = channel["handler"]
+                # check database handlers and deserializer
+                if channel["deserializer_template"] != "":
+                    deserializer_template = channel["deserializer_template"]
+                elif channel["deserializer"] != "":
                     deserializer = channel["deserializer"]
-                if channel["handler"] != "":
-                    return None, name, channel["handler"], handler, deserializer
+                return handler_template, name, handler, deserializer, deserializer_template
     # registered channels
     if chan in HANDLERS:
-        url = "instant/handlers/" + chan + ".js"
+        handler_template = "instant/handlers/" + chan + ".js"
     else:
-        url = "instant/handlers/default.js"
-        return url, name, handler, deserializer
+        handler_template = "instant/handlers/default.js"
+    return handler_template, name, handler, deserializer, deserializer_template
 
 
 @register.simple_tag

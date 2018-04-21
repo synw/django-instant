@@ -3,7 +3,7 @@
 var instantDebug = {% debug_mode %};
 
 {% include "instant/js/utils.js" %}
-{% include "instant/js/serializer.js" %}
+{% include "instant/js/deserializer.js" %}
 
 {% get_timestamp as timestamp %}
 var centrifuge = new Centrifuge({
@@ -23,15 +23,13 @@ var centrifuge = new Centrifuge({
 	{% get_channels_for_role request.path "superuser" as supchans %}
 	{% for chan in supchans %}
 		{% get_handlers chan as handlers %}
-		{% with handlers.0 as url %}
+		{% with handlers.0 as handler_template %}
 		{% with handlers.1 as chan_name %}
 		{% with handlers.2|safe as handler %}
-		{% with handlers.3|safe as serializer %}
+		{% with handlers.3|safe as deserializer %}
+		{% with handlers.4 as deserializer_template %}
 			{% include "instant/channels/client.js" %}
-		{% endwith %}
-		{% endwith %}
-		{% endwith %}
-		{% endwith %}
+		{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
 	{% endfor %}
 {% endif %}
 

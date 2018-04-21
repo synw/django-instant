@@ -1,5 +1,4 @@
-function getClockTime(seconds)
-{
+function getClockTime(seconds) {
    var now    = new Date();
    var hour   = now.getHours();
    var minute = now.getMinutes();
