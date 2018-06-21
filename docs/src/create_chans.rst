@@ -22,21 +22,21 @@ the channel will autoconnect on every path. Example:
 
 ::
 
-   INSTANT_SUPERUSER_CHANNELS = [
-    ["$mysite_admin1", ["/a/path", "/another/path"]]
-    ['$mysite_admin2']
-   )
-   INSTANT_STAFF_CHANNELS = [
-    ["$mysite_staff1", ["/a/path"]]
-    ['$mysite_staff2',),
-   ]
-   INSTANT_USERS_CHANNELS = [
-    ['$mysite_users1']
-   ]
-   INSTANT_PUBLIC_CHANNELS = [
-    ['mysite_public1']
-    ['mysite_public2']
-   ]
+   INSTANT_SUPERUSER_CHANNELS=[
+      ["$mysite_admin1", ["/a/path", "/another/path"]],
+      ['$mysite_admin2']
+   ],
+   INSTANT_STAFF_CHANNELS=[
+      ["$mysite_staff1", ["/a/path"]],
+      ['$mysite_staff2'],
+   ],
+   INSTANT_USERS_CHANNELS=[
+      ['$mysite_users1'],
+   ],
+   INSTANT_PUBLIC_CHANNELS=[
+      ['mysite_public1'],
+      ['mysite_public2'],
+   ],
    
 Note: be sure to configure auth if you use private channels: see private channels section for instructions.
    
