@@ -1,14 +1,18 @@
 language: python
 
 python:
-        - 2.7
-        - pypy
+  - 3.5
+  - 3.6
 
 env:
-        - DJANGO=1.11
+ global:
+    - PYTHONPATH="/home/travis/build/synw/django-instant"
 
 install:
-        - pip install -r requirements.txt
+  - pip install virtualenv tox coveralls
 
 script:
-        python setup.py test
+  - tox
+
+after_success:
+  coveralls

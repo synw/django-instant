@@ -4,6 +4,8 @@ settings.py
 .project
 .pydevproject
 .settings
+coverage_html_report/
+test_db
 
 __pycache__/
 *.py[cod]
