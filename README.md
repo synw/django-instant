@@ -1,6 +1,7 @@
 # Django Instant
 
 [![Build Status](https://travis-ci.org/synw/django-instant.svg?branch=master)](https://travis-ci.org/synw/django-instant)
+[![Coverage Status](https://coveralls.io/repos/github/synw/django-instant/badge.svg?branch=master)](https://coveralls.io/github/synw/django-instant?branch=master)
 
 Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifugo).
 
