@@ -25,7 +25,8 @@ def _get_channel(channel, target):
     return channel
 
 
-def publish_py(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None):
+def publish_py(message, event_class="default", data={},
+               channel=None, site=SITE_NAME, target=None):
     cent_url = CENTRIFUGO_HOST + ":" + str(CENTRIFUGO_PORT)
     client = Client(cent_url, SECRET_KEY, timeout=1)
     channel = _get_channel(channel, target)
@@ -41,7 +42,8 @@ def publish_py(message, event_class="default", data={}, channel=None, site=SITE_
     return err
 
 
-def publish_go(message, event_class="default", data={}, channel=None, site=SITE_NAME, target=None):
+def publish_go(message, event_class="default", data={},
+               channel=None, site=SITE_NAME, target=None):
     channel = _get_channel(channel, target)
     channel = channel.replace("$", "-_-")
     conn = '-host="' + CENTRIFUGO_HOST + '" -port="' + \

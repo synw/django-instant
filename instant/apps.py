@@ -23,15 +23,18 @@ class InstantConfig(AppConfig):
         col = '\033[91m'
         endcol = '\033[0m'
         if ENABLE_STAFF_CHANNEL is True:
-            print(col + "Warning from Django Instant" + endcol + ": the setting ENABLE_STAFF_CHANNEL "
+            print(col + "Warning from Django Instant" + endcol +
+                  ": the setting ENABLE_STAFF_CHANNEL "
                   "will be deprecated in version 0.8. "
                   "Please use declarative channels instead")
         if ENABLE_USERS_CHANNEL is True:
-            print(col + "Warning from Django Instant" + endcol + ": the setting ENABLE_USERS_CHANNEL "
+            print(col + "Warning from Django Instant" + endcol +
+                  ": the setting ENABLE_USERS_CHANNEL "
                   "will be deprecated in version 0.8. "
                   "Please use declarative channels instead")
         if ENABLE_SUPERUSER_CHANNEL is True:
-            print(col + "Warning from Django Instant" + endcol + ": the setting ENABLE_SUPERUSER_CHANNEL "
+            print(col + "Warning from Django Instant" + endcol +
+                  ": the setting ENABLE_SUPERUSER_CHANNEL "
                   "will be deprecated in version 0.8. "
                   "Please use declarative channels instead")
 
