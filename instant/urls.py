@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from django.core.urlresolvers import reverse_lazy
+from django import VERSION
+if VERSION >= (2, 0):
+    from django.urls import reverse_lazy
+else:
+    from django.core.urlresolvers import reverse_lazy
 from django.conf.urls import url
 from django.views.generic import RedirectView
 from instant.views import FrontendView, StaffChannelView, PostMsgView
