@@ -1,17 +1,8 @@
 Custom channels
 ===============
 
-Set you channels credentials in settings.py:
-
-.. highlight:: python
-
-::
-
-   INSTANT_USERS_CHANNELS = ['$mychannel1']
-   INSTANT_STAFF_CHANNELS = ['$mychannel2']
-   INSTANT_SUPERUSER_CHANNELS = ['$mychannel3']
-   
-Now you can setup the client-side handlers for your channels:
+Custom javascript client
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create a ``{% instant/extra_clients.js %}`` template that contains something like:
 
@@ -25,29 +16,28 @@ Create a ``{% instant/extra_clients.js %}`` template that contains something lik
 
 Edit ``myapp/client.js``:
 
-.. highlight:: javascript
+.. highlight:: django
 
 ::
    
    var my_callbacks = {
-       "message": function(dataset) {
-   	    // the instantDebug variable is set via INSTANT_DEBUG = True in settings.py
-       	if (instantDebug === true) { console.log('EVENT: '+JSON.stringify(dataset));};
-       	res = unpack_data(dataset);
-    	var message = res['message']
-    	var event_class = res['event_class']
-    	var message_label = res['message_label']
-    	var data = res['data']
-    	var channel = res['channel'];
-    	if ( data.hasOwnProperty('my_field) ) {
-   		   my_field = data['myfield']
-    	}
-    	// do something with the data
-    	console.log(message);
-    },
-	{% include "instant/js/join_events.js" %}
-   }
-   
+      "message": function(dataset) {
+      // the instantDebug variable is set via INSTANT_DEBUG = True in settings.py
+      if (instantDebug === true) { console.log('EVENT: '+JSON.stringify(dataset));};
+      res = unpack_data(dataset);
+      var message = res['message']
+      var event_class = res['event_class']
+      var message_label = res['message_label']
+      var data = res['data']
+      var channel = res['channel'];
+      if ( data.hasOwnProperty('my_field) ) {
+       my_field = data['myfield']
+      }
+      // do something with the data
+      console.log(message);
+   },
+   {% include "instant/js/join_events.js" %}
+     
    var subscription = centrifuge.subscribe("$mychannel", my_callbacks);
 
    

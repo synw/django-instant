@@ -19,18 +19,20 @@ Instant delivers events in real time to the userland using the
 	:maxdepth: 2
 	:caption: Create channels
    
-	src/create_chans
+	src/declarative_chans
+	src/default_chans
 
 .. toctree::
 	:maxdepth: 2
-	:caption: Usage
+	:caption: Handle messages
    
-	src/usage
-	src/handlers
+	src/send_messages
+	src/handle_messages
+	src/formating
 	
 .. toctree::
 	:maxdepth: 2
-	:caption: Private channels
+	:caption: Security
 	
 	src/private_chans
 	src/custom_chans

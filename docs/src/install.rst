@@ -13,15 +13,6 @@ Add to installed apps:
 ::
 
    "instant",
-
-Set the urls:
-
-.. highlight:: python
-
-::
-   
-   # required only if you want to use the frontend at /instant/
-   url('^instant/', include('instant.urls')),
    
 2. Install the websockets server
 
@@ -33,30 +24,36 @@ An installer is available for Linux only:
 
    python3 manage.py installws
    
-This will download the Centrifugo websockets server, install it and update your settings.py file with the 
-appropriate configuration.
+This will download the Centrifugo websockets server, install it and update your settings.py 
+file with the appropriate configuration.
 
-For other systems you have to install Centrifugo `manually <https://fzambia.gitbooks.io/centrifugal/content/server/start.html>`_
+For other systems you have to install 
+Centrifugo `manually <https://fzambia.gitbooks.io/centrifugal/content/server/start.html>`_
 
 Templates
 ~~~~~~~~~
 
-Include the template ``{% include "instant/client.html" %}`` anywhere: nothing will be displayed it is the engine. 
-See next section for messages handling. 
+Include the template ``{% include "instant/client.html" %}`` anywhere: nothing will 
+be displayed it is the engine. See next section for messages handling. 
 
 Run the websockets server
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you used the installer:
 
 .. highlight:: bash
 
 ::
 
    python3 manage.py runws
+   
+Otherwise run the Centrifugo server normally
 
 Settings
 ~~~~~~~~
 
-Note: if you use the management command to install the server the settings will already be configured
+Note: if you use the management command to install the server the settings will already 
+be configured.
 
 Configure settings.py:
 
@@ -70,17 +67,17 @@ Configure settings.py:
    # optionnal settings
    CENTRIFUGO_HOST = 'http://ip_here' #default: localhost
    CENTRIFUGO_PORT = 8012 # default: 8001
-   INSTANT_PUBLIC_CHANNEL = "public" #default: SITE_SLUG+'_public'
-   INSTANT_ENABLE_PUBLIC_CHANNEL = False # this one is to disable the default public channel
    
-By default the events are published using python. A go module is available to perform the publish
-operations in order to leave the main process alone as much as possible. This might be usefull when lots of messages
-are sent. 
+By default the events are published using python. A go module is available to perform the 
+publish operations in order to leave the main process alone as much as possible. 
+This might be usefull when lots of messages are sent. 
 
-Note: when this option is enabled there is no error handling. This option is recommended when you need higher performance
-and don't care about error messages.
+Note: when this option is enabled there is no error handling. This option is recommended 
+when you need higher performance and don't care about error messages.
 
 You might have to make the `instant/go/publish` file executable with `chmod`
+
+.. highlight:: python
 
 ::
 
@@ -96,4 +93,26 @@ Performance test: 1000 messages:
 - Python: 29.57 seconds
 - Go: 14.44 seconds
 
-Note: this test uses the standard publish function so that each new event sent makes an new connection to Centrifugo.
+Note: this test uses the standard publish function so that each new event sent makes an 
+new connection to Centrifugo.
+
+Frontend
+~~~~~~~~
+
+A demo frontend is available. To use it:
+
+Set the urls:
+
+.. highlight:: python
+
+::
+
+   from instant.views import instant_auth
+   
+   urlpatterns = [
+   	# ...
+   	url(r'^centrifuge/auth/$', instant_auth, name='instant-auth'),
+   	url('^instant/', include('instant.urls')),
+   	]
+
+Login as superuser and go to `/instant/`

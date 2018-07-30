@@ -1,7 +1,10 @@
 Private channels
 ================
 
-Add this in you main url file:
+Authentication
+~~~~~~~~~~~~~~
+
+To use private channels add this in you main url file:
 
 .. highlight:: python
 
@@ -28,54 +31,10 @@ All the channels prefixed with a dollar sign **$** are considered private.
 Security
 ~~~~~~~~
    
-All the messages sent to the Centrifugo server are signed using the secret key. When a client requests a connection to
-a private channels Centrifugo sends an ajax request to ``/centrifuge/auth/`` and expects to receive a signed response
+All the messages sent to the Centrifugo server are signed using the secret key. 
+When a client requests a connection to a private channels Centrifugo sends an ajax 
+request to ``/centrifuge/auth/`` and expects to receive a signed response
 that will indicate if the user is authorized or not.
 
 More info `here <https://fzambia.gitbooks.io/centrifugal/content/mixed/private_channels.html>`_ about Centrifugo's auth
 mechanism.
-
-Default channels
-~~~~~~~~~~~~~~~~
-
-By default only the public channel is enabled. You can activate the default privates channels in settings:
-
-.. highlight:: python
-
-::
-
-   # reserved to logged in users
-   INSTANT_ENABLE_USERS_CHANNEL = True
-   # reserved to staff users
-   INSTANT_ENABLE_STAFF_CHANNEL = True
-   # reserved to superuser
-   INSTANT_ENABLE_SUPERUSER_CHANNEL = True
-
-Make sure the main client is loaded somewhere: ``{% include "instant/client.html" %}`` and add some handlers.
-   
-To push an event to one of theses channel use the ``target`` parameter: `
-
-.. highlight:: python
-
-::
-
-   publish(message="Staff event", target="staff")
-
-Note: if a ``channel`` parameter is provided, the ``target`` will be ignored.
-   
-To change the events behavior client-side customize the handlers like described in the previous section, and use the
-channel parameter:
-
-.. highlight:: javascript
-
-::
-   
-   if ( channel == "$mysite_staff" && event_class == 'anyeventclass' ) {
-      console.log(message);
-      return false
-   }
-
-You can also overide the whole client: for the staff channel: ``instant/channels/staff/js/client.js``
-
-
-	    
