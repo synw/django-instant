@@ -49,6 +49,14 @@ class InstantConfig(AppConfig):
         try:
             d = "templates/instant/handlers"
             handlers_dir = safe_join(settings.BASE_DIR, d)
+            if not os.path.isdir(handlers_dir):
+                if settings.TEMPLATES and settings.TEMPLATES[0]['DIRS']:
+                    dirs = settings.TEMPLATES[0]['DIRS']
+                    for dir in dirs:
+                        handlers_check = safe_join(dir, d)
+                        if os.path.isdir(handlers_check):
+                            handlers_dir = handlers_check
+                            break
             # map default handlers
             handlers = os.listdir(handlers_dir)
             for handler in handlers:
