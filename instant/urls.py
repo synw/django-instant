@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import sys
-if (sys.version_info > (3, 0)):
+from django import VERSION
+if VERSION > (2, 0):
     from django.urls import reverse_lazy
 else:
     from django.core.urlresolvers import reverse_lazy
