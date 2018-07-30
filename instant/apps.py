@@ -50,7 +50,7 @@ class InstantConfig(AppConfig):
             d = "templates/instant/handlers"
             handlers_dir = safe_join(settings.BASE_DIR, d)
             if not os.path.isdir(handlers_dir):
-                if settings.TEMPLATES and TEMPLATES[0]['DIRS']:
+                if settings.TEMPLATES and settings.TEMPLATES[0]['DIRS']:
                     dirs = TEMPLATES[0]['DIRS']
                     for dir in dirs:
                         handlers_check = safe_join(dir, d)
