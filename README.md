@@ -30,7 +30,7 @@ publish(message="Message in private channel", channel="$private_chan")
 
 # Publish to the staff channel with an extra json data payload
 data = {"field1":"value1","field2":[1,2]}
-publish(message="Message for staff", target="staff", data=data)
+publish(message="Message for staff", channel="$mysite_staff", data=data)
   ```
 
 Handle the events client-side in a template:
@@ -38,7 +38,6 @@ Handle the events client-side in a template:
   ```javascript
 if (event_class == 'test') {
         console.log("This is a test message: "+message);
-        return true
 }
   ```
 
