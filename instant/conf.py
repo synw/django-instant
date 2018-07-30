@@ -24,11 +24,9 @@ DEFAULT_STAFF_CHANNEL = "$" + SITE_SLUG + "_staff"
 DEFAULT_SUPERUSER_CHANNEL = "$" + SITE_SLUG + "_admin"
 
 PUBLIC_CHANNELS = getattr(settings, 'INSTANT_PUBLIC_CHANNELS', [])
-USERS_CHANNELS = getattr(
-    settings, 'INSTANT_USERS_CHANNELS', [])
+USERS_CHANNELS = getattr(settings, 'INSTANT_USERS_CHANNELS', [])
 STAFF_CHANNELS = getattr(settings, 'INSTANT_STAFF_CHANNELS', [])
 SUPERUSER_CHANNELS = getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', [])
-USERS_CHANNELS = getattr(settings, 'INSTANT_USERS_CHANNELS', [])
 
 
 EXCLUDE = getattr(settings, 'INSTANT_EXCLUDE', ["__presence__"])
