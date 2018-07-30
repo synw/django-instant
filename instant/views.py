@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 from django.http import JsonResponse
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http.response import Http404
 from django.views.generic.base import View
 from django.views.generic import FormView
