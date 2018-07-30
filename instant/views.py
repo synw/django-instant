@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 import json
+import sys
 from django.http import JsonResponse
-from django.urls import reverse
+if (sys.version_info > (3, 0)):
+    from django.urls import reverse
+else:
+    from django.core.urlresolvers import reverse
 from django.http.response import Http404
 from django.views.generic.base import View
 from django.views.generic import FormView
