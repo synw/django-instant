@@ -22,11 +22,12 @@ Push events in channels from anywhere in the code:
   ```python
 from instant.producers import publish
   
-# Publish on the default public channel
-publish(message="Message for everyone", event_class="test")
+# Publish to a public channel
+publish(message="Message for everyone", channel="mysite_public")
 
-# Publish to a private channel
-publish(message="Message in private channel", channel="$private_chan")
+# Publish to a private channel with an event class set
+publish(message="Message in private channel", channel="$private_chan", 
+          event_class="test")
 
 # Publish to the staff channel with an extra json data payload
 data = {"field1":"value1","field2":[1,2]}
@@ -36,8 +37,8 @@ publish(message="Message for staff", channel="$mysite_staff", data=data)
 Handle the events client-side in a template:
 
   ```javascript
-if (event_class == 'test') {
-        console.log("This is a test message: "+message);
+if (event_class === 'test') {
+        console.log("This is a test message: " + message);
 }
   ```
 
