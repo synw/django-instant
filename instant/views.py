@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import json
-import sys
+from django import VERSION
+
 from django.http import JsonResponse
-if (sys.version_info > (3, 0)):
+if VERSION >= (2, 0):
     from django.urls import reverse
 else:
     from django.core.urlresolvers import reverse
