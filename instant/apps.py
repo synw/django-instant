@@ -19,6 +19,7 @@ class InstantConfig(AppConfig):
     def ready(self):
         global HANDLERS, CHANNELS, CHANNELS_NAMES, DEFAULT_HANDLER
         from django.conf import settings
+        debug = getattr(settings, "INSTANT_DEBUG", False)
         from .utils import get_channels_for_roles
         from .conf import ENABLE_STAFF_CHANNEL, ENABLE_USERS_CHANNEL, \
             ENABLE_SUPERUSER_CHANNEL
@@ -42,7 +43,7 @@ class InstantConfig(AppConfig):
 
         CHANNELS, CHANNELS_NAMES = get_channels_for_roles()
         try:
-            if settings.INSTANT_DEBUG is True:
+            if debug is True:
                 print("Django Instant registered channels:")
                 print(json.dumps(CHANNELS, indent=2))
         except AttributeError:
@@ -77,7 +78,7 @@ class InstantConfig(AppConfig):
                                 DEFAULT_HANDLER = hdir + "/" + handler
                             else:
                                 HANDLERS[chan_name] = hdir + "/" + handler
-        if settings.INSTANT_DEBUG is True:
+        if debug is True:
             print("Instant channels handlers found:")
             for handler in HANDLERS:
                 print(handler + ": " + HANDLERS[handler])
