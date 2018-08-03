@@ -48,15 +48,6 @@ def instant_auth(request):
     return JsonResponse(response)
 
 
-class StaffChannelView(TemplateView):
-    template_name = 'instant/channels/staff.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.is_ajax():
-            raise Http404
-        return super(StaffChannelView, self).dispatch(request, *args, **kwargs)
-
-
 class FrontendView(FormView):
     form_class = BroadcastForm
     template_name = 'instant/frontend/index.html'
