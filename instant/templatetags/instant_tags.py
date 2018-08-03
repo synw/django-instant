@@ -6,7 +6,7 @@ from django.template.defaultfilters import stringfilter
 from django.conf import settings
 from django.utils.html import mark_safe
 from django.core.exceptions import ImproperlyConfigured
-from ..apps import CHANNELS, HANDLERS
+from ..apps import CHANNELS, HANDLERS, DEFAULT_HANDLER
 
 DEBUG = False
 
@@ -46,6 +46,10 @@ else:
     DEBUG_MODE = "false"
 
 register = template.Library()
+
+
+class NoHandlerException(Exception):
+    pass
 
 
 @register.simple_tag
@@ -149,9 +153,15 @@ def get_channels_for_role(path, role):
 @register.simple_tag
 def get_handlers_url(chan):
     if chan in HANDLERS:
-        url = "instant/handlers/" + chan + ".js"
+        url = HANDLERS[chan]
     else:
-        url = "instant/handlers/default.js"
+        if DEFAULT_HANDLER is None:
+            raise NoHandlerException("No handler found for channel " +
+                                     "and no default handler is set. " +
+                                     "Please set a default handler or " +
+                                     "a handler for channel " + chan)
+        else:
+            url = DEFAULT_HANDLER
     name = chan.replace("$", "")
     return [url, name]
 
