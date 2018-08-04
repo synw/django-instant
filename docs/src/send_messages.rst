@@ -10,8 +10,8 @@ To publish messages from python code:
    from instant.producers import publish 
 
    # fire a message on the public channel whith error handling
-   err = publish(message='Hello world', event_class="infos", 
-                 channel="public", data={"myfield":"my_value"})
+   err = publish(message='Hello world', channel="public", event_class="infos", 
+                 data={"myfield":"my_value"})
    if err != None:
       print("Error", str(err))
    
