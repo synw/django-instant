@@ -6,6 +6,12 @@ from .conf import PUBLIC_CHANNEL, SECRET_KEY, PUBLIC_CHANNELS, \
     DEFAULT_USERS_CHANNEL, DEFAULT_STAFF_CHANNEL, DEFAULT_SUPERUSER_CHANNEL
 
 
+def warn(msg):
+    col = '\033[91m'
+    endcol = '\033[0m'
+    print(col + "Warning from Django Instant" + endcol + ": " + msg)
+
+
 def signed_response(channel, client):
     signature = generate_channel_sign(SECRET_KEY, client, channel, info="")
     return {"sign": signature}
