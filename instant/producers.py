@@ -32,11 +32,13 @@ def _get_channel(channel, target):
     return channel
 
 
-def publish_py(message, channel=None, event_class="default", data={},
+def publish_py(message, channel=None, event_class="default", data=None,
                site=SITE_NAME, target=None):
     cent_url = CENTRIFUGO_HOST + ":" + str(CENTRIFUGO_PORT)
     client = Client(cent_url, SECRET_KEY, timeout=1)
     channel = _get_channel(channel, target)
+    if data is None:
+        data = {}
     payload = {"message": message, "channel": channel,
                'event_class': event_class, "data": data, "site": site}
     err = None
@@ -49,12 +51,14 @@ def publish_py(message, channel=None, event_class="default", data={},
     return err
 
 
-def publish_go(message, channel=None, event_class="default", data={},
+def publish_go(message, channel=None, event_class="default", data=None,
                site=SITE_NAME, target=None):
     channel = _get_channel(channel, target)
     channel = channel.replace("$", "-_-")
     conn = '-host="' + CENTRIFUGO_HOST + '" -port="' + \
         str(CENTRIFUGO_PORT) + '" -key="' + SECRET_KEY + '"'
+    if data is None:
+        data = {}
     params = conn + ' -channel="' + channel + '" -event_class="' + event_class + \
         '" -message="' + message + '" -data=\'' + json.dumps(data) + "'"
     pth = os.path.dirname(instant.__file__)
