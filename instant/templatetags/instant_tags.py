@@ -39,8 +39,8 @@ SUPERUSER_CHANNELS = getattr(settings, 'INSTANT_SUPERUSER_CHANNELS', ())
 USERS_CHANNELS = getattr(settings, 'INSTANT_USERS_CHANNELS', ())
 
 # javascript debug messages
-debug_mode = getattr(settings, 'INSTANT_DEBUG', False)
-if debug_mode is True:
+_debug_mode = getattr(settings, 'INSTANT_DEBUG', False)
+if _debug_mode is True:
     DEBUG_MODE = "true"
 else:
     DEBUG_MODE = "false"
@@ -156,9 +156,9 @@ def get_handlers_url(chan):
         url = HANDLERS[chan]
     else:
         if DEFAULT_HANDLER is None:
-            raise NoHandlerException("No handler found for channel " +
-                                     "and no default handler is set. " +
-                                     "Please set a default handler or " +
+            raise NoHandlerException("No handler found for channel " + 
+                                     "and no default handler is set. " + 
+                                     "Please set a default handler or " + 
                                      "a handler for channel " + chan)
         else:
             url = DEFAULT_HANDLER
