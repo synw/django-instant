@@ -46,9 +46,14 @@ class FrontendView(TemplateView):
             raise Http404
         return super(FrontendView, self).dispatch(request, *args, **kwargs)
 
-    
+
 class PostMsgView(PostFormView):
     
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.is_superuser:
+            raise Http404
+        return super(PostMsgView, self).dispatch(request, *args, **kwargs)
+
     def action(self, request, clean_data):
         try:
             msg = clean_data["msg"]
