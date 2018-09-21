@@ -1,6 +1,5 @@
 from setuptools import setup, find_packages
 
-
 version = __import__('instant').__version__
 
 setup(
@@ -22,7 +21,7 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     install_requires=[
-        'cent',
+        'cent<3.0',
     ],
     zip_safe=False
 )
