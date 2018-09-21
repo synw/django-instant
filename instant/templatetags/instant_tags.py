@@ -74,16 +74,6 @@ def mq_generate_token(user, timestamp, info=""):
 
 
 @register.simple_tag
-def public_channel_is_on():
-    return ENABLE_PUBLIC_CHANNEL
-
-
-@register.simple_tag
-def get_public_channel():
-    return PUBLIC_CHANNEL
-
-
-@register.simple_tag
 def is_users_channel():
     return ENABLE_USERS_CHANNEL
 
@@ -136,15 +126,6 @@ def _get_channels_for_role(path, role):
 
 
 @register.simple_tag
-def get_all_channels():
-    chans = []
-    for ctype in CHANNELS:
-        for chan in CHANNELS[ctype]:
-            chans.append(chan["slug"])
-    return chans
-
-
-@register.simple_tag
 def get_channels_for_role(path, role):
     chans = _get_channels_for_role(path, role)
     return chans
@@ -164,47 +145,3 @@ def get_handlers_url(chan):
             url = DEFAULT_HANDLER
     name = chan.replace("$", "")
     return [url, name]
-
-
-@register.simple_tag
-def get_apps():
-    return APPS
-
-
-@register.filter
-@stringfilter
-def is_in_apps(app):
-    if app in APPS:
-        return True
-    else:
-        return False
-
-
-@register.simple_tag
-def get_default_channels():
-    channels = []
-    if ENABLE_PUBLIC_CHANNEL is True:
-        channels.append(PUBLIC_CHANNEL)
-    if ENABLE_STAFF_CHANNEL is True:
-        c = '$' + SITE_SLUG + '_staff'
-        channels.append(c)
-    if ENABLE_USERS_CHANNEL is True:
-        c = '$' + SITE_SLUG + '_users'
-        channels.append(c)
-    if ENABLE_SUPERUSER_CHANNEL is True:
-        c = '$' + SITE_SLUG + '_admin'
-        channels.append(c)
-    return channels
-
-
-@register.simple_tag
-def exclude_chans():
-    chans = []
-    for chan in EXCLUDE:
-        chans.append('"' + chan + '"')
-    return mark_safe(",".join(chans))
-
-
-@register.simple_tag
-def num_excluded_chans():
-    return len(EXCLUDE)

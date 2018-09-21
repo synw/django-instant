@@ -104,11 +104,11 @@ div {
 .event-label {
 	margin-right:0.5em;
 	opacity:0.6;
+	margin-top:0.5em !important;
 }
 .event-labels {
 	padding:0.5em;
-	margin:0 0 0 2em;
-	min-height:3.2em;
+	margin-top:0.5em !important;
 }
 .full {
 	width:100%;

@@ -8,38 +8,17 @@
 
 <body>
 <div id="app">
-	<div id="site_header">
-		{% include "instant/frontend/header.html" %}
-	</div>
-	<div id="navbar">
-		{% include "instant/frontend/navbar.html" %}
-	</div>
-	<div id="content" style="text-align:center;width:100%">
-		<div style="width:100%;max-width:1140px !important;text-align:left;display:inline-block">
-			{% include "instant/frontend/form.html" %}
-			<h3 v-if="(numMsgs>0)" style="display:none">{% trans 'Messages' %}</h3>
-			{% verbatim %}
-			<ul v-for="msg in msgs" style="list-style-type:none">
-				<li v-bind:id="msg.uid">
-					<a href="#" class="pull-right btn btn-link btn-sm" @click="delMsg(msg)">
-						<i class="fa fa-close" style="color:red;position:relative;top:-0.3em"></i>
-					</a>
-					<span style="margin-left:-2.2em" v-html="formatMsg(msg)"></span>
-				</li>
-			</ul>
-			<div class="gus" v-show="numMsgs" style="display:none">
-				<a href="#" @click="deleteAllMsgs()">
-					<button class="danger">
-						{% endverbatim %}{% trans 'Delete all' %}
-					</button>
-				</a>
-			</div>
-		</div>
-	</div>
-	{% include "instant/client.html" %}
-	<script type="text/javascript">
-		{% include "instant/frontend/app.js" %}
-	</script>
+	{% include "instant/frontend/header.html" %}
+	{% include "instant/frontend/content.html" %}
 </div>
+<script type="text/javascript">
+	{% include "instant/frontend/datatable.js" %}
+	{% include "instant/frontend/app.js" %}
+</script>
+{% include "instant/client.html" %}
+<script type="text/javascript">
+	{% include "instant/event_class_format.js" %}
+	{% include "instant/frontend/init.js" %}
+</script>
 </body>
 </html>

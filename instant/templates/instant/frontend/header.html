@@ -1,16 +1,13 @@
-{% load staticfiles %}
-
-<div id="topbar">
-	<div id="instant_msgs" style="display:none;font-size:160%">
-		{% verbatim %}
-		<a href="" v-if="(numMsgs>0)">
-			<i v-bind:class="msgIconClass"></i>&nbsp;{{numMsgs}}
-		</a>
-		{% endverbatim %}
+<div class="container-fluid">
+	<div class="navbar" style="background-color:steelblue">
+		<div class="navbar-brand">
+			<div class="navbar-item is-size-3 is-bold">
+     			Instant
+     			<!-- span class="numMsgsSparkline" style="margin-left:1em;position:relative;top:0.2em"></span -->
+			</div>
+		</div>
+		<div class="navbar-menu" >
+			<span class="numMsgsSparkline" style="margin-left:1em;position:relative;top:0.9em"></span>
+		</div>
 	</div>
-</div>
-<div class="gds-s" style="display:inline-block;position:relative;top:11px;left:2em;font-size:220%;color:white">
-	<span class="hidden-xxs">
-		<a href="/">Django Instant</a>
-	</span>
 </div>

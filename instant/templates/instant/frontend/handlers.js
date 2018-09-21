@@ -1,23 +1,19 @@
-{% load instant_tags %}
-//console.log("NUM: {% num_excluded_chans %}");
-{% if num_excluded_chans != 0 %}
-	var exclude = [{% exclude_chans %}];
-	//console.log("EX VAR: "+exclude);
-	for (i=0;i<exclude.length;i++) {
-		//console.log(channel+" / "+exclude[i]);
-		if (event_class === exclude[i]) {
-			return
-		}
+function get_channel(slug) {
+	if (slug in app.publicChans === true) {
+		return app.publicChans[slug]
+	} else if (slug in app.usersChans === true) {
+		return app.usersChans[slug]
+	} else if (slug in app.staffChans === true) {
+		return app.staffChans[slug]
+	} else if (slug in app.superuserChans === true) {
+		return app.superuserChans[slug]
 	}
-{% else %}
-//console.log("NO");
-{% endif %}
-app.msgIconClass["fa-envelope-o"] = false;
-app.msgIconClass["fa-envelope"] = true;
-setTimeout(function(){
-	app.msgIconClass["fa-envelope-o"] = true;
-	app.msgIconClass["fa-envelope"] = false;
-},1200);
-app.msgs.unshift({"event_class": event_class, "message": message, "uid": uid});
-document.getElementById("instant_msgs").style.display = "inline-block";
-app.numMsgs++;
+}
+var now = getClockTime(true);
+if (app.labels.indexOf(event_class) !== -1) {
+	event_class=get_label(event_class);
+};
+var msg = {"time":now, "class": event_class, "channel": channel, "message": message, "data": app.str(data)};
+$('#msgsTable').DataTable().row.add(msg).draw();
+var chan = get_channel(channel);
+app.msgReceived(chan);

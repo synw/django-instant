@@ -1,21 +1,11 @@
 # -*- coding: utf-8 -*-
 import json
-from django import VERSION
-
 from django.http import JsonResponse
-if VERSION >= (2, 0):
-    from django.urls import reverse
-else:
-    from django.core.urlresolvers import reverse
 from django.http.response import Http404
-from django.views.generic.base import View
-from django.views.generic import FormView
 from django.views.generic.base import TemplateView
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.translation import ugettext_lazy as _
-from django.contrib import messages
+from vv.views import PostFormView
 from .producers import publish
-from .forms import BroadcastForm
 from .utils import signed_response
 from .apps import CHANNELS_NAMES
 
@@ -48,58 +38,28 @@ def instant_auth(request):
     return JsonResponse(response)
 
 
-class FrontendView(FormView):
-    form_class = BroadcastForm
+class FrontendView(TemplateView):
     template_name = 'instant/frontend/index.html'
-
+    
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_superuser:
             raise Http404
         return super(FrontendView, self).dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        msg = form.cleaned_data['message']
-        event_class = "default"
-        if "event_class" in form.cleaned_data:
-            event_class = form.cleaned_data['event_class']
-        channel = form.cleaned_data['channel']
-        default_channel = form.cleaned_data['default_channel']
-        err = None
-        if channel or default_channel:
-            if default_channel:
-                err = publish(message=msg, event_class=event_class,
-                              channel=default_channel)
-            if channel:
-                err = publish(
-                    message=msg, event_class=event_class, channel=channel)
-            if err is not None:
-                messages.warning(self.request, _(
-                    u"Error publishing the message: " + err))
+    
+class PostMsgView(PostFormView):
+    
+    def action(self, request, clean_data):
+        try:
+            msg = clean_data["msg"]
+            chan = clean_data["channel"]
+            event_class = clean_data["msg_class"]
+            data = clean_data["msg_data"]
+            if data == "":
+                data = {}
             else:
-                messages.success(self.request, _(
-                    u"Message published to the channel " + channel))
-        else:
-            messages.warning(self.request, _(
-                u"Please provide a valid channel"))
-        return super(FrontendView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse('instant-message-broadcasted')
-
-
-class PostMsgView(View):
-
-    def post(self, request, *args, **kwargs):
-        if not request.user.is_superuser:
-            return JsonResponse({"ok": 0})
-        data = json.loads(self.request.body.decode('utf-8'))
-        msg = data["msg"]
-        channel = data["channel"]
-        event_class = "default"
-        if "event_class" in data:
-            event_class = data['event_class']
-        err = publish(message=msg, event_class=event_class, channel=channel)
-        if err is not None:
-            errmsg = _(u"Error publishing the message: " + err)
-            return JsonResponse({"ok": 0, "err": errmsg})
-        return JsonResponse({"ok": 1})
+                data = json.loads(data)
+            err = publish(msg, chan, event_class=event_class, data=data)
+        except:
+            err = "Error processing the message data"
+        return None, err
