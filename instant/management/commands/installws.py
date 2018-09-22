@@ -44,6 +44,7 @@ class Command(BaseCommand):
         extralines = extralines + 'CENTRIFUGO_SECRET_KEY = "' + key + '"\n'
         extralines = extralines + 'CENTRIFUGO_HOST = "http://localhost"\n'
         extralines = extralines + "CENTRIFUGO_PORT = 8001\n"
+        extralines = extralines + "CORS_ORIGIN_WHITELIST = ('localhost:8001',)"
         project_dir = basepath + "/" + project_name
         filepath = project_dir + '/settings.py'
         f = open(filepath, "a")

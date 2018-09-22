@@ -22,6 +22,7 @@ setup(
     ],
     install_requires=[
         'cent<3.0',
+        'django-cors-headers',
     ],
     zip_safe=False
 )
