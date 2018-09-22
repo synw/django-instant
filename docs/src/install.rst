@@ -114,6 +114,15 @@ Frontend
 
 A demo frontend is available. To use it:
 
+
+.. highlight:: python
+
+::
+
+   pip install django-vitevue
+   
+Add `"vv",` to installed apps
+
 Set the urls:
 
 .. highlight:: python
