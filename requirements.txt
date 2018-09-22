@@ -1,1 +1,2 @@
 cent<3
+django-cors-headers
