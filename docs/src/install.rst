@@ -29,7 +29,8 @@ This will download the Centrifugo websockets server, install it and update your 
 file with the appropriate configuration.
 
 For other systems you have to install 
-Centrifugo `manually <https://fzambia.gitbooks.io/centrifugal/content/server/start.html>`_
+Centrifugo `manually <https://fzambia.gitbooks.io/centrifugal/content/server/start.html>`_ (use version
+1 as this module is not compatible with Centrifugo 2 yet)
 
 Settings
 ~~~~~~~~
