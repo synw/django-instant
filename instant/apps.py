@@ -6,11 +6,10 @@ from django.apps import AppConfig
 from django.utils._os import safe_join
 from django.template.loaders.app_directories import get_app_template_dirs
 
-
 HANDLERS = {}
 CHANNELS = {}
 CHANNELS_NAMES = {}
-DEFAULT_HANDLER = None
+DEFAULT_HANDLER = "instant/handlers/default.js"
 
 
 class InstantConfig(AppConfig):
@@ -26,17 +25,17 @@ class InstantConfig(AppConfig):
         col = '\033[91m'
         endcol = '\033[0m'
         if ENABLE_STAFF_CHANNEL is True:
-            print(col + "Warning from Django Instant" + endcol +
+            print(col + "Warning from Django Instant" + endcol + 
                   ": the setting ENABLE_STAFF_CHANNEL "
                   "will be deprecated in version 0.8. "
                   "Please use declarative channels instead")
         if ENABLE_USERS_CHANNEL is True:
-            print(col + "Warning from Django Instant" + endcol +
+            print(col + "Warning from Django Instant" + endcol + 
                   ": the setting ENABLE_USERS_CHANNEL "
                   "will be deprecated in version 0.8. "
                   "Please use declarative channels instead")
         if ENABLE_SUPERUSER_CHANNEL is True:
-            print(col + "Warning from Django Instant" + endcol +
+            print(col + "Warning from Django Instant" + endcol + 
                   ": the setting ENABLE_SUPERUSER_CHANNEL "
                   "will be deprecated in version 0.8. "
                   "Please use declarative channels instead")
