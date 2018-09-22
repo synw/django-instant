@@ -22,7 +22,7 @@ def instant_auth(request):
     for channel in channels:
         signature = None
         if channel in chans["users"]:
-            if request.user.is_authenticated():
+            if request.user.is_authenticated:
                 signature = signed_response(channel, client)
         if channel in chans["staff"]:
             if request.user.is_staff:
