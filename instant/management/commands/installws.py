@@ -38,8 +38,9 @@ class Command(BaseCommand):
         else:
             subprocess.call(["tar", "xfvz", dirname])
 
+        if "zip" in self.file_suffix:
+            subprocess.call(["mv", dirname, "centrifugo"])
 
-        subprocess.call(["mv", dirname, "centrifugo"])
         subprocess.call(["rm", "-f", dirname])
         subprocess.call(["centrifugo/centrifugo", "genconfig"])
         subprocess.call(["mv", "config.json", "centrifugo"])
