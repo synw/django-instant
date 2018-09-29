@@ -40,7 +40,7 @@ class Command(BaseCommand):
         else:
             try:
                 subprocess.call(["mkdir", "-p", "centrifugo"])
-                subprocess.call(["tar", "xfvz", dirname + self.centrifugo_file_ext, "-C", "centrifugo",])
+                subprocess.call(["tar", "xfvz", dirname + self.centrifugo_file_ext, "-C", "centrifugo"])
             except Exception as e:
                 print(str(e))
                 exit()
