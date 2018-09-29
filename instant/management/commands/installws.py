@@ -38,7 +38,8 @@ class Command(BaseCommand):
             subprocess.call(["unzip", dirname +  self.centrifugo_file_ext])
             subprocess.call(["mv", dirname, "centrifugo"])
         else:
-            subprocess.call(["tar", "xfvz", dirname +  self.centrifugo_file_ext])
+            subprocess.call(["mkdir", "centrifugo"])
+            subprocess.call(["tar", "xfvz", dirname +  self.centrifugo_file_ext, '-C',"centrifugo"])
 
 
 
