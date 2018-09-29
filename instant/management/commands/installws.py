@@ -11,14 +11,14 @@ class Command(BaseCommand):
 
 
     def __init__(self,*args,**options):
-        self.centrifugo_version = "2.0.0_"
+        self.centrifugo_version = "2.0.0"
         self.run_on = str(platform.system()).lower()
 
         if self.run_on == "linux":
-            self.file_suffix = "linux-386.zip"
+            self.file_suffix = "_linux-386.tar.gz"
 
         if self.run_on == "darwin":
-            self.file_suffix = "darwin-amd64.zip"
+            self.file_suffix = "_darwin-amd64.tar.gz"
 
         if self.run_on == "Windows":
             print("Not supported")
@@ -30,9 +30,15 @@ class Command(BaseCommand):
             self.centrifugo_version + "/centrifugo-" + self.centrifugo_version + self.file_suffix
         subprocess.call(["wget", fetch_url])
         dirname = "centrifugo-" + self.centrifugo_version + self.file_suffix
-        subprocess.call(["unzip", dirname + ".zip"])
+
+        if "zip" in self.file_suffix:
+            subprocess.call(["unzip", dirname])
+        else:
+            subprocess.call(["tar xfvz", dirname])
+
+
         subprocess.call(["mv", dirname, "centrifugo"])
-        subprocess.call(["rm", "-f", dirname + ".zip"])
+        subprocess.call(["rm", "-f", dirname])
         subprocess.call(["centrifugo/centrifugo", "genconfig"])
         subprocess.call(["mv", "config.json", "centrifugo"])
         # generate settings
