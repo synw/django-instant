@@ -30,7 +30,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         fetch_url = "https://github.com/centrifugal/centrifugo/releases/download/v" + \
-            self.centrifugo_version + "/" + self.centrifugo_prefix + self.centrifugo_version + self.file_suffix
+            self.centrifugo_version + "/" + self.centrifugo_prefix + self.centrifugo_version + self.file_suffix + self.centrifugo_file_ext
         subprocess.call(["wget", fetch_url])
         dirname = self.centrifugo_prefix + self.centrifugo_version + self.file_suffix
 
