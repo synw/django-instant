@@ -93,9 +93,11 @@ class Command(BaseCommand):
         if "CORS_ORIGIN_WHITELIST" not in content:
             extralines += "CORS_ORIGIN_WHITELIST = ('localhost:8001',)"
 
-        f = open(filepath, "a")
+
         if len(extralines)>0:
+            f = open(filepath, "a")
             f.write("\n" + extralines + "\n")
-        f.close()
+            f.close()
+
         print("The Centrifugo websockets server is installed. Run it with python3 manage.py runws")
         return
