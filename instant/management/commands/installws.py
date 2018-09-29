@@ -18,10 +18,10 @@ class Command(BaseCommand):
         self.run_on = str(platform.system()).lower()
 
         if self.run_on == "linux":
-            self.file_suffix = "-linux_386"
+            self.file_suffix = "-linux-386"
 
         if self.run_on == "darwin":
-            self.file_suffix = "-darwin_amd64"
+            self.file_suffix = "-darwin-amd64"
 
         if self.run_on == "Windows":
             print("Not supported")
