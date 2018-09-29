@@ -8,7 +8,8 @@ import platform
 
 class Command(BaseCommand):
     help = 'Install the Centrifugo websockets server for Linux'
-
+    run_on = None
+    file_suffix = None
 
     def __init__(self,*args,**options):
         self.centrifugo_version = "2.0.0_"
