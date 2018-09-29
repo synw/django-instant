@@ -15,10 +15,10 @@ class Command(BaseCommand):
         self.run_on = str(platform.system()).lower()
 
         if self.run_on == "linux":
-            self.file_suffix = "_linux-386.tar.gz"
+            self.file_suffix = "_linux_386.tar.gz"
 
         if self.run_on == "darwin":
-            self.file_suffix = "_darwin-amd64.tar.gz"
+            self.file_suffix = "_darwin_amd64.tar.gz"
 
         if self.run_on == "Windows":
             print("Not supported")
