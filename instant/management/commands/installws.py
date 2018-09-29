@@ -34,7 +34,7 @@ class Command(BaseCommand):
         if "zip" in self.file_suffix:
             subprocess.call(["unzip", dirname])
         else:
-            subprocess.call(["tar xfvz", dirname])
+            subprocess.call(["tar", "xfvz", dirname])
 
 
         subprocess.call(["mv", dirname, "centrifugo"])
