@@ -11,17 +11,17 @@ class Command(BaseCommand):
 
 
     def __init__(self, *args, **options):
-        self.centrifugo_version = "2.0.0"
-        self.centrifugo_prefix = "centrifugo_"
-        self.centrifugo_file_ext = ".tar.gz"
+        self.centrifugo_version = "1.8.0"
+        self.centrifugo_prefix = "centrifugo-"
+        self.centrifugo_file_ext = ".zip"
 
         self.run_on = str(platform.system()).lower()
 
         if self.run_on == "linux":
-            self.file_suffix = "_linux_386"
+            self.file_suffix = "-linux_386"
 
         if self.run_on == "darwin":
-            self.file_suffix = "_darwin_amd64"
+            self.file_suffix = "-darwin_amd64"
 
         if self.run_on == "Windows":
             print("Not supported")
