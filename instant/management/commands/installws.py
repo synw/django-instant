@@ -10,27 +10,26 @@ class Command(BaseCommand):
     help = 'Install the Centrifugo websockets server for Linux'
 
 
-    def handle(self, *args, **options):
-        run_on = platform.system()
+    def __init__(self,*args,**options):
+        self.centrifugo_version = "2.0.0_"
+        self.run_on = str(platform.system()).lower
 
-        if run_on == "Linux":
-            self.handle_linux(self, *args, **options)
+        if self.run_on == "Linux":
+            self.file_suffix = "linux-386.zip"
 
-        if run_on == "Darwin":
-            self.handle_darwin(self, *args, **options)
+        if self.run_on == "Darwin":
+            self.file_suffix = "darwin-amd64.zip"
 
-        if run_on == "Windows":
+        if self.run_on == "Windows":
             print("Not supported")
+            exit()
 
-    def handle_darwin(self, *args, **options):
-        print('darwin')
+    def handle(self, *args, **options):
 
-    def handle_linux(self, *args, **options):
-        centrifugo_version = "1.8.0"
         fetch_url = "https://github.com/centrifugal/centrifugo/releases/download/v" + \
-            centrifugo_version + "/centrifugo-" + centrifugo_version + "-linux-386.zip"
+            self.centrifugo_version + "/centrifugo-" + self.centrifugo_version + self.file_suffix
         subprocess.call(["wget", fetch_url])
-        dirname = "centrifugo-" + centrifugo_version + "-linux-386"
+        dirname = "centrifugo-" + self.centrifugo_version + self.file_suffix
         subprocess.call(["unzip", dirname + ".zip"])
         subprocess.call(["mv", dirname, "centrifugo"])
         subprocess.call(["rm", "-f", dirname + ".zip"])
