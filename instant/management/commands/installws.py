@@ -38,7 +38,12 @@ class Command(BaseCommand):
             subprocess.call(["unzip", dirname +  self.centrifugo_file_ext])
             subprocess.call(["mv", dirname, "centrifugo"])
         else:
-            subprocess.call(["mkdir", "centrifugo"])
+            try:
+                print("create directory")
+                subprocess.call(["mkdir", "centrifugo"])
+            except Exception as e:
+                print(e)
+            print("extract directory")
             subprocess.call(["tar", "xfvz", dirname +  self.centrifugo_file_ext, '-C',"centrifugo"])
 
 
