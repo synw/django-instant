@@ -72,28 +72,28 @@ class Command(BaseCommand):
         project_dir = basepath + "/" + project_name
         filepath = project_dir + '/settings.py'
 
+        with open(filepath, 'r') as myfile:
+            content = myfile.read()
+
+            if "SITE_SLUG" not in content:
+                extralines += 'SITE_SLUG = "' + project_name + '"\n'
+
+            if "SITE_NAME" not in content:
+                extralines += 'SITE_NAME = SITE_SLUG\n'
+
+            if "CENTRIFUGO_SECRET_KEY" not in content:
+                extralines += 'CENTRIFUGO_SECRET_KEY = "' + key + '"\n'
+
+            if "CENTRIFUGO_HOST" not in content:
+                extralines += 'CENTRIFUGO_HOST = "http://localhost"\n'
+
+            if "CENTRIFUGO_PORT" not in content:
+                extralines += "CENTRIFUGO_PORT = 8001\n"
+
+            if "CORS_ORIGIN_WHITELIST" not in content:
+                extralines += "CORS_ORIGIN_WHITELIST = ('localhost:8001',)"
+
         f = open(filepath, "a")
-        content = f.read()
-
-        if "SITE_SLUG" not in content:
-            extralines += 'SITE_SLUG = "' + project_name + '"\n'
-
-        if "SITE_NAME" not in content:
-            extralines += 'SITE_NAME = SITE_SLUG\n'
-
-        if "CENTRIFUGO_SECRET_KEY" not in content:
-            extralines += 'CENTRIFUGO_SECRET_KEY = "' + key + '"\n'
-
-        if "CENTRIFUGO_HOST" not in content:
-            extralines += 'CENTRIFUGO_HOST = "http://localhost"\n'
-
-        if "CENTRIFUGO_PORT" not in content:
-            extralines += "CENTRIFUGO_PORT = 8001\n"
-
-        if "CORS_ORIGIN_WHITELIST" not in content:
-            extralines += "CORS_ORIGIN_WHITELIST = ('localhost:8001',)"
-
-
         if len(extralines)>0:
             f.write("\n" + extralines + "\n")
         f.close()
