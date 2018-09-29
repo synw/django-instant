@@ -8,17 +8,16 @@ import platform
 
 class Command(BaseCommand):
     help = 'Install the Centrifugo websockets server for Linux'
-    run_on = None
-    file_suffix = None
+
 
     def __init__(self,*args,**options):
         self.centrifugo_version = "2.0.0_"
-        self.run_on = str(platform.system()).lower
+        self.run_on = str(platform.system()).lower()
 
-        if self.run_on == "Linux":
+        if self.run_on == "linux":
             self.file_suffix = "linux-386.zip"
 
-        if self.run_on == "Darwin":
+        if self.run_on == "darwin":
             self.file_suffix = "darwin-amd64.zip"
 
         if self.run_on == "Windows":
