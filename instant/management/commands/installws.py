@@ -40,12 +40,10 @@ class Command(BaseCommand):
         else:
             try:
                 subprocess.call(["mkdir", "-p", "centrifugo"])
+                subprocess.call(["tar", "xfvz", "-C", "centrifugo", dirname + self.centrifugo_file_ext])
             except Exception as e:
                 print(str(e))
-
-            print("extract directory")
-            subprocess.call(["tar", "xfvz", "-C", "centrifugo", dirname + self.centrifugo_file_ext])
-
+                exit()
 
 
         subprocess.call(["rm", "-f", dirname +  self.centrifugo_file_ext])
