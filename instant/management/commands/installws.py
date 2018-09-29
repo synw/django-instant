@@ -14,10 +14,10 @@ class Command(BaseCommand):
         run_on = platform.system()
 
         if run_on == "Linux":
-            handle_linux(self, *args, **options)
+            self.handle_linux(self, *args, **options)
 
         if run_on == "Darwin":
-            handle_darwin(self, *args, **options)
+            self.handle_darwin(self, *args, **options)
 
         if run_on == "Windows":
             print("Not supported")
