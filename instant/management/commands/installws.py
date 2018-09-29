@@ -12,6 +12,8 @@ class Command(BaseCommand):
 
     def __init__(self,*args,**options):
         self.centrifugo_version = "2.0.0"
+        self.centrifugo_prefix = "centrifugo_"
+
         self.run_on = str(platform.system()).lower()
 
         if self.run_on == "linux":
@@ -27,9 +29,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         fetch_url = "https://github.com/centrifugal/centrifugo/releases/download/v" + \
-            self.centrifugo_version + "/centrifugo_" + self.centrifugo_version + self.file_suffix
+            self.centrifugo_version + "/" + self.centrifugo_prefix + self.centrifugo_version + self.file_suffix
         subprocess.call(["wget", fetch_url])
-        dirname = "centrifugo-" + self.centrifugo_version + self.file_suffix
+        dirname = self.centrifugo_prefix + self.centrifugo_version + self.file_suffix
 
         if "zip" in self.file_suffix:
             subprocess.call(["unzip", dirname])
