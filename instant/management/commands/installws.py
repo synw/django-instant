@@ -34,7 +34,7 @@ class Command(BaseCommand):
         subprocess.call(["wget", fetch_url])
         dirname = self.centrifugo_prefix + self.centrifugo_version + self.file_suffix
 
-        if "zip" in self.file_suffix:
+        if "zip" in self.centrifugo_file_ext:
             subprocess.call(["unzip", dirname +  self.centrifugo_file_ext])
             subprocess.call(["mv", dirname, "centrifugo"])
         else:
