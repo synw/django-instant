@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand
 import platform
 
 class Command(BaseCommand):
-    help = 'Install the Centrifugo websockets server for Linux'
+    help = 'Install the Centrifugo websockets server for Linux and Darwin'
 
 
     def __init__(self, *args, **options):
@@ -23,8 +23,8 @@ class Command(BaseCommand):
         if self.run_on == "darwin":
             self.file_suffix = "-darwin-amd64"
 
-        if self.run_on == "Windows":
-            print("Not supported")
+        else:
+            print("The platform Windows is not supported: can not install")
             exit()
 
     def handle(self, *args, **options):
