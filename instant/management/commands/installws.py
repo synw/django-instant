@@ -4,20 +4,53 @@ import subprocess
 import json
 from django.conf import settings
 from django.core.management.base import BaseCommand
-
+import platform
 
 class Command(BaseCommand):
-    help = 'Install the Centrifugo websockets server for Linux'
+    help = 'Install the Centrifugo websockets server for Linux and Darwin'
+
+
+    def __init__(self, *args, **options):
+        self.centrifugo_version = "1.8.0"
+        self.centrifugo_prefix = "centrifugo-"
+        self.centrifugo_file_ext = ".zip"
+
+        self.run_on = str(platform.system()).lower()
+
+        if self.run_on == "linux":
+            self.file_suffix = "-linux-386"
+
+        if self.run_on == "darwin":
+            self.file_suffix = "-darwin-amd64"
+
+        else:
+            print("The platform Windows is not supported: can not install")
+            exit()
 
     def handle(self, *args, **options):
-        centrifugo_version = "1.8.0"
+
         fetch_url = "https://github.com/centrifugal/centrifugo/releases/download/v" + \
-            centrifugo_version + "/centrifugo-" + centrifugo_version + "-linux-386.zip"
+            self.centrifugo_version + "/" + self.centrifugo_prefix + \
+            self.centrifugo_version + self.file_suffix + self.centrifugo_file_ext
         subprocess.call(["wget", fetch_url])
-        dirname = "centrifugo-" + centrifugo_version + "-linux-386"
-        subprocess.call(["unzip", dirname + ".zip"])
-        subprocess.call(["mv", dirname, "centrifugo"])
-        subprocess.call(["rm", "-f", dirname + ".zip"])
+        dirname = self.centrifugo_prefix + self.centrifugo_version + self.file_suffix
+
+        if "zip" in self.centrifugo_file_ext:
+            subprocess.call(["unzip", dirname +  self.centrifugo_file_ext])
+            subprocess.call(["mv", dirname, "centrifugo"])
+        else:
+            try:
+                subprocess.call(["mkdir", "-p", "centrifugo"])
+                subprocess.call(
+                    ["tar", "xfvz", dirname + self.centrifugo_file_ext,
+                    "-C", "centrifugo"]
+                    )
+            except Exception as e:
+                print(str(e))
+                exit()
+
+
+        subprocess.call(["rm", "-f", dirname +  self.centrifugo_file_ext])
         subprocess.call(["centrifugo/centrifugo", "genconfig"])
         subprocess.call(["mv", "config.json", "centrifugo"])
         # generate settings
@@ -39,16 +72,36 @@ class Command(BaseCommand):
         os.remove(filepath)
         os.rename(filepathtmp, filepath)
         # settings.py
-        extralines = 'SITE_SLUG = "' + project_name + '"\n'
-        extralines = extralines + 'SITE_NAME = SITE_SLUG\n'
-        extralines = extralines + 'CENTRIFUGO_SECRET_KEY = "' + key + '"\n'
-        extralines = extralines + 'CENTRIFUGO_HOST = "http://localhost"\n'
-        extralines = extralines + "CENTRIFUGO_PORT = 8001\n"
-        extralines = extralines + "CORS_ORIGIN_WHITELIST = ('localhost:8001',)"
+        extralines = ""
         project_dir = basepath + "/" + project_name
         filepath = project_dir + '/settings.py'
-        f = open(filepath, "a")
-        f.write("\n" + extralines + "\n")
-        f.close()
+
+
+        content = open(filepath, 'r').read()
+
+        if "SITE_SLUG" not in content:
+            extralines += 'SITE_SLUG = "' + project_name + '"\n'
+
+        if "SITE_NAME" not in content:
+            extralines += 'SITE_NAME = SITE_SLUG\n'
+
+        if "CENTRIFUGO_SECRET_KEY" not in content:
+            extralines += 'CENTRIFUGO_SECRET_KEY = "' + key + '"\n'
+
+        if "CENTRIFUGO_HOST" not in content:
+            extralines += 'CENTRIFUGO_HOST = "http://localhost"\n'
+
+        if "CENTRIFUGO_PORT" not in content:
+            extralines += "CENTRIFUGO_PORT = 8001\n"
+
+        if "CORS_ORIGIN_WHITELIST" not in content:
+            extralines += "CORS_ORIGIN_WHITELIST = ('localhost:8001',)"
+
+
+        if len(extralines)>0:
+            f = open(filepath, "a")
+            f.write("\n" + extralines + "\n")
+            f.close()
+
         print("The Centrifugo websockets server is installed. Run it with python3 manage.py runws")
         return

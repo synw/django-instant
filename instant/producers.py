@@ -34,7 +34,11 @@ def _get_channel(channel, target):
 
 def publish_py(message, channel=None, event_class="default", data=None,
                site=SITE_NAME, target=None):
-    cent_url = CENTRIFUGO_HOST + ":" + str(CENTRIFUGO_PORT)
+    if CENTRIFUGO_PROXY:
+        cent_url = CENTRIFUGO_HOST + ":" + str(CENTRIFUGO_PORT)
+    else:
+        cent_url = CENTRIFUGO_HOST
+
     client = Client(cent_url, SECRET_KEY, timeout=1)
     channel = _get_channel(channel, target)
     if data is None:
