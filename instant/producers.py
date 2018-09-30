@@ -4,7 +4,7 @@ from __future__ import print_function
 import json
 from cent import Client, CentException
 from instant.conf import SITE_NAME, CENTRIFUGO_HOST, CENTRIFUGO_PORT, SECRET_KEY, \
-    SITE_SLUG, PUBLIC_CHANNEL, BROADCAST_WITH
+    SITE_SLUG, PUBLIC_CHANNEL, BROADCAST_WITH, CENTRIFUGO_PROXY
 if BROADCAST_WITH == "go":
     import os
     import instant
@@ -35,6 +35,8 @@ def _get_channel(channel, target):
 def publish_py(message, channel=None, event_class="default", data=None,
                site=SITE_NAME, target=None):
     cent_url = CENTRIFUGO_HOST + ":" + str(CENTRIFUGO_PORT)
+    if CENTRIFUGO_PROXY is True:
+        cent_url = CENTRIFUGO_HOST
     client = Client(cent_url, SECRET_KEY, timeout=1)
     channel = _get_channel(channel, target)
     if data is None:

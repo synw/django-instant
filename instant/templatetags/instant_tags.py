@@ -18,6 +18,7 @@ except ImportError:
 SITE_SLUG = getattr(settings, 'SITE_SLUG', 'site')
 CENTRIFUGO_HOST = getattr(settings, 'CENTRIFUGO_HOST', 'http://localhost')
 CENTRIFUGO_PORT = getattr(settings, 'CENTRIFUGO_PORT', 8001)
+CENTRIFUGO_PROXY = getattr(settings, 'CENTRIFUGO_PROXY', False)
 
 APPS = getattr(settings, 'INSTANT_APPS', [])
 
@@ -54,7 +55,10 @@ class NoHandlerException(Exception):
 
 @register.simple_tag
 def get_centrifugo_url():
-    return CENTRIFUGO_HOST + ":" + str(CENTRIFUGO_PORT)
+    centrifugo_url = CENTRIFUGO_HOST + ":" + str(CENTRIFUGO_PORT)
+    if CENTRIFUGO_PROXY is True:
+         centrifugo_url = CENTRIFUGO_HOST
+    return centrifugo_url
 
 
 @register.simple_tag
@@ -137,9 +141,9 @@ def get_handlers_url(chan):
         url = HANDLERS[chan]
     else:
         if DEFAULT_HANDLER is None:
-            raise NoHandlerException("No handler found for channel " + 
-                                     "and no default handler is set. " + 
-                                     "Please set a default handler or " + 
+            raise NoHandlerException("No handler found for channel " +
+                                     "and no default handler is set. " +
+                                     "Please set a default handler or " +
                                      "a handler for channel " + chan)
         else:
             url = DEFAULT_HANDLER

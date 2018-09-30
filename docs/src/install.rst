@@ -6,15 +6,15 @@ Install and configure
 ::
 
    pip install django-instant
-   
-   
+
+
 Add to installed apps:
 
 ::
 
    "corsheaders",
    "instant",
-   
+
 2. Install the websockets server
 
 An installer is available for Linux only:
@@ -24,11 +24,11 @@ An installer is available for Linux only:
 ::
 
    python3 manage.py installws
-   
-This will download the Centrifugo websockets server, install it and update your settings.py 
+
+This will download the Centrifugo websockets server, install it and update your settings.py
 file with the appropriate configuration.
 
-For other systems you have to install 
+For other systems you have to install
 Centrifugo `manually <https://fzambia.gitbooks.io/centrifugal/content/server/start.html>`_ (use version
 1 as this module is not compatible with Centrifugo 2 yet)
 
@@ -46,7 +46,7 @@ Configure the middleware:
       ...
    ]
 
-Note: if you use the management command to install the server the settings below will already 
+Note: if you use the management command to install the server the settings below will already
 be configured.
 
 ::
@@ -55,19 +55,19 @@ be configured.
    CENTRIFUGO_SECRET_KEY = "70b651f6-775a-4949-982b-b387b31c1d84" # the_key_that_is_in_config.json
    SITE_SLUG = "my_site" # used internaly to prefix the channels
    SITE_NAME = "My site"
-   
+
    CORS_ORIGIN_WHITELIST = ('localhost:8001',)
-   
+
    # optionnal settings
    CENTRIFUGO_HOST = 'http://ip_here' #default: localhost
    CENTRIFUGO_PORT = 8012 # default: 8001
+   CENTRIFUGO_PROXY = True # default: False - remove port from URL if you are behind a proxy.
 
-   
-By default the events are published using python. A go module is available to perform the 
-publish operations in order to leave the main process alone as much as possible. 
-This might be usefull when lots of messages are sent. 
+By default the events are published using python. A go module is available to perform the
+publish operations in order to leave the main process alone as much as possible.
+This might be usefull when lots of messages are sent.
 
-Note: when this option is enabled there is no error handling. This option is recommended 
+Note: when this option is enabled there is no error handling. This option is recommended
 when you need higher performance and don't care about error messages.
 
 You might have to make the `instant/go/publish` file executable with `chmod`
@@ -77,7 +77,7 @@ You might have to make the `instant/go/publish` file executable with `chmod`
 ::
 
    INSTANT_BROADCAST_WITH = 'go'
-   
+
 Performance test: 1000 messages:
 
 - Python: 2.96 seconds
@@ -88,14 +88,14 @@ Performance test: 1000 messages:
 - Python: 29.57 seconds
 - Go: 14.44 seconds
 
-Note: this test uses the standard publish function so that each new event sent makes an 
+Note: this test uses the standard publish function so that each new event sent makes an
 new connection to Centrifugo.
 
 Templates
 ~~~~~~~~~
 
-Include the template ``{% include "instant/client.html" %}`` anywhere: nothing will 
-be displayed it is the engine. See next section for messages handling. 
+Include the template ``{% include "instant/client.html" %}`` anywhere: nothing will
+be displayed it is the engine. See next section for messages handling.
 
 Run the websockets server
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -107,7 +107,7 @@ If you used the installer:
 ::
 
    python3 manage.py runws
-   
+
 Otherwise run the Centrifugo server normally
 
 Frontend
@@ -121,7 +121,7 @@ A demo frontend is available. To use it:
 ::
 
    pip install django-vitevue
-   
+
 Add `"vv",` to installed apps
 
 Set the urls:
@@ -131,7 +131,7 @@ Set the urls:
 ::
 
    from instant.views import instant_auth
-   
+
    urlpatterns = [
    	# ...
    	url(r'^centrifuge/auth/$', instant_auth, name='instant-auth'),
