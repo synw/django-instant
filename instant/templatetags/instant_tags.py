@@ -56,7 +56,7 @@ class NoHandlerException(Exception):
 @register.simple_tag
 def get_centrifugo_url():
     centrifugo_url = CENTRIFUGO_HOST + ":" + str(CENTRIFUGO_PORT)
-    if CENTRIFUGO_PROXY:
+    if CENTRIFUGO_PROXY is True:
          centrifugo_url = CENTRIFUGO_HOST
     return centrifugo_url
 
