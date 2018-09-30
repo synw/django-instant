@@ -4,6 +4,7 @@ from django.conf import settings
 SECRET_KEY = getattr(settings, 'CENTRIFUGO_SECRET_KEY', "secret_key")
 CENTRIFUGO_HOST = getattr(settings, 'CENTRIFUGO_HOST', 'http://localhost')
 CENTRIFUGO_PORT = getattr(settings, 'CENTRIFUGO_PORT', 8001)
+CENTRIFUGO_PROXY = getattr(settings, 'CENTRIFUGO_PROXY', False)
 
 SITE_SLUG = getattr(settings, 'SITE_SLUG', 'site')
 SITE_NAME = getattr(settings, 'SITE_NAME', 'Site')
