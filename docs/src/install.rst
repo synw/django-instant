@@ -134,8 +134,8 @@ Set the urls:
 
    urlpatterns = [
    	# ...
-   	url(r'^centrifuge/auth/$', instant_auth, name='instant-auth'),
-   	url('^instant/', include('instant.urls')),
+   	path('centrifuge/auth/', instant_auth, name='instant-auth'),
+   	path('instant/', include('instant.urls')),
    	]
 
 Login as superuser and go to `/instant/`
