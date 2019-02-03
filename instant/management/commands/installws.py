@@ -4,17 +4,26 @@ import subprocess
 import json
 from django.conf import settings
 from django.core.management.base import BaseCommand
-
+import platform
 
 class Command(BaseCommand):
-    help = 'Install the Centrifugo websockets server for Linux'
+    help = 'Install the Centrifugo websockets server for Linux and Darwin'
 
     def handle(self, *args, **options):
         centrifugo_version = "1.8.0"
+        run_on = str(platform.system()).lower()
+
+        suffix = "-linux-386"
+
+        if run_on == "darwin":
+            suffix = "-darwin-amd64"
+
+        suffix_file = suffix + ".zip"
+
         fetch_url = "https://github.com/centrifugal/centrifugo/releases/download/v" + \
-            centrifugo_version + "/centrifugo-" + centrifugo_version + "-linux-386.zip"
+            centrifugo_version + "/centrifugo-" + centrifugo_version + suffix_file
         subprocess.call(["wget", fetch_url])
-        dirname = "centrifugo-" + centrifugo_version + "-linux-386"
+        dirname = "centrifugo-" + centrifugo_version + suffix
         subprocess.call(["unzip", dirname + ".zip"])
         subprocess.call(["mv", dirname, "centrifugo"])
         subprocess.call(["rm", "-f", dirname + ".zip"])
