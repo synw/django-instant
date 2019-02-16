@@ -1,5 +1,5 @@
-Optionnal message labels
-========================
+Optional message labels
+=======================
 
 Some javascript is used in the demo frontend to format the messages 
 label: ``templates/instant/event_class_format.js``.
