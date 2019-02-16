@@ -122,7 +122,11 @@ A demo frontend is available. To use it:
 
    pip install django-vitevue
 
-Add `"vv",` to installed apps
+Add to installed apps:
+
+::
+
+   "vv",
 
 Set the urls:
 
