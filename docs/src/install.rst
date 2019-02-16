@@ -17,7 +17,7 @@ Add to installed apps:
 
 2. Install the websockets server
 
-An installer is available for Linux only:
+An installer is available for Linux and Darwin:
 
 .. highlight:: bash
 
