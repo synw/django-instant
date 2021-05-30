@@ -18,10 +18,10 @@ setup(
         'Framework :: Django :: 1.11',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     install_requires=[
-        'cent<3.0',
+        'cent',
         'django-cors-headers',
     ],
     zip_safe=False

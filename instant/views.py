@@ -1,70 +1,77 @@
 # -*- coding: utf-8 -*-
 import json
-from django.http import JsonResponse
-from django.http.response import Http404
-from django.views.generic.base import TemplateView
+
+from django.contrib import auth
+from django.http import JsonResponse, HttpResponseForbidden, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from vv.views import PostFormView
-from .producers import publish
-from .utils import signed_response
-from .apps import CHANNELS_NAMES
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import csrf_exempt
+
+from .token import connection_token, channel_token
+from .models import Channel
 
 
 @csrf_exempt
-def instant_auth(request):
-    if not request.is_ajax() or not request.method == "POST":
-        raise Http404
-    chans = CHANNELS_NAMES
-    data = json.loads(request.body.decode("utf-8"))
-    channels = data["channels"]
-    client = data['client']
-    response = {}
-    for channel in channels:
-        signature = None
-        if channel in chans["users"]:
-            if request.user.is_authenticated:
-                signature = signed_response(channel, client)
-        if channel in chans["staff"]:
-            if request.user.is_staff:
-                signature = signed_response(channel, client)
-        if channel in chans["superuser"]:
-            if request.user.is_superuser:
-                signature = signed_response(channel, client)
-        # response
-        if signature is not None:
-            response[channel] = signature
-        else:
-            response[channel] = {"status": "403"}
-    return JsonResponse(response)
+def private_channel_subscription(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    json_data = json.loads(request.body)
+    # print("PRIVATE SUB for", request.user.username, json_data)
+    user_chans = Channel.objects.for_user(request.user).values("name")
+    user_chans_names = []
+    for chan in user_chans:
+        user_chans_names.append(chan["name"])
+    authorized_chans = []
+    for channel in json_data["channels"]:
+        # print("Checking auth for chan", channel, channel in user_chans_names)
+        if channel in user_chans_names:
+            chan = {
+                "channel": channel,
+                "token": channel_token(json_data["client"], channel),
+            }
+            authorized_chans.append(chan)
+    # print({"channels": authorized_chans})
+    return JsonResponse({"channels": authorized_chans})
 
 
-class FrontendView(TemplateView):
-    template_name = 'instant/frontend/index.html'
-    
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.user.is_superuser:
-            raise Http404
-        return super(FrontendView, self).dispatch(request, *args, **kwargs)
+def _get_response(request):
+    channels = Channel.objects.for_user(request.user).values("name", "level")
+    return JsonResponse(
+        {
+            "csrf_token": get_token(request),
+            "ws_token": connection_token(request.user),
+            "channels": list(channels),
+        }
+    )
 
 
-class PostMsgView(PostFormView):
-    
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.user.is_superuser:
-            raise Http404
-        return super(PostMsgView, self).dispatch(request, *args, **kwargs)
+@csrf_exempt
+def login_and_get_tokens(request):
+    print("Login view", request.method)
+    if request.user.is_authenticated:
+        return _get_response(request)
+    if request.method == "POST":
+        # print("POST", request.body)
+        json_data = json.loads(request.body)
+        username = json_data["username"]
+        password = json_data["password"]
+        # print("Authenticate", username, password)
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return _get_response(request)
+    return HttpResponseForbidden()
 
-    def action(self, request, clean_data):
-        try:
-            msg = clean_data["msg"]
-            chan = clean_data["channel"]
-            event_class = clean_data["msg_class"]
-            data = clean_data["msg_data"]
-            if data == "":
-                data = {}
-            else:
-                data = json.loads(data)
-            err = publish(msg, chan, event_class=event_class, data=data)
-        except:
-            err = "Error processing the message data"
-        return None, err
+
+def logout(request):
+    if request.user.is_authenticated:
+        auth.logout(request)
+        return JsonResponse({"response": "ok"})
+    return HttpResponseForbidden()
+
+
+@csrf_exempt
+def get_connection_token(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+    return _get_response(request)

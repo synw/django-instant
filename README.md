@@ -1,21 +1,13 @@
 # Django Instant
 
-[![Build Status](https://travis-ci.org/synw/django-instant.svg?branch=master)](https://travis-ci.org/synw/django-instant)
-[![Coverage Status](https://coveralls.io/repos/github/synw/django-instant/badge.svg?branch=master)](https://coveralls.io/github/synw/django-instant?branch=master)
-
 Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifugo).
 
 * Push events into public or private channels.
-
 * Handle the events in javascript client-side.
 
-:sunny: Compatible: plug it on an existing Django instance _without any modification in your main stack_. 
+:sunny: Compatible: plug it on an existing Django instance _without any modification in your main stack_
 
-Straightforward: no particular concepts to know, no learning curve: just push events and handle them client-side.
-
-Check the [documentation](http://django-instant.readthedocs.io/en/latest/) for the install instructions.
-
-### Quick example
+### Example
 
 Push events in channels from anywhere in the code:
 
@@ -23,47 +15,72 @@ Push events in channels from anywhere in the code:
 from instant.producers import publish
   
 # Publish to a public channel
-publish(message="Message for everyone", channel="mysite_public")
+publish("public", "Message for everyone")
 
 # Publish to a private channel with an event class set
-publish(message="Message in private channel", channel="$private_chan", 
-          event_class="test")
+publish("$users", "Message in logged in users channel", event_class="important")
 
 # Publish to the staff channel with an extra json data payload
 data = {"field1":"value1","field2":[1,2]}
-publish(message="Message for staff", channel="$mysite_staff", data=data)
+publish("$staff", "Message for staff", data=data)
   ```
 
-Handle the events client-side in a template:
+## Quick start
 
-  ```javascript
-if (event_class === 'test') {
-        console.log("This is a test message: " + message);
+### Install the websockets server
+
+Install the Centrifugo websockets server (see the [detailled doc](https://centrifugal.github.io/centrifugo/server/install/) 
+for more info). [Download a release](https://github.com/centrifugal/centrifugo/releases/latest) 
+and generate a configuration file:
+
+```
+./centrifugo genconfig
+```
+
+The generated `config.json` file looks like this:
+
+```javascript
+{
+  "v3_use_offset": true,
+  "token_hmac_secret_key": "46b38493-147e-4e3f-86e0-dc5ec54f5133",
+  "admin_password": "ad0dff75-3131-4a02-8d64-9279b4f1c57b",
+  "admin_secret": "583bc4b7-0fa5-4c4a-8566-16d3ce4ad401",
+  "api_key": "aaaf202f-b5f8-4b34-bf88-f6c03a1ecda6",
+  "allowed_origins": []
 }
-  ```
+```
 
-### Using this
+### Configure Django settings
 
-[Django Presence](https://github.com/synw/django-presence): user presence notification widget
+Use these parameters to update your Django's `settings.py`:
 
-[Django Mqueue Livefeed](https://github.com/synw/django-mqueue-livefeed): multi-sites realtime application events and logs
+```python
+CENTRIFUGO_HOST = "http://localhost"
+CENTRIFUGO_PORT = 8001
+CENTRIFUGO_HMAC_KEY = "46b38493-147e-4e3f-86e0-dc5ec54f5133"
+CENTRIFUGO_API_KEY = "aaaf202f-b5f8-4b34-bf88-f6c03a1ecda6"
+SITE_NAME = "My site" # used in the messages to identify where they come from
+```
 
-[Django Autoreloader](https://github.com/synw/django-autoreloader): watches files change and autoreload in browser
+Add `"instant"` to `INSTALLED_APPS` and update `urls.py`:
 
-[Django Term](https://github.com/synw/django-term): in browser terminal for Django
- 
-[Django Rechat](https://github.com/synw/django-rechat): basic chat app (toy app for now)
+```python
+urlpatterns = [
+    # ...
+    path("instant/", include("instant.urls")),
+]
+```
 
-### Why?
+### Create channels
 
-Most of the websockets solutions associated with Django today require some modification in the main stack, like uwsgi, 
-and often come with a whole bunch of new concepts to figure out, making the newcomer to feel like 
-he is walking in the dark.
+Go into the admin to create channels
 
-We wanted a solution that could plug on a safe classic Django stack without having to do any tweaks on it. 
-The Centrifugo websockets server handles the job very well, better than all the python solutions I know IMHO. This made 
-it possible to build an app that just plugs on an existing Django stack. The API is simple and does not involve any
-new concept.
+## Avalailable endpoints
 
-We are trying to ship a fully compatible, easy to install and ready to use websockets solution for Django: 
-websockets in Django should not be a big deal.
+`/instant/login/`: takes a username and password as parameter and will login the
+user in Django and return a Centrifugo connection token
+
+`/instant/get_token/`: get a Centrifugo connection token for a logged in user
+
+`/instant/subscribe/`: get tokens for Centrifugo channels subscriptions 
+([doc](https://centrifugal.github.io/centrifugo/server/private_channels/))

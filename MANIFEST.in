@@ -1,5 +1,1 @@
-recursive-include instant/static *
 recursive-include instant/migrations *
-recursive-include instant/templates *
-recursive-include instant/templatetags *
-recursive-include instant/go *

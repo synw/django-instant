@@ -1,2 +1,2 @@
-cent<3
+cent
 django-cors-headers
