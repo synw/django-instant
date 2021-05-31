@@ -124,4 +124,9 @@ publish("$users", "A message", data={
 
 The other parameters are optional
 
+## Javascript client
+
+A dedicated [javascript client](https://github.com/synw/djangoinstant) is available
+to handle the messages and connections client side
+
 
