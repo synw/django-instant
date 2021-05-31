@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import json
 from cent import Client, CentException
 from .conf import SITE_NAME, CENTRIFUGO_HOST, CENTRIFUGO_PORT, CENTRIFUGO_API_KEY
 
 
-def publish(
-    channel, message=None, event_class=None, data=None, bucket=None, site=SITE_NAME
-):
+def publish(channel, *args, event_class=None, data=None, bucket=None, site=SITE_NAME):
+    message = None
+    if len(args) == 1:
+        message = args[0]
     if message is None and data is None:
         raise ValueError("Provide either a message or data argument")
     cent_url = CENTRIFUGO_HOST
@@ -31,6 +31,4 @@ def publish(
         err = str(e)
     except Exception as e:
         raise e
-    if event_class.lower() == "debug":
-        print("[DEBUG] ", str(json.dumps(payload)))
     return err
