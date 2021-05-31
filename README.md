@@ -53,6 +53,21 @@ The generated `config.json` file looks like this:
 }
 ```
 
+### Install the Django package
+
+```
+pip install django-instant
+```
+
+Add `"instant"` to `INSTALLED_APPS` and update `urls.py`:
+
+```python
+urlpatterns = [
+    # ...
+    path("instant/", include("instant.urls")),
+]
+```
+
 ### Configure Django settings
 
 Use these parameters to update your Django's `settings.py`:
@@ -63,15 +78,6 @@ CENTRIFUGO_PORT = 8001
 CENTRIFUGO_HMAC_KEY = "46b38493-147e-4e3f-86e0-dc5ec54f5133"
 CENTRIFUGO_API_KEY = "aaaf202f-b5f8-4b34-bf88-f6c03a1ecda6"
 SITE_NAME = "My site" # used in the messages to identify where they come from
-```
-
-Add `"instant"` to `INSTALLED_APPS` and update `urls.py`:
-
-```python
-urlpatterns = [
-    # ...
-    path("instant/", include("instant.urls")),
-]
 ```
 
 ### Create channels
