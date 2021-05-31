@@ -20,6 +20,9 @@ publish("public", "Message for everyone")
 # Publish to a private channel with an event class set
 publish("$users", "Message in logged in users channel", event_class="important")
 
+# Publish to a group channel
+publish("$group1", "Message for users in group1")
+
 # Publish to the staff channel with an extra json data payload
 data = {"field1":"value1","field2":[1,2]}
 publish("$staff", "Message for staff", data=data)
@@ -82,5 +85,43 @@ user in Django and return a Centrifugo connection token
 
 `/instant/get_token/`: get a Centrifugo connection token for a logged in user
 
+The two methods above return some connection information: a token for
+the websockets connection, a Django csrf token and a list of authorized
+channels for the user:
+
+```javascript
+{
+  "csrf_token": "fvO61oyhcfzrW3SjPCYxYfzDAQFO6Yz7yaAQkxDbhC0NhlwoP1cecqLEYv8SCDLK",
+  "ws_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnZ2ciLCJleHAiOjE2M..",
+  "channels": [
+    {
+      "name": "public",
+      "level": "public"
+    },
+    {
+      "name": "$users",
+      "level": "users"
+    },
+    {
+      "name": "$group1",
+      "level": "groups"
+    }
+  ]
+}
+```
+
 `/instant/subscribe/`: get tokens for Centrifugo channels subscriptions 
 ([doc](https://centrifugal.github.io/centrifugo/server/private_channels/))
+
+## Publish method
+
+The required parameters are `channel` and either `message` or `data`
+
+```python
+publish("$users", "A message", data={
+        "foo": "bar"}, event_class="important", bucket="notifications")
+```
+
+The other parameters are optional
+
+
