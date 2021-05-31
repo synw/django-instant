@@ -68,9 +68,9 @@ urlpatterns = [
 ]
 ```
 
-### Configure Django settings
+### Configure the Django settings
 
-Use these parameters to update your Django's `settings.py`:
+Use the parameters from Centrifugo's `config.json` file to update your Django's `settings.py`:
 
 ```python
 CENTRIFUGO_HOST = "http://localhost"
