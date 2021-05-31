@@ -135,4 +135,6 @@ The other parameters are optional
 A dedicated [javascript client](https://github.com/synw/djangoinstant) is available
 to handle the messages and connections client side
 
+## Example
 
+An [example](https://github.com/synw/django-instant-example) with a backend and a frontend is available
