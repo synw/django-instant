@@ -27,7 +27,8 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     install_requires=[
-        'cent'
+        'cent',
+        'PyJWT'
     ],
     zip_safe=False
 )
