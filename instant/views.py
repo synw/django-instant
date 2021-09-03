@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 import json
 
 from django.contrib import auth
-from django.http import JsonResponse, HttpResponseForbidden, JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.middleware.csrf import get_token
-from django.views.decorators.csrf import csrf_exempt
 
 from .token import connection_token, channel_token
 from .models import Channel
@@ -17,7 +15,7 @@ def private_channel_subscription(request):
         return HttpResponseForbidden()
     json_data = json.loads(request.body)
     # print("PRIVATE SUB for", request.user.username, json_data)
-    user_chans = Channel.objects.for_user(request.user).values("name")
+    user_chans = Channel.objects.for_user(request.user).values("name")  # type: ignore
     user_chans_names = []
     for chan in user_chans:
         user_chans_names.append(chan["name"])
@@ -35,7 +33,9 @@ def private_channel_subscription(request):
 
 
 def _get_response(request):
-    channels = Channel.objects.for_user(request.user).values("name", "level")
+    channels = Channel.objects.for_user(request.user).values(  # type: ignore
+        "name", "level"
+    )
     return JsonResponse(
         {
             "csrf_token": get_token(request),

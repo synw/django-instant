@@ -28,20 +28,17 @@ class ChannelManager(models.Manager):
 
 
 class Channel(models.Model):
-    global LEVELS
     name = models.CharField(
         max_length=120,
         verbose_name=_("Name"),
         unique=True,
-        help_text=_(
-            "Use $ to prefix non public channels: " "ex: $private_chan"),
+        help_text=_("Use $ to prefix non public channels: " "ex: $private_chan"),
     )
     level = models.CharField(
         max_length=20, choices=LEVELS, verbose_name=_("Authorized for")
     )
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
-    groups = models.ManyToManyField(
-        Group, blank=True, verbose_name=_("Groups"))
+    groups = models.ManyToManyField(Group, blank=True, verbose_name=_("Groups"))
     objects = ChannelManager()
 
     class Meta:

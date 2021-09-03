@@ -25,7 +25,7 @@ def publish(channel, *args, event_class=None, data=None, bucket=None, site=SITE_
         payload["bucket"] = bucket
     err = None
     try:
-        print(f"Publishing to {cent_url} {payload}")
+        # print(f"Publishing to {cent_url} {payload}")
         client.publish(channel, payload)
     except CentException as e:
         err = str(e)
