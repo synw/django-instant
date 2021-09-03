@@ -30,7 +30,35 @@ publish("$staff", "Message for staff", data=data)
 
 ## Quick start
 
+### Install the Django package
+
+```
+pip install django-instant
+```
+
+Add `"instant"` to `INSTALLED_APPS` and update `urls.py`:
+
+```python
+urlpatterns = [
+    # ...
+    path("instant/", include("instant.urls")),
+]
+```
+
 ### Install the websockets server
+
+#### Using the installer
+
+Use the Centrifugo installer management command (for Linux and MacOs):
+
+```
+python manage.py installws
+```
+
+This will download a Centrifugo binary release and install it under a *centrifugo* directory. It will
+generate the Django settings to use.
+
+#### Install manualy
 
 Install the Centrifugo websockets server (see the [detailled doc](https://centrifugal.github.io/centrifugo/server/install/) 
 for more info). [Download a release](https://github.com/centrifugal/centrifugo/releases/latest) 
@@ -53,24 +81,10 @@ The generated `config.json` file looks like this:
 }
 ```
 
-### Install the Django package
-
-```
-pip install django-instant
-```
-
-Add `"instant"` to `INSTALLED_APPS` and update `urls.py`:
-
-```python
-urlpatterns = [
-    # ...
-    path("instant/", include("instant.urls")),
-]
-```
-
 ### Configure the Django settings
 
-Use the parameters from Centrifugo's `config.json` file to update your Django's `settings.py`:
+Use the parameters from the installer's output or from Centrifugo's `config.json` file 
+to update your Django's `settings.py`:
 
 ```python
 CENTRIFUGO_HOST = "http://localhost"
