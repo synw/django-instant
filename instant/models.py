@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
+
 from .init import ensure_channel_is_private
 
 
@@ -35,7 +36,10 @@ class Channel(models.Model):
         help_text=_("Use $ to prefix non public channels: " "ex: $private_chan"),
     )
     level = models.CharField(
-        max_length=20, choices=LEVELS, verbose_name=_("Authorized for")
+        max_length=20,
+        choices=LEVELS,
+        verbose_name=_("Authorized for"),
+        default="superuser",
     )
     is_active = models.BooleanField(default=True, verbose_name=_("Active"))
     groups = models.ManyToManyField(Group, blank=True, verbose_name=_("Groups"))
@@ -46,11 +50,10 @@ class Channel(models.Model):
         verbose_name_plural = _("Channels")
 
     def __str__(self):
-        return f"{self.name} ({self.level})"
+        return self.name
 
     def save(self, *args, **kwargs):
         # check the channel name
         if self.level != "public":
-            if self.name.startswith("$") is False:
-                self.name = ensure_channel_is_private(self.name)
+            self.name = ensure_channel_is_private(self.name)
         return super(Channel, self).save(*args, **kwargs)

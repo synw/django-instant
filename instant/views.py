@@ -47,7 +47,7 @@ def _get_response(request):
 
 @csrf_exempt
 def login_and_get_tokens(request):
-    print("Login view", request.method)
+    # print("Login view", request.method)
     if request.user.is_authenticated:
         return _get_response(request)
     if request.method == "POST":

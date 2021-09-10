@@ -22,7 +22,7 @@ def generate_settings_from_conf(
     return buffer
 
 
-def ensure_channel_is_private(chan):
+def ensure_channel_is_private(chan: str) -> str:
     """
     Make sure that a private channel name starts with a $ sign
     """

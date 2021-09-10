@@ -1,10 +1,21 @@
-# -*- coding: utf-8 -*-
+from typing import Any, Dict, Union
 
-from cent import Client, CentException
+from cent import Client
+
 from .conf import SITE_NAME, CENTRIFUGO_HOST, CENTRIFUGO_PORT, CENTRIFUGO_API_KEY
 
 
-def publish(channel, *args, event_class=None, data=None, bucket=None, site=SITE_NAME):
+def publish(
+    channel: str,
+    *args,
+    event_class: Union[str, None] = None,
+    data: Union[Dict[Any, Any], None] = None,
+    bucket: str = None,
+    site: str = SITE_NAME
+) -> None:
+    """
+    Publish a message to a websockets channel
+    """
     message = None
     if len(args) == 1:
         message = args[0]
@@ -14,7 +25,7 @@ def publish(channel, *args, event_class=None, data=None, bucket=None, site=SITE_
     if CENTRIFUGO_PORT is not None:
         cent_url += ":" + str(CENTRIFUGO_PORT)
     client = Client(cent_url, api_key=CENTRIFUGO_API_KEY, timeout=1)
-    payload = {"channel": channel, "site": site}
+    payload: Dict[Any, Any] = {"channel": channel, "site": site}
     if message is not None:
         payload["message"] = message
     if data is not None:
@@ -23,12 +34,4 @@ def publish(channel, *args, event_class=None, data=None, bucket=None, site=SITE_
         payload["event_class"] = event_class
     if bucket is not None:
         payload["bucket"] = bucket
-    err = None
-    try:
-        # print(f"Publishing to {cent_url} {payload}")
-        client.publish(channel, payload)
-    except CentException as e:
-        err = str(e)
-    except Exception as e:
-        raise e
-    return err
+    client.publish(channel, payload)
