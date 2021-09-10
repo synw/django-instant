@@ -8,6 +8,8 @@ coverage_html_report/
 test_db
 bin/
 pyvenv.cfg
+.coveragerc
+.vscode/
 
 __pycache__/
 *.py[cod]
