@@ -1,0 +1,2 @@
+class InstantTest:
+    pass
