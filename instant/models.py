@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import Group
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .init import ensure_channel_is_private
 
@@ -49,11 +49,11 @@ class Channel(models.Model):
         verbose_name = _("Channel")
         verbose_name_plural = _("Channels")
 
-    def __str__(self):
-        return self.name
+    def __str__(self) -> str:
+        return str(self.name)
 
     def save(self, *args, **kwargs):
         # check the channel name
         if self.level != "public":
-            self.name = ensure_channel_is_private(self.name)
+            self.name = ensure_channel_is_private(self.__str__())
         return super(Channel, self).save(*args, **kwargs)
