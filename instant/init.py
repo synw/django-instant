@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Union
-
+from pathlib import Path
 
 from django.conf import settings
 
@@ -15,7 +15,10 @@ def generate_settings_from_conf(
     buffer.append("CENTRIFUGO_PORT = 8427")
     buffer.append(f'CENTRIFUGO_HMAC_KEY = "{conf["token_hmac_secret_key"]}"')
     buffer.append(f'CENTRIFUGO_API_KEY = "{conf["api_key"]}"')
-    project_name = settings.BASE_DIR.name
+    default_base_dir = settings.BASE_DIR
+    if isinstance(default_base_dir, Path) is False:
+        default_base_dir = Path(default_base_dir)
+    project_name = default_base_dir.name
     if site_name is not None:
         project_name = site_name
     buffer.append(f'SITE_NAME = "{project_name}"')

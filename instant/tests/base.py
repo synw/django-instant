@@ -12,7 +12,7 @@ class InstantBaseTest(TestCase):
     user = None
 
     def setUp(self):
-        self.factory = RequestFactory()
+        self.factory = RequestFactory()  # type: ignore
         self.user = User.objects.create_user(  # type: ignore
             "myuser", "myemail@test.com", "password"
         )

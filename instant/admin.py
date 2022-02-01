@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 from django.contrib import admin
-from .models import Channel
+
+from instant.models import Channel
 
 
-@admin.register(Channel)
+@admin.register(Channel)  # type: ignore
 class ChannelAdmin(admin.ModelAdmin):
     list_display = ["name", "level", "is_active"]
