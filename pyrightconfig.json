@@ -1,0 +1,17 @@
+{
+  "useLibraryCodeForTypes": true,
+  "reportMissingImports": false,
+  "reportMissingTypeStubs": false,
+  "strictSetInference": true,
+  "strictDictionaryInference": true,
+  "strictListInference": true,
+  "reportUntypedFunctionDecorator": true,
+  "reportUntypedClassDecorator": true,
+  "reportIncompatibleMethodOverride": "error",
+  "reportIncompatibleVariableOverride": "error",
+  "reportUninitializedInstanceVariable": "error",
+  "reportUnknownParameterType": false,
+  "reportUnknownVariableType": false,
+  "reportUnnecessaryCast": "warning",
+  "reportUnnecessaryComparison": "warning",
+}
