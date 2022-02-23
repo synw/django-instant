@@ -60,8 +60,11 @@ generate the Django settings to use.
 
 #### Install manualy
 
-Install the Centrifugo websockets server (see the [detailled doc](https://centrifugal.github.io/centrifugo/server/install/) 
-for more info). [Download a release](https://github.com/centrifugal/centrifugo/releases/latest) 
+Install the Centrifugo websockets server: see the [detailled doc](https://centrifugal.github.io/centrifugo/server/install/) 
+ 
+<details>
+<br />
+Download a release https://github.com/centrifugal/centrifugo/releases/latest
 and generate a configuration file:
 
 ```
@@ -80,6 +83,7 @@ The generated `config.json` file looks like this:
   "allowed_origins": []
 }
 ```
+</details>
 
 ### Configure the Django settings
 
@@ -146,8 +150,54 @@ The other parameters are optional
 
 ## Javascript client
 
-A dedicated [javascript client](https://github.com/synw/djangoinstant) is available
-to handle the messages and connections client side
+Several options are available for the client side
+
+### Use the builtin client
+
+A javascript client is available: in a template:
+
+```django
+<script src="https://cdn.jsdelivr.net/gh/centrifugal/centrifuge-js@2.8.4/dist/centrifuge.min.js"></script>
+<script type="module">
+  import Instant from "{% static 'instant/index.js' %}";
+  const $instant = new Instant(
+    "http://localhost:8000", // Django backend's address
+    "ws://localhost:8427", // Centrifugo server's address
+    true, // verbosity (optional, default: false)
+  );
+  // once the user connected get him a websockets token
+  await $instant.get_token();
+  // configure the message handlers
+  $instant.onMessage = (msg) => {
+    console.log(JSON.stringify(msg, null, "  "));
+  }
+  /* sample message output:
+  {
+    "channel": "$channelname",
+    "site": "site_name",
+    "message": "The main message",
+    "data": {
+      "some": "json data"
+    }
+  }
+  */
+
+  // connect to the websockets server and auto subscribe to all
+  // channels that are authorized by the backend
+  await $instant.connect();
+  console.log("Websockets connected");
+</script>
+```
+
+### Use the official Centrifugo js client
+
+Manage your websockets connection manually with the official Centrifugo js library: 
+[Centrifuge-js](https://github.com/centrifugal/centrifuge-js)
+
+### Use the npm client
+
+A dedicated [client](https://github.com/synw/djangoinstant) is available from npm
+to handle the messages and connections client side in javascript or typescript
 
 ## Example
 
