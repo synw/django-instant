@@ -1,3 +1,4 @@
+import json
 from typing import Any, Dict, Union
 
 from cent import Client
@@ -9,8 +10,8 @@ def publish(
     channel: str,
     *args,
     event_class: Union[str, None] = None,
-    data: Union[Dict[Any, Any], None] = None,
-    bucket: str = None,
+    data: Union[Dict[str, Any], None] = None,
+    bucket: str = "",
     site: str = SITE_NAME
 ) -> None:
     """
@@ -23,15 +24,19 @@ def publish(
         raise ValueError("Provide either a message or data argument")
     cent_url = CENTRIFUGO_HOST
     if CENTRIFUGO_PORT is not None:
-        cent_url += ":" + str(CENTRIFUGO_PORT)
-    client = Client(cent_url, api_key=CENTRIFUGO_API_KEY, timeout=1)
-    payload: Dict[Any, Any] = {"channel": channel, "site": site}
+        cent_url += ":" + str(CENTRIFUGO_PORT) + "/api"
+    client = Client(
+        cent_url,
+        api_key=CENTRIFUGO_API_KEY,
+        timeout=1,
+    )
+    payload: Dict[str, Any] = {"channel": channel, "site": site}
     if message is not None:
         payload["message"] = message
     if data is not None:
         payload["data"] = data
     if event_class is not None:
         payload["event_class"] = event_class
-    if bucket is not None:
+    if len(bucket) > 0:
         payload["bucket"] = bucket
-    client.publish(channel, payload)
+    client.publish(channel, json.dumps(payload))
