@@ -17,7 +17,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         centrifugo_version = "3.1.1"
         run_on = str(platform.system()).lower()
-        suffix = "_linux_386"
+        suffix = "_linux_amd64"
         if run_on == "darwin":
             suffix = "_darwin_amd64"
         suffix_file = suffix + ".tar.gz"
@@ -42,7 +42,11 @@ class Command(BaseCommand):
         with open(filepath, "r+") as f:
             content = f.read()
             conf = json.loads(content)
-            conf["allowed_origins"] = ["*"]
+            conf["allowed_origins"] = [
+                "http://localhost:8000",  # django dev server
+                "http://localhost:3000",  # frontend dev server
+                "http://localhost:5000",  # frontend build preview
+            ]
             output = json.dumps(conf, indent=4)
             f.seek(0)
             f.write(output)
