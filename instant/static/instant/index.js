@@ -1,15 +1,16 @@
-export default class Instant {
+class Instant {
   csrfToken = "";
   client;
   backendUri;
   websocketsUri;
   channels = new Set();
+  handlers = {};
   verbose = false;
   _onMessage = (message) => console.log(JSON.stringify(message.data, null, "  "));
   set onMessage(func) {
     this._onMessage = func;
   }
-  constructor(backendUri, websocketsUri, verbose = false) {
+  init(backendUri, websocketsUri, verbose = false) {
     this.backendUri = backendUri;
     this.websocketsUri = websocketsUri;
     this.verbose = verbose;
@@ -35,7 +36,11 @@ export default class Instant {
   subscribe(channel) {
     this.client.subscribe(channel.name, (message) => {
       const data = JSON.parse(message.data);
-      this._onMessage(data);
+      if (channel.name in this.handlers) {
+        this.handlers[channel.name](data)
+      } else {
+        this._onMessage(data);
+      }
     });
   }
   unsubscribe(channel) {
@@ -48,13 +53,19 @@ export default class Instant {
       this.subscribe(c)
     });
   }
+  addHandler(channel, func) {
+    this.handlers[channel] = func;
+  }
+  removeHandler(channel) {
+    delete this.handlers[channel];
+  }
   async login(username, password) {
     //console.log("Login");
     const payload = {
       username: username,
       password: password
     };
-    const opts = this.postHeader(payload);
+    const opts = this._postHeader(payload);
     const uri = this.backendUri + "/instant/login/";
     const response = await fetch(uri, opts);
     if (!response.ok) {
@@ -62,10 +73,10 @@ export default class Instant {
       throw new Error(response.statusText);
     }
     const data = (await response.json());
-    this._process_response(data);
+    this._process_tokens(data);
   }
   async get_token() {
-    const opts = this.postHeader({});
+    const opts = this._postHeader({});
     const uri = this.backendUri + "/instant/get_token/";
     const response = await fetch(uri, opts);
     if (!response.ok) {
@@ -73,9 +84,9 @@ export default class Instant {
       throw new Error(response.statusText);
     }
     const data = (await response.json());
-    this._process_response(data);
+    this._process_tokens(data);
   }
-  postHeader(payload) {
+  _postHeader(payload) {
     const header = {
       method: "post",
       credentials: "include",
@@ -93,7 +104,7 @@ export default class Instant {
     }
     return header;
   }
-  _process_response(data) {
+  _process_tokens(data) {
     if (this.verbose) {
       console.log("Tokens", JSON.stringify(data, null, "  "));
     }
@@ -104,3 +115,5 @@ export default class Instant {
     });
   }
 }
+
+var $instant = new Instant();
