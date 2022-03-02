@@ -158,15 +158,13 @@ A javascript client is available: in a template:
 
 ```django
 <script src="https://cdn.jsdelivr.net/gh/centrifugal/centrifuge-js@2.8.4/dist/centrifuge.min.js"></script>
-<script type="module">
-  import Instant from "{% static 'instant/index.js' %}";
-  const $instant = new Instant(
+<script src="{% static 'instant/index.js' %}"></script>
+<script>
+  $instant.init(
     "http://localhost:8000", // Django backend's address
     "ws://localhost:8427", // Centrifugo server's address
     true, // verbosity (optional, default: false)
   );
-  // once the user connected get him a websockets token
-  await $instant.get_token();
   // configure the message handlers
   $instant.onMessage = (msg) => {
     console.log(JSON.stringify(msg, null, "  "));
@@ -184,8 +182,8 @@ A javascript client is available: in a template:
 
   // connect to the websockets server and auto subscribe to all
   // channels that are authorized by the backend
-  await $instant.connect();
-  console.log("Websockets connected");
+   $instant.get_token().then(() => $instant.connect().then(() => console.log("Websockets connected")));
+  
 </script>
 ```
 
