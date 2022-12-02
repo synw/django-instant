@@ -17,7 +17,7 @@ class InstantTestConf(InstantBaseTest):
         self.assertEqual(CENTRIFUGO_API_KEY, None)
         self.assertEqual(CENTRIFUGO_HMAC_KEY, None)
         self.assertEqual(CENTRIFUGO_HOST, "http://localhost")
-        self.assertEqual(CENTRIFUGO_PORT, 8000)
+        self.assertEqual(CENTRIFUGO_PORT, 8427)
         self.assertEqual(SITE_SLUG, "site")
         self.assertEqual(SITE_NAME, "Site")
 
