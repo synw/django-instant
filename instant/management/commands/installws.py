@@ -15,7 +15,7 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
-        centrifugo_version = "3.1.1"
+        centrifugo_version = "4.0.4"
         run_on = str(platform.system()).lower()
         suffix = "_linux_amd64"
         if run_on == "darwin":

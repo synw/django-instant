@@ -12,7 +12,7 @@ class InstantTestToken(InstantBaseTest):
             # print(t)
             self.assertTrue(
                 str(t).startswith(
-                    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteXVzZXIiLCJl"
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                 )
             )
 
@@ -21,12 +21,11 @@ class InstantTestToken(InstantBaseTest):
             channel_token("cli", "chan")
         with self.settings(CENTRIFUGO_HMAC_KEY="key"):
             t = channel_token("cli", "chan")
-            # print(t)
+            # print(t)
             self.assertTrue(
                 str(t).startswith(
                     (
-                        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9."
-                        "eyJjbGllbnQiOiJjbGkiLCJjaGFubmVsIjoiY2hhbiIsImV4cCI6"
+                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
                     )
                 )
             )
