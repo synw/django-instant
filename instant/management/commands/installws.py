@@ -60,6 +60,6 @@ class Command(BaseCommand):
             print(line)
         print("\n")
         print(
-            "The Centrifugo websockets server is installed. Run it with python3"
+            "The Centrifugo websockets server is installed. Run it with python "
             "manage.py runws"
         )

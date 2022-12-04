@@ -14,8 +14,8 @@ from instant.conf import (
 
 class InstantTestConf(InstantBaseTest):
     def test_default_conf(self):
-        self.assertEqual(CENTRIFUGO_API_KEY, None)
-        self.assertEqual(CENTRIFUGO_HMAC_KEY, None)
+        self.assertEqual(CENTRIFUGO_API_KEY, "key")
+        self.assertEqual(CENTRIFUGO_HMAC_KEY, "key")
         self.assertEqual(CENTRIFUGO_HOST, "http://localhost")
         self.assertEqual(CENTRIFUGO_PORT, 8427)
         self.assertEqual(SITE_SLUG, "site")

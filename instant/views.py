@@ -8,9 +8,22 @@ from django.middleware.csrf import get_token
 from .token import connection_token, channel_token
 from .models import Channel
 
+def user_channels(user):
+    user_chans = Channel.objects.for_user(user)
+    authorized_chans = []
+    for channel in user_chans:
+        # print("Checking auth for chan", channel, channel in user_chans_names)
+        chan = {
+            "name": channel.name,
+            "level": channel.level,
+            "token": channel_token(channel.name, user),
+        }
+        authorized_chans.append(chan)
+    return authorized_chans
 
-@csrf_exempt
-def private_channel_subscription(request):
+
+@csrf_exempt  # type: ignore
+def channels_subscription(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     json_data = json.loads(request.body)
@@ -19,33 +32,23 @@ def private_channel_subscription(request):
     user_chans_names = []
     for chan in user_chans:
         user_chans_names.append(chan["name"])
-    authorized_chans = []
-    for channel in json_data["channels"]:
-        # print("Checking auth for chan", channel, channel in user_chans_names)
-        if channel in user_chans_names:
-            chan = {
-                "channel": channel,
-                "token": channel_token(json_data["client"], channel),
-            }
-            authorized_chans.append(chan)
+    authorized_chans = user_channels(request.user)
     # print({"channels": authorized_chans})
     return JsonResponse({"channels": authorized_chans})
 
 
 def _get_response(request):
-    channels = Channel.objects.for_user(request.user).values(  # type: ignore
-        "name", "level"
-    )
+    channels = user_channels(request.user)
     return JsonResponse(
         {
             "csrf_token": get_token(request),
             "ws_token": connection_token(request.user),
-            "channels": list(channels),
+            "channels": channels,
         }
     )
 
 
-@csrf_exempt
+@csrf_exempt  # type: ignore
 def login_and_get_tokens(request):
     # print("Login view", request.method)
     if request.user.is_authenticated:
@@ -70,7 +73,7 @@ def logout(request):
     return HttpResponseForbidden()
 
 
-@csrf_exempt
+@csrf_exempt  # type: ignore
 def get_connection_token(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()

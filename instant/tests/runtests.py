@@ -86,7 +86,8 @@ settings.configure(
         },
     },
     DEFAULT_AUTO_FIELD="django.db.models.BigAutoField",
-    # CENTRIFUGO_HMAC_KEY="key",
+    CENTRIFUGO_API_KEY="key",
+    CENTRIFUGO_HMAC_KEY="key",
 )
 
 django.setup()

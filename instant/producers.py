@@ -23,12 +23,13 @@ def publish(
     if message is None and data is None:
         raise ValueError("Provide either a message or data argument")
     cent_url = CENTRIFUGO_HOST
-    if CENTRIFUGO_PORT is not None:
-        cent_url += ":" + str(CENTRIFUGO_PORT) + "/api"
+    cent_url += ":" + str(CENTRIFUGO_PORT) + "/api"
+    if CENTRIFUGO_API_KEY is None:
+        raise ValueError("Provide a CENTRIFUGO_API_KEY in settings")
     client = Client(
         cent_url,
-        api_key=CENTRIFUGO_API_KEY,
-        timeout=1,
+        api_key = CENTRIFUGO_API_KEY,
+        timeout = 1,
     )
     payload: Dict[str, Any] = {"channel": channel, "site": site}
     if message is not None:

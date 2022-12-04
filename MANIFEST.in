@@ -1,3 +1,2 @@
 recursive-include instant/migrations *
 recursive-include instant/management *
-recursive-include instant/static *

@@ -1,5 +1,7 @@
 # Django Instant
 
+[![pub package](https://img.shields.io/pypi/v/django-instant)](https://pypi.org/project/django-instant/)
+
 Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifugo).
 
 * Push events into public or private channels.
@@ -152,41 +154,6 @@ The other parameters are optional
 
 Several options are available for the client side
 
-### Use the builtin client
-
-A javascript client is available: in a template:
-
-```django
-<script src="https://cdn.jsdelivr.net/gh/centrifugal/centrifuge-js@2.8.4/dist/centrifuge.min.js"></script>
-<script src="{% static 'instant/index.js' %}"></script>
-<script>
-  $instant.init(
-    "http://localhost:8000", // Django backend's address
-    "ws://localhost:8427", // Centrifugo server's address
-    true, // verbosity (optional, default: false)
-  );
-  // configure the message handlers
-  $instant.onMessage = (msg) => {
-    console.log(JSON.stringify(msg, null, "  "));
-  }
-  /* sample message output:
-  {
-    "channel": "$channelname",
-    "site": "site_name",
-    "message": "The main message",
-    "data": {
-      "some": "json data"
-    }
-  }
-  */
-
-  // connect to the websockets server and auto subscribe to all
-  // channels that are authorized by the backend
-   $instant.get_token().then(() => $instant.connect().then(() => console.log("Websockets connected")));
-  
-</script>
-```
-
 ### Use the official Centrifugo js client
 
 Manage your websockets connection manually with the official Centrifugo js library: 
@@ -200,3 +167,11 @@ to handle the messages and connections client side in javascript or typescript
 ## Example
 
 An [example](https://github.com/synw/django-instant-example) with a backend and a frontend is available
+
+## Tests
+
+To run the tests:
+
+```bash
+tox
+```

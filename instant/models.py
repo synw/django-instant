@@ -44,7 +44,7 @@ class Channel(models.Model):
     groups = models.ManyToManyField(Group, blank=True, verbose_name=_("Groups"))
     objects = ChannelManager()
 
-    class Meta:  # type: ignore
+    class Meta:
         verbose_name = _("Channel")
         verbose_name_plural = _("Channels")
 
