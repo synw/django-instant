@@ -1,6 +1,6 @@
 # Django Instant
 
-[![pub package](https://img.shields.io/pypi/v/django-instant)](https://pypi.org/project/django-instant/)
+[![pub package](https://img.shields.io/pypi/v/django-instant)](https://pypi.org/project/django-instant/) [![Django CI](https://github.com/synw/django-instant/actions/workflows/django.yml/badge.svg)](https://github.com/synw/django-instant/actions/workflows/django.yml)
 
 Websockets for Django with [Centrifugo](https://github.com/centrifugal/centrifugo).
 
