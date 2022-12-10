@@ -159,6 +159,20 @@ Several options are available for the client side
 Manage your websockets connection manually with the official Centrifugo js library: 
 [Centrifuge-js](https://github.com/centrifugal/centrifuge-js)
 
+### Use the embeded client in a script tag
+
+In a Django template:
+
+```html
+{% load static %}
+<script src="{% static 'instant/index.min.js' %}"></script>
+<script>
+  const instant = $instant.useInstant();
+</script>
+```
+
+[Api doc](https://github.com/synw/djangoinstant#usage)
+
 ### Use the npm client
 
 A dedicated [client](https://github.com/synw/djangoinstant) is available from npm
