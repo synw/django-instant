@@ -6,7 +6,7 @@ from .init import ensure_channel_is_private
 
 class ChannelManager(models.Manager):
     def for_user(self, user):
-        filter_from = [Channel.level.Public, Channel.level.Users]
+        filter_from = [Channel.Level.Public, Channel.Level.Users]
         if user.is_superuser:
             filter_from.append(Channel.Level.Superuser)
         if user.is_staff:
