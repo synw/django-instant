@@ -13,7 +13,7 @@ class InstantTestCreate(InstantBaseTest):
         self.assertEqual(str(chan), "$chan")
 
     def test_public_channel_creation(self):
-        chan = Channel.objects.create(name="chan", level="public")
+        chan = Channel.objects.create(name="chan", level=Channel.Level.Public)
         self.assertEqual(chan.name, "chan")
         self.assertEqual(chan.level, "public")
 
