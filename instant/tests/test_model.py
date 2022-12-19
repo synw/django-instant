@@ -17,6 +17,12 @@ class InstantTestCreate(InstantBaseTest):
         self.assertEqual(chan.name, "chan")
         self.assertEqual(chan.level, "public")
 
+    def test_public_channel_creation_enum(self):
+        chan = Channel.objects.create(name="chan", level=Channel.Level.Public)
+        self.assertEqual(chan.name, "chan")
+        self.assertEqual(chan.level, "public")
+        
+
     def test_channel_manager(self):
         Channel.objects.create(name="$chan")
         user_chans = Channel.objects.for_user(self.superuser)  #  type: ignore

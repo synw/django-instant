@@ -4,23 +4,13 @@ from django.utils.translation import gettext_lazy as _
 
 from .init import ensure_channel_is_private
 
-
-LEVELS = (
-    ("public", "Public"),
-    ("users", "Users"),
-    ("groups", "Groups"),
-    ("staff", "Staff"),
-    ("superuser", "Superuser"),
-)
-
-
 class ChannelManager(models.Manager):
     def for_user(self, user):
-        filter_from = ["public", "users"]
+        filter_from = [Channel.Level.Public, Channel.Level.Users]
         if user.is_superuser:
-            filter_from.append("superuser")
+            filter_from.append(Channel.Level.Superuser)
         if user.is_staff:
-            filter_from.append("staff")
+            filter_from.append(Channel.Level.Staff)
         chans = Channel.objects.filter(
             is_active=True, groups__in=user.groups.all()
         ) | Channel.objects.filter(level__in=filter_from, is_active=True)
@@ -28,6 +18,13 @@ class ChannelManager(models.Manager):
 
 
 class Channel(models.Model):
+    class Level(models.TextChoices):
+        Public = "public"
+        Users = "users"
+        Groups = "groups"
+        Staff = "staff"
+        Superuser = "superuser"
+
     name = models.CharField(
         max_length=120,
         verbose_name=_("Name"),
@@ -36,7 +33,7 @@ class Channel(models.Model):
     )
     level = models.CharField(
         max_length=20,
-        choices=LEVELS,
+        choices=Level.choices,
         verbose_name=_("Authorized for"),
         default="superuser",
     )
