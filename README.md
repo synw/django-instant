@@ -102,7 +102,20 @@ SITE_NAME = "My site" # used in the messages to identify where they come from
 
 ### Create channels
 
-Go into the admin to create channels
+Go into the admin to create channels or create them programatically:
+
+```python
+from instant.models import Channel
+
+Channel.objects.create(name="superuser", level=Channel.Level.Superuser) 
+```
+
+Api: channel create parameters:
+
+- `name`: the channel name. Required and unique
+- `level`: access authorization level for a channel: *Public, Users, Groups, Staff, Superuser*. Default: *Superuser*
+- `is_active`: a boolean to disable a channel
+- `groups`: a list of authorized Django groups for a channel
 
 ## Avalailable endpoints
 
